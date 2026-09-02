@@ -235,9 +235,9 @@
 
     function makeFeedBtn(trackUrl) {
         const btn = document.createElement("button");
-        btn.className = "sc-button sc-button-medium sc-button-icon";
+        btn.className = "sc-button sc-button-small sc-button-icon sc-dl-feed-btn";
         btn.title = "Download this track";
-        btn.style.cssText = "margin-left:4px;background:#ff5500;color:#fff;border-color:#ff5500;cursor:pointer;";
+        btn.style.cssText = "background:#ff5500;color:#fff;border-color:#ff5500;cursor:pointer;";
         btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>';
         btn.addEventListener("click", (e) => handleDownload(e, trackUrl));
         return btn;
@@ -366,11 +366,9 @@
         console.log("[direct] feed bars found:", feedBars.length);
         if (feedBars.length > 0) {
             feedBars.forEach(({ container, trackUrl }) => {
-                // Skip if we already injected here
                 if (container.querySelector('.sc-dl-feed-btn')) return;
                 const btn = makeFeedBtn(trackUrl);
-                btn.classList.add("sc-dl-feed-btn");
-                container.appendChild(btn);
+                container.insertBefore(btn, container.firstChild);
                 injected = true;
                 console.log("[direct] injected button for:", trackUrl);
             });
