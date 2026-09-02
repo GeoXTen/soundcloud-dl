@@ -293,7 +293,6 @@
             if (trackUrl) {
                 seenContainers.add(item);
                 results.push({ container: actionBar, trackUrl });
-                console.log("[direct] list track:", trackUrl);
             }
         });
 
@@ -324,11 +323,9 @@
             if (trackUrl) {
                 seenContainers.add(tileId);
                 results.push({ container: row, trackUrl });
-                console.log("[direct] tile track:", trackUrl);
             }
         });
 
-        console.log("[direct] total track buttons:", results.length);
         return results;
     }
 
@@ -363,7 +360,6 @@
 
         // === FEED PAGE: inject button on EVERY track card ===
         const feedBars = findFeedActionBars();
-        console.log("[direct] feed bars found:", feedBars.length);
         if (feedBars.length > 0) {
             feedBars.forEach(({ container, trackUrl }) => {
                 if (container.querySelector('.sc-dl-feed-btn')) return;
@@ -375,7 +371,6 @@
                     container.appendChild(btn);
                 }
                 injected = true;
-                console.log("[direct] injected button for:", trackUrl);
             });
         }
 
@@ -404,7 +399,7 @@
             injected = true;
         }
 
-        if (!injected) { console.log("[direct] no container found, retry"); return false; }
+        if (!injected) { return false; }
         return true;
     }
 
@@ -413,7 +408,7 @@
     const poll = setInterval(() => {
         attempts++;
         if (createButtons()) clearInterval(poll);
-        if (attempts > 60) { clearInterval(poll); console.log("[direct] gave up after 60 attempts"); }
+        if (attempts > 60) { clearInterval(poll); }
     }, 500);
 
     // Re-inject on SPA navigation
@@ -421,7 +416,6 @@
     setInterval(() => {
         if (location.href !== lastUrl) {
             lastUrl = location.href;
-            console.log("[direct] URL changed to", lastUrl);
             setTimeout(() => {
                 let a = 0;
                 const p2 = setInterval(() => { a++; if (createButtons()) clearInterval(p2); if (a > 20) clearInterval(p2); }, 500);
