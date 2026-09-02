@@ -6,7 +6,8 @@
 
     // Extract SoundCloud client_id from page
     function isValidClientId(id) {
-        return id && /^[a-zA-Z0-9]{20,64}$/.test(id) && !id.includes("+") && !id.includes(".");
+        // Real SoundCloud client_id is 32 alphanumeric chars, must contain at least one digit
+        return id && /^[a-zA-Z0-9]{32}$/.test(id) && /\d/.test(id);
     }
     async function getClientId() {
         if (clientId) return clientId;
