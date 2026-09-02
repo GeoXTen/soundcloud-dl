@@ -1,3 +1,4 @@
 .playwright-mcp/
 *.ps1
+*.zip
 .playwright-mcp
