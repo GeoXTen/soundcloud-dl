@@ -250,8 +250,9 @@
     function findFeedActionBars() {
         const results = [];
         const seen = new Set();
+        // Owner toolbar keywords — skip these containers
+        const OWNER_KEYWORDS = ['your insights', 'edit', 'analytics', 'stats'];
 
-        // Find ALL track links on the page
         document.querySelectorAll('a[href*="soundcloud.com/"]').forEach(a => {
             const href = a.getAttribute('href');
             if (!href || href.includes('/you/') || href.includes('/search') || href.includes('/discover') || href.includes('/tags/')) return;
@@ -259,21 +260,21 @@
             const parts = full.replace('https://soundcloud.com/', '').split('/').filter(Boolean);
             if (parts.length < 2 || parts[0].startsWith('you')) return;
 
-            // Walk up from the track link to find the track card container
             let card = a;
             for (let i = 0; i < 20; i++) {
                 card = card.parentElement;
                 if (!card || card === document.body) break;
 
-                // Look for a button container (action bar) with 2+ buttons
                 const btns = card.querySelectorAll('button');
                 if (btns.length >= 3) {
-                    // This looks like the action bar area — find the button row
-                    // The action bar is usually a div containing multiple buttons
                     for (const btn of btns) {
                         const btnParent = btn.parentElement;
                         if (btnParent && btnParent.querySelectorAll('button').length >= 3) {
-                            // Found action bar container
+                            // Skip owner toolbars
+                            const btnTexts = Array.from(btnParent.querySelectorAll('button')).map(b => (b.textContent || '').trim().toLowerCase());
+                            const isOwner = OWNER_KEYWORDS.some(kw => btnTexts.some(t => t.includes(kw)));
+                            if (isOwner) break;
+
                             const key = btnParent;
                             if (!seen.has(key)) {
                                 seen.add(key);
