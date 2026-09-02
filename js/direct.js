@@ -404,4 +404,28 @@
             }, 1000);
         }
     }, 1000);
+
+    // Re-inject when SoundCloud lazy-loads new feed items on scroll
+    let debounceTimer = null;
+    const scrollObs = new MutationObserver(() => {
+        // Only re-inject if there are feed items without download buttons
+        const feedBars = document.querySelectorAll('button');
+        let hasUnbuttoned = false;
+        for (const b of feedBars) {
+            const row = b.parentElement;
+            if (!row || row.closest('footer, [role="contentinfo"]')) continue;
+            const rowBtns = Array.from(row.querySelectorAll('button'));
+            if (rowBtns.length >= 3 && rowBtns.length <= 8) {
+                if (!row.querySelector('.sc-dl-feed-btn')) {
+                    hasUnbuttoned = true;
+                    break;
+                }
+            }
+        }
+        if (!hasUnbuttoned) return;
+        // Debounce: wait 300ms after last mutation
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => { createButtons(); }, 300);
+    });
+    scrollObs.observe(document.body, {childList: true, subtree: true});
 })();
