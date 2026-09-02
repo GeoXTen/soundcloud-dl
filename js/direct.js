@@ -270,9 +270,7 @@
         let data;
         // Check if value has non-ASCII chars — use UTF-16LE with BOM
         if (/[^\x00-\x7F]/.test(value)) {
-            const encoder = new TextEncoder();
-            const utf8 = encoder.encode(value);
-            // Simple UTF-8 to UTF-16LE conversion
+            const utf8 = new TextEncoder().encode(value);
             const utf16 = [];
             let i = 0;
             while (i < utf8.length) {
@@ -286,9 +284,11 @@
             }
             const bom = new Uint8Array([0xFF, 0xFE]); // UTF-16LE BOM
             const textData = new Uint8Array(utf16);
-            data = new Uint8Array(bom.length + textData.length);
-            data.set(bom, 0);
-            data.set(textData, bom.length);
+            // encoding(0x01=UTF-16) + BOM + text
+            data = new Uint8Array(1 + bom.length + textData.length);
+            data[0] = 0x01; // encoding: UTF-16 with BOM
+            data.set(bom, 1);
+            data.set(textData, 1 + bom.length);
         } else {
             data = new Uint8Array([0x00, ...strToUint8(value)]); // ISO-8859-1
         }
@@ -298,10 +298,32 @@
     function makeCommentFrame(text) {
         const lang = strToUint8('eng');
         const desc = new Uint8Array(1); // empty description
-        const body = new Uint8Array(lang.length + desc.length + strToUint8(text).length);
+        let textData;
+        if (/[^\x00-\x7F]/.test(text)) {
+            const utf8 = new TextEncoder().encode(text);
+            const utf16 = [];
+            let i = 0;
+            while (i < utf8.length) {
+                let cp;
+                const b = utf8[i];
+                if (b < 0x80) { cp = b; i++; }
+                else if ((b & 0xE0) === 0xC0) { cp = ((b & 0x1F) << 6) | (utf8[i+1] & 0x3F); i += 2; }
+                else if ((b & 0xF0) === 0xE0) { cp = ((b & 0x0F) << 12) | ((utf8[i+1] & 0x3F) << 6) | (utf8[i+2] & 0x3F); i += 3; }
+                else { cp = ((b & 0x07) << 18) | ((utf8[i+1] & 0x3F) << 12) | ((utf8[i+2] & 0x3F) << 6) | (utf8[i+3] & 0x3F); i += 4; }
+                utf16.push(cp & 0xFF, (cp >> 8) & 0xFF);
+            }
+            const bom = new Uint8Array([0xFF, 0xFE]);
+            textData = new Uint8Array(1 + bom.length + utf16.length);
+            textData[0] = 0x01;
+            textData.set(bom, 1);
+            textData.set(new Uint8Array(utf16), 1 + bom.length);
+        } else {
+            textData = new Uint8Array([0x00, ...strToUint8(text)]);
+        }
+        const body = new Uint8Array(lang.length + desc.length + textData.length);
         body.set(lang, 0);
         body.set(desc, lang.length);
-        body.set(strToUint8(text), lang.length + desc.length);
+        body.set(textData, lang.length + desc.length);
         return makeFrame('COMM', body);
     }
 
