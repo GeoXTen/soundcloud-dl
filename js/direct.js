@@ -121,7 +121,19 @@
             const r = await fetch(url);
             if (r.ok) {
                 const data = await r.json();
-                if (data.id) return String(data.id);
+                if (data.id) {
+                    // If it's a playlist/set, get the first track
+                    if (data.kind === 'playlist' || data.kind === 'system-playlist') {
+                        const tracks = data.tracks || [];
+                        if (tracks.length > 0) {
+                            const firstTrack = tracks[0];
+                            if (firstTrack.id) return String(firstTrack.id);
+                            if (firstTrack.track_id) return String(firstTrack.track_id);
+                        }
+                        return null;
+                    }
+                    return String(data.id);
+                }
             }
         } catch(e) {}
         return null;
@@ -271,24 +283,20 @@
             return null;
         }
 
-        // Type 1: List items (artist tracks page, stream, reposts) — soundList__item with soundActions
+        // Type 1a: Direct list items (artist tracks, stream, regular reposts)
         const listItems = document.querySelectorAll('.soundList__item, .sc-list-nostyle > li');
         listItems.forEach(item => {
             if (seenContainers.has(item)) return;
-            const actionBar = item.querySelector('.soundActions, [class*="soundActions"]');
+            const actionBar = item.querySelector(':scope > .userStreamItem > .sound > .sound__body > .sound__footer > .sound__soundActions > .soundActions, .soundActions');
             if (!actionBar) return;
+            if (seenContainers.has(actionBar)) return;
 
             const allBtns = actionBar.querySelectorAll('button, a[class*="sc-button"], [role="button"]');
             if (allBtns.length < 1) return;
 
-            // Get track URL — try multiple strategies
             let trackUrl = null;
-
-            // 1. Try artwork cover link (most reliable)
-            const artLink = item.querySelector('a.sound__coverArt');
+            const artLink = item.querySelector(':scope > .userStreamItem > .sound > .sound__body > .sound__artwork > a.sound__coverArt, a.sound__coverArt');
             if (artLink) trackUrl = getTrackUrl(artLink.getAttribute('href'));
-
-            // 2. Try title link (individual track link)
             if (!trackUrl) {
                 const titleLinks = item.querySelectorAll('.soundTitle__titleContainer a, .soundTitle a[href]');
                 for (const a of titleLinks) {
@@ -297,8 +305,6 @@
                     if (url) { trackUrl = url; break; }
                 }
             }
-
-            // 3. Fallback: ANY valid link in the item
             if (!trackUrl) {
                 const links = item.querySelectorAll('a[href]');
                 for (const a of links) {
@@ -311,6 +317,41 @@
 
             if (trackUrl) {
                 seenContainers.add(item);
+                seenContainers.add(actionBar);
+                results.push({ container: actionBar, trackUrl });
+            }
+        });
+
+        // Type 1b: Nested track listings inside album reposts
+        // These are soundActions inside sub-elements (e.g., "1 - Artist - Track" rows)
+        document.querySelectorAll('.soundActions').forEach(actionBar => {
+            if (seenContainers.has(actionBar)) return;
+            if (actionBar.closest('footer, [role="contentinfo"], [class*="playback"], [class*="miniplayer"]')) return;
+
+            const allBtns = actionBar.querySelectorAll('button, a[class*="sc-button"], [role="button"]');
+            if (allBtns.length < 1) return;
+
+            // Walk up to the closest sound context (not the outer soundList__item)
+            const soundCtx = actionBar.closest('.sound, .sound__body, .sound__content, .visualSound__wrapper');
+            if (!soundCtx) return;
+
+            let trackUrl = null;
+
+            // Find artwork link within this specific sound context
+            const artLink = soundCtx.querySelector('a.sound__coverArt');
+            if (artLink) trackUrl = getTrackUrl(artLink.getAttribute('href'));
+
+            // Try title link
+            if (!trackUrl) {
+                const titleLinks = soundCtx.querySelectorAll('.soundTitle__titleContainer a[href], .soundTitle a[href]');
+                for (const a of titleLinks) {
+                    const url = getTrackUrl(a.getAttribute('href'));
+                    if (url) { trackUrl = url; break; }
+                }
+            }
+
+            if (trackUrl) {
+                seenContainers.add(actionBar);
                 results.push({ container: actionBar, trackUrl });
             }
         });
