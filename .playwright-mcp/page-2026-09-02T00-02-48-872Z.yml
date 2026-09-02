@@ -1,0 +1,117 @@
+- generic [ref=e1]:
+  - heading "ServiceWorker" [level=1] [ref=e2]
+  - generic [ref=e3]:
+    - generic [ref=e5] [cursor=pointer]:
+      - checkbox "Open DevTools window and pause JavaScript execution on Service Worker startup for debugging." [ref=e6]
+      - generic [ref=e7]: Open DevTools window and pause JavaScript execution on Service Worker startup for debugging.
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - text: "Registrations in:"
+          - generic [ref=e12]: C:\Users\purpl\AppData\Local\ms-playwright-mcp\mcp-chrome-1ae0b5d\Default
+        - generic [ref=e13]: (2)
+      - generic [ref=e15]:
+        - generic [ref=e16]:
+          - text: "Scope:"
+          - generic [ref=e17]: chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/
+        - generic [ref=e18]:
+          - text: "Registration ID:"
+          - generic [ref=e19]: "6"
+        - generic [ref=e20]:
+          - text: "Navigation preload enabled:"
+          - generic [ref=e21]: "false"
+        - generic [ref=e22]:
+          - text: "Navigation preload header length:"
+          - generic [ref=e23]: "4"
+        - generic [ref=e24]:
+          - text: "Active worker:"
+          - generic [ref=e25]:
+            - generic [ref=e26]:
+              - text: "Installation Status:"
+              - generic [ref=e27]: ACTIVATED
+            - generic [ref=e28]:
+              - text: "Running Status:"
+              - generic [ref=e29]: RUNNING
+            - generic [ref=e30]:
+              - text: "Fetch handler existence:"
+              - generic [ref=e31]: DOES_NOT_EXIST
+            - generic [ref=e32]:
+              - text: "Fetch handler type:"
+              - generic [ref=e33]: NO_HANDLER
+            - generic [ref=e34]:
+              - text: "Script:"
+              - generic [ref=e35]: chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/service-worker.js
+            - generic [ref=e36]:
+              - text: "Version ID:"
+              - generic [ref=e37]: "6"
+            - generic [ref=e38]:
+              - text: "Renderer process ID:"
+              - generic [ref=e39]: "7112"
+            - generic [ref=e40]:
+              - text: "Renderer thread ID:"
+              - generic [ref=e41]: "1"
+            - generic [ref=e42]:
+              - text: "DevTools agent route ID:"
+              - generic [ref=e43]: "1"
+            - generic [ref=e44]:
+              - generic [ref=e45]: "Log:"
+              - textbox [ref=e46]
+            - generic [ref=e47]:
+              - button "Stop" [ref=e48] [cursor=pointer]
+              - button "Inspect" [active] [ref=e50] [cursor=pointer]
+        - button "Unregister" [ref=e53] [cursor=pointer]
+      - generic [ref=e56]:
+        - generic [ref=e57]:
+          - text: "Scope:"
+          - generic [ref=e58]: https://soundcloud.com/
+        - generic [ref=e59]:
+          - text: "Registration ID:"
+          - generic [ref=e60]: "0"
+        - generic [ref=e61]:
+          - text: "Navigation preload enabled:"
+          - generic [ref=e62]: "false"
+        - generic [ref=e63]:
+          - text: "Navigation preload header length:"
+          - generic [ref=e64]: "4"
+        - generic [ref=e65]:
+          - text: "Active worker:"
+          - generic [ref=e66]:
+            - generic [ref=e67]:
+              - text: "Installation Status:"
+              - generic [ref=e68]: ACTIVATED
+            - generic [ref=e69]:
+              - text: "Running Status:"
+              - generic [ref=e70]: RUNNING
+            - generic [ref=e71]:
+              - text: "Fetch handler existence:"
+              - generic [ref=e72]: EXISTS
+            - generic [ref=e73]:
+              - text: "Fetch handler type:"
+              - generic [ref=e74]: NOT_SKIPPABLE
+            - generic [ref=e75]:
+              - text: "Script:"
+              - generic [ref=e76]: https://soundcloud.com/service-worker.js
+            - generic [ref=e77]:
+              - text: "Version ID:"
+              - generic [ref=e78]: "0"
+            - generic [ref=e79]:
+              - text: "Renderer process ID:"
+              - generic [ref=e80]: "15408"
+            - generic [ref=e81]:
+              - text: "Renderer thread ID:"
+              - generic [ref=e82]: "2"
+            - generic [ref=e83]:
+              - text: "DevTools agent route ID:"
+              - generic [ref=e84]: "19"
+            - generic [ref=e85]:
+              - generic [ref=e86]: "Client:"
+              - generic [ref=e87]:
+                - generic [ref=e88]: "ID: d494cb29-033c-4d62-b6ad-7b3ecf14301c"
+                - generic [ref=e89]: "URL: https://soundcloud.com/hollmusic/god_2"
+            - generic [ref=e90]:
+              - generic [ref=e91]: "Log:"
+              - textbox [ref=e92]
+            - generic [ref=e93]:
+              - button "Stop" [ref=e94] [cursor=pointer]
+              - button "Inspect" [ref=e96] [cursor=pointer]
+        - button "Unregister" [ref=e99] [cursor=pointer]

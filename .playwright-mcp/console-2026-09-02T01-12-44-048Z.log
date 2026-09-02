@@ -1,0 +1,58 @@
+[     695ms] [INFO] You like to look under the hood? Why not help us build the engine? https://soundcloud.com/jobs @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:32
+[     775ms] [LOG] prebid-load.js loaded successfully. @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[     838ms] [LOG] %craven%c Raven v1.22.2-6hoy9q background-color:#000;margin-left:1px;padding:1px 3px;font-size:0.75em;color:#ffffff; font-size:0.9em; @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[     868ms] [WARNING] [GPT] PubAdsService.disableInitialLoad is deprecated, use googletag.setConfig({disableInitialLoad: ...}) instead.
+https://goo.gle/gpt-message#170 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[    1000ms] [LOG] [DIAG-CS] Diagnostic content script loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:4
+[    1001ms] [LOG] [DIAG-CS] sendMessage monitoring active @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:54
+[    1001ms] [LOG] [DIAG-CS] MutationObserver attached @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:74
+[    1003ms] [LOG] [DIAG-CS] sendMessage called: {"recipient":"__CROSSPILOT_MESSAGE__","action":"sandbox-content-scripts-data","keys":["messageRecipient","action","data"]} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:27
+[    1003ms] [LOG] [DIAG-CS] Time since load: 3ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:28
+[    1003ms] [LOG] [DIAG-CS] Args count: 1 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:29
+[    1004ms] [LOG] [DIAG-CS] CrossPilot attribute detected on HTML @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:63
+[    1004ms] [LOG] [DIAG-CS] Time since load: 3ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:64
+[    1005ms] [LOG] [direct] SoundCloud direct downloader loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:2
+[    1052ms] [LOG] [DIAG-CS] sendMessage promise resolved: null @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:41
+[    1285ms] [WARNING] [GPT] Slot.getTargetingKeys is deprecated, use Slot.getConfig('targeting') instead.
+https://goo.gle/gpt-message#201 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[    1515ms] [LOG] [direct] Download button injected (player mini) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:249
+[    1741ms] [LOG] [direct] Download button injected (middle next to More) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:225
+[    1789ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1789ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'ambient-light-sensor'. @ :0
+[    1789ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1789ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'battery'. @ :0
+[    1789ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1789ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1789ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'document-domain'. @ :0
+[    1789ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1789ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1789ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1789ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1789ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1789ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1790ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1790ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1790ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1790ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1790ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'wake-lock'. @ :0
+[    2348ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://api-auth.soundcloud.com/oauth/authorize?client_id=Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo:0
+[    2454ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[    2474ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[    2770ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[   31736ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=5d41402abc4b2a76b9719d911017c592:0
+[   31969ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=LapsedConsumerSubscriptionBanner:0
+[   32180ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=showWithdrawFromSubscriptionLink:0
+[   32389ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=showWithdrawFromSubscriptionLink:0
+[   32599ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=showWithdrawFromSubscriptionLink:0
+[   32842ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=buildXhrWithAuthTransportFactory:0
+[   33052ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=a7c02a899fe843dfbea609e8cfb420f0:0
+[   33318ms] [LOG] [direct] client_id from script (validated): Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:26
+[   33579ms] [LOG] [direct] track info: GOD_2 user: HOL! media: {transcodings: Array(5)} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:131
+[   33580ms] [LOG] [direct] using transcoding: mp3_1_0 https://api-v2.soundcloud.com/media/soundcloud:tracks:2392658898/943148cf-d501-4b90-8746-d1a7947f67b8/stream/progressive @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:138
+[   33833ms] [LOG] [direct] stream url: https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzExODA2fX19XX0_&Signature=RyxGf693JOwFxZkO8fJRFW3eOQK4PRZqRVFyBjoStfJxToc3z-IjY3OnwiLeUIxZ1Oi6WXZ4RSZJAwPw51bKMaBWdPtUeeQdX0tTgKNzw4b6r9aj~-DSUDeR~8FO-z2qOhNZEQKMdvaGD1TzqICYTtNrdAWhIaAAPrCqKl9fkJ1ADVVAC7SHwbhdXVCEb345nhzXsh04bJmYQ8~2UCeM-zLMdXlBy2DkHkmRUonlZP--FMNlchisH~tyhsEUTXZMdDQg44x4bF7o6fjYf47mVRQVvk4AxCAdHAWf0sFQo-XjnMWDfBP7Dg8~Til0ukP4pSCLvg21YjAHX9Cnz0Y5ng__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:140
+[   33834ms] [LOG] [direct] downloading: HOL_GOD_2.mp3 https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzExODA2fX19XX0_&Signature=RyxGf693JOwFxZkO8fJRFW3eOQK4PRZqRVFyBjoStfJxToc3z-IjY3OnwiLeUIxZ1Oi6WXZ4RSZJAwPw51bKMaBWdPtUeeQdX0tTgKNzw4b6r9aj~-DSUDeR~8FO-z2qOhNZEQKMdvaGD1TzqICYTtNrdAWhIaAAPrCqKl9fkJ1ADVVAC7SHwbhdXVCEb345nhzXsh04bJmYQ8~2UCeM-zLMdXlBy2DkHkmRUonlZP--FMNlchisH~tyhsEUTXZMdDQg44x4bF7o6fjYf47mVRQVvk4AxCAdHAWf0sFQo-XjnMWDfBP7Dg8~Til0ukP4pSCLvg21YjAHX9Cnz0Y5ng__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:183
+[   33834ms] [LOG] [DIAG-CS] sendMessage called: {"recipient":"__SC_DIRECT__","action":"download","keys":["messageRecipient","action","url","filename"]} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:27
+[   33834ms] [LOG] [DIAG-CS] Time since load: 32833ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:28
+[   33834ms] [LOG] [DIAG-CS] Args count: 2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:29
+[   34185ms] [LOG] [DIAG-CS] sendMessage response: {"success":true,"downloadId":10} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:33
+[   34185ms] [LOG] [direct] download response: {success: true, downloadId: 10} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:186

@@ -1,0 +1,26 @@
+[     546ms] [INFO] You like to look under the hood? Why not help us build the engine? https://soundcloud.com/jobs @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:32
+[     590ms] [WARNING] [GPT] PubAdsService.disableInitialLoad is deprecated, use googletag.setConfig({disableInitialLoad: ...}) instead.
+https://goo.gle/gpt-message#170 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[    1305ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1305ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'ambient-light-sensor'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'battery'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'document-domain'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1306ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'wake-lock'. @ :0
+[    1372ms] [LOG] prebid-load.js loaded successfully. @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[    1488ms] [LOG] %craven%c Raven v1.22.2-6hoy9q background-color:#000;margin-left:1px;padding:1px 3px;font-size:0.75em;color:#ffffff; font-size:0.9em; @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[    1771ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://api-auth.soundcloud.com/oauth/authorize?client_id=Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo:0
+[    1939ms] [WARNING] [GPT] Slot.getTargetingKeys is deprecated, use Slot.getConfig('targeting') instead.
+https://goo.gle/gpt-message#201 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99

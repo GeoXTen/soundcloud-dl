@@ -1,0 +1,453 @@
+- generic [active] [ref=f155e1]:
+  - generic [ref=f155e2]:
+    - banner [ref=f155e3]:
+      - generic [ref=f155e4]:
+        - generic [ref=f155e5]:
+          - link [ref=f155e7] [cursor=pointer]:
+            - /url: /
+          - navigation [ref=f155e11]:
+            - list [ref=f155e12]:
+              - listitem [ref=f155e13]:
+                - link "Home" [ref=f155e14] [cursor=pointer]:
+                  - /url: /discover
+              - listitem [ref=f155e15]:
+                - link "Feed" [ref=f155e16] [cursor=pointer]:
+                  - /url: /feed
+              - listitem [ref=f155e17]:
+                - link "Library" [ref=f155e18] [cursor=pointer]:
+                  - /url: /you/library
+        - search [ref=f155e20]:
+          - generic [ref=f155e21]:
+            - searchbox "Search" [ref=f155e22]
+            - button "Search" [ref=f155e23] [cursor=pointer]
+        - generic [ref=f155e28]:
+          - generic [ref=f155e29]:
+            - button "Sign in" [ref=f155e30] [cursor=pointer]
+            - button "Create a SoundCloud account" [ref=f155e31] [cursor=pointer]:
+              - generic: Create account
+          - link "Upload" [ref=f155e33] [cursor=pointer]:
+            - /url: /upload
+          - list [ref=f155e35]:
+            - listitem [ref=f155e36]:
+              - button "Settings and more" [ref=f155e37] [cursor=pointer]
+    - main [ref=f155e44]:
+      - generic [ref=f155e45]:
+        - generic [ref=f155e52]:
+          - generic "GOD_2" [ref=f155e57] [cursor=pointer]
+          - generic "GOD_2" [ref=f155e59]:
+            - generic [ref=f155e60]:
+              - button "Pause" [ref=f155e62] [cursor=pointer]
+              - generic [ref=f155e63]:
+                - heading "GOD_2" [level=1] [ref=f155e65]
+                - heading [level=2] [ref=f155e67]:
+                  - link [ref=f155e68] [cursor=pointer]:
+                    - /url: /hollmusic
+                    - text: HOL!
+                    - img "Verified" [ref=f155e71]
+          - generic [ref=f155e74]:
+            - time [ref=f155e76]:
+              - generic [ref=f155e77]: 6 hours ago
+              - text: 6 hours ago
+            - link "# Electronic" [ref=f155e78] [cursor=pointer]:
+              - /url: /tags/electronic
+              - text: "#"
+              - generic [ref=f155e79]: Electronic
+        - generic [ref=f155e93]:
+          - generic [ref=f155e95]:
+            - generic [ref=f155e98]:
+              - generic [ref=f155e105]:
+                - textbox "Write a comment" [ref=f155e107]
+                - button "Submit" [disabled] [ref=f155e108]
+              - generic [ref=f155e109]:
+                - generic [ref=f155e111]:
+                  - button "Like" [ref=f155e112] [cursor=pointer]
+                  - button "Repost" [ref=f155e113] [cursor=pointer]
+                  - button "Share" [ref=f155e114] [cursor=pointer]
+                  - button "Copy Link" [ref=f155e115] [cursor=pointer]
+                  - button "Add to Next up" [ref=f155e116] [cursor=pointer]
+                  - button "More" [ref=f155e117] [cursor=pointer]
+                - list "Track stats" [ref=f155e118]:
+                  - listitem "6,195 plays" [ref=f155e119]:
+                    - generic [ref=f155e120]:
+                      - generic [ref=f155e124]: 6,195 plays
+                      - text: 6,195
+                  - listitem "2,259 likes" [ref=f155e125]:
+                    - link "View all likes" [ref=f155e126] [cursor=pointer]:
+                      - /url: /hollmusic/god_2/likes
+                      - text: 2,259
+                  - listitem "117 reposts" [ref=f155e131]:
+                    - link "View all reposts" [ref=f155e132] [cursor=pointer]:
+                      - /url: /hollmusic/god_2/reposts
+                      - text: "117"
+            - generic [ref=f155e138]:
+              - generic [ref=f155e141]:
+                - generic [ref=f155e142]:
+                  - link "HOL!’s avatar" [ref=f155e146] [cursor=pointer]:
+                    - /url: /hollmusic
+                    - generic "HOL!’s avatar" [ref=f155e149]
+                  - generic [ref=f155e150]:
+                    - heading [level=3] [ref=f155e152]:
+                      - link "HOL!" [ref=f155e153] [cursor=pointer]:
+                        - /url: /hollmusic
+                      - img "Verified" [ref=f155e156]
+                    - generic "User stats" [ref=f155e161]:
+                      - list [ref=f155e162]:
+                        - listitem "59,555 followers" [ref=f155e163]:
+                          - link "59,555 followers" [ref=f155e164] [cursor=pointer]:
+                            - /url: /hollmusic/followers
+                            - generic [aria-hidden] [ref=f155e170]: 59.5K
+                        - listitem "84 tracks" [ref=f155e171]:
+                          - link "84 tracks" [ref=f155e172] [cursor=pointer]:
+                            - /url: /hollmusic/tracks
+                            - generic [aria-hidden] [ref=f155e177]: "84"
+                  - button "Follow" [ref=f155e179] [cursor=pointer]
+                - generic [ref=f155e181]: Report
+              - generic [ref=f155e184]:
+                - generic [ref=f155e188]:
+                  - paragraph [ref=f155e189]:
+                    - text: Follow
+                    - link "HOL!" [ref=f155e190] [cursor=pointer]:
+                      - /url: /hollmusic
+                    - text: and others on SoundCloud.
+                  - generic [ref=f155e191]:
+                    - button "Sign in" [ref=f155e192] [cursor=pointer]
+                    - button "Create a SoundCloud account" [ref=f155e193] [cursor=pointer]
+                - generic [ref=f155e195]:
+                  - paragraph [ref=f155e200]: shout out clams casinooooo
+                  - paragraph
+                - generic [ref=f155e201]:
+                  - generic [ref=f155e203]:
+                    - heading "161 comments" [level=3] [ref=f155e204]
+                    - 'button "Sorted by: Newest" [ref=f155e208] [cursor=pointer]'
+                  - list [ref=f155e209]:
+                    - listitem [ref=f155e210]:
+                      - generic [ref=f155e212]:
+                        - link "Dominick Graf’s avatar" [ref=f155e214] [cursor=pointer]:
+                          - /url: /dominick-graf
+                          - generic "Dominick Graf’s avatar" [ref=f155e216]
+                        - generic [ref=f155e217]:
+                          - generic [ref=f155e219]:
+                            - generic [ref=f155e220]:
+                              - link "Dominick Graf" [ref=f155e221] [cursor=pointer]:
+                                - /url: /dominick-graf
+                              - generic [ref=f155e222]:
+                                - text: at
+                                - link "0:59" [ref=f155e223] [cursor=pointer]:
+                                  - /url: ""
+                            - text: ·
+                            - time [ref=f155e225]:
+                              - generic [ref=f155e226]: Posted 11 minutes ago
+                              - text: 11 minutes ago
+                          - generic [ref=f155e228]:
+                            - paragraph [ref=f155e231]: Bruh slayed this
+                            - link "Reply" [ref=f155e233] [cursor=pointer]:
+                              - /url: /hollmusic/god_2/comments/2586843705
+                    - listitem [ref=f155e234]:
+                      - generic [ref=f155e236]:
+                        - link "M’s avatar" [ref=f155e238] [cursor=pointer]:
+                          - /url: /maylee-tho-136389643
+                          - generic "M’s avatar" [ref=f155e240]
+                        - generic [ref=f155e241]:
+                          - generic [ref=f155e243]:
+                            - generic [ref=f155e244]:
+                              - link "M" [ref=f155e245] [cursor=pointer]:
+                                - /url: /maylee-tho-136389643
+                              - generic [ref=f155e246]:
+                                - text: at
+                                - link "0:53" [ref=f155e247] [cursor=pointer]:
+                                  - /url: ""
+                            - text: ·
+                            - time [ref=f155e249]:
+                              - generic [ref=f155e250]: Posted 17 minutes ago
+                              - text: 17 minutes ago
+                          - generic [ref=f155e252]:
+                            - paragraph [ref=f155e255]: this just healed me
+                            - link "Reply" [ref=f155e257] [cursor=pointer]:
+                              - /url: /hollmusic/god_2/comments/2586842415
+                    - listitem [ref=f155e258]:
+                      - generic [ref=f155e260]:
+                        - link "Ciara with a C’s avatar" [ref=f155e262] [cursor=pointer]:
+                          - /url: /user789305922
+                          - generic "Ciara with a C’s avatar" [ref=f155e264]
+                        - generic [ref=f155e265]:
+                          - generic [ref=f155e267]:
+                            - generic [ref=f155e268]:
+                              - link "Ciara with a C" [ref=f155e269] [cursor=pointer]:
+                                - /url: /user789305922
+                              - generic [ref=f155e270]:
+                                - text: at
+                                - link "0:42" [ref=f155e271] [cursor=pointer]:
+                                  - /url: ""
+                            - text: ·
+                            - time [ref=f155e273]:
+                              - generic [ref=f155e274]: Posted 20 minutes ago
+                              - text: 20 minutes ago
+                          - generic [ref=f155e276]:
+                            - paragraph [ref=f155e279]: Yup.
+                            - link "Reply" [ref=f155e281] [cursor=pointer]:
+                              - /url: /hollmusic/god_2/comments/2586841730
+                    - listitem [ref=f155e282]:
+                      - generic [ref=f155e284]:
+                        - link "LILYTH’s avatar" [ref=f155e286] [cursor=pointer]:
+                          - /url: /lilythdub
+                          - generic "LILYTH’s avatar" [ref=f155e288]
+                        - generic [ref=f155e289]:
+                          - generic [ref=f155e291]:
+                            - generic [ref=f155e292]:
+                              - link "LILYTH" [ref=f155e293] [cursor=pointer]:
+                                - /url: /lilythdub
+                              - generic [ref=f155e294]:
+                                - text: at
+                                - link "0:07" [ref=f155e295] [cursor=pointer]:
+                                  - /url: ""
+                            - text: ·
+                            - time [ref=f155e297]:
+                              - generic [ref=f155e298]: Posted 21 minutes ago
+                              - text: 21 minutes ago
+                          - generic [ref=f155e300]:
+                            - paragraph [ref=f155e303]: Thank fucking god
+                            - link "Reply" [ref=f155e305] [cursor=pointer]:
+                              - /url: /hollmusic/god_2/comments/2586841245
+                    - listitem [ref=f155e306]:
+                      - generic [ref=f155e308]:
+                        - link "dr.edgar’s avatar" [ref=f155e310] [cursor=pointer]:
+                          - /url: /user-281044832
+                          - generic "dr.edgar’s avatar" [ref=f155e312]
+                        - generic [ref=f155e313]:
+                          - generic [ref=f155e315]:
+                            - generic [ref=f155e316]:
+                              - link "dr.edgar" [ref=f155e317] [cursor=pointer]:
+                                - /url: /user-281044832
+                              - generic [ref=f155e318]:
+                                - text: at
+                                - link "0:38" [ref=f155e319] [cursor=pointer]:
+                                  - /url: ""
+                            - text: ·
+                            - time [ref=f155e321]:
+                              - generic [ref=f155e322]: Posted 22 minutes ago
+                              - text: 22 minutes ago
+                          - generic [ref=f155e324]:
+                            - paragraph [ref=f155e327]: He don’t miss 🔥
+                            - link "Reply" [ref=f155e329] [cursor=pointer]:
+                              - /url: /hollmusic/god_2/comments/2586841191
+                    - listitem [ref=f155e330]:
+                      - generic [ref=f155e332]:
+                        - link "Ciara with a C’s avatar" [ref=f155e334] [cursor=pointer]:
+                          - /url: /user789305922
+                          - generic "Ciara with a C’s avatar" [ref=f155e336]
+                        - generic [ref=f155e337]:
+                          - generic [ref=f155e339]:
+                            - generic [ref=f155e340]:
+                              - link "Ciara with a C" [ref=f155e341] [cursor=pointer]:
+                                - /url: /user789305922
+                              - generic [ref=f155e342]:
+                                - text: at
+                                - link "0:49" [ref=f155e343] [cursor=pointer]:
+                                  - /url: ""
+                            - text: ·
+                            - time [ref=f155e345]:
+                              - generic [ref=f155e346]: Posted 26 minutes ago
+                              - text: 26 minutes ago
+                          - generic [ref=f155e348]:
+                            - paragraph [ref=f155e351]: Brooooo 🤝 thank you so fucking much for dropping this one
+                            - link "Reply" [ref=f155e353] [cursor=pointer]:
+                              - /url: /hollmusic/god_2/comments/2586840089
+                    - listitem [ref=f155e354]:
+                      - generic [ref=f155e356]:
+                        - link "Carst0n’s avatar" [ref=f155e358] [cursor=pointer]:
+                          - /url: /merkour
+                          - generic "Carst0n’s avatar" [ref=f155e360]
+                        - generic [ref=f155e361]:
+                          - generic [ref=f155e363]:
+                            - generic [ref=f155e364]:
+                              - link "Carst0n" [ref=f155e365] [cursor=pointer]:
+                                - /url: /merkour
+                              - generic [ref=f155e366]:
+                                - text: at
+                                - link "0:08" [ref=f155e367] [cursor=pointer]:
+                                  - /url: ""
+                            - text: ·
+                            - time [ref=f155e369]:
+                              - generic [ref=f155e370]: Posted 29 minutes ago
+                              - text: 29 minutes ago
+                          - generic [ref=f155e372]:
+                            - paragraph [ref=f155e375]: Yea..
+                            - link "Reply" [ref=f155e377] [cursor=pointer]:
+                              - /url: /hollmusic/god_2/comments/2586839372
+                    - listitem [ref=f155e378]:
+                      - generic [ref=f155e380]:
+                        - link "PureG0ld’s avatar" [ref=f155e382] [cursor=pointer]:
+                          - /url: /pureg0ld
+                          - generic "PureG0ld’s avatar" [ref=f155e384]
+                        - generic [ref=f155e385]:
+                          - generic [ref=f155e387]:
+                            - generic [ref=f155e388]:
+                              - link "PureG0ld" [ref=f155e389] [cursor=pointer]:
+                                - /url: /pureg0ld
+                              - generic [ref=f155e390]:
+                                - text: at
+                                - link "0:30" [ref=f155e391] [cursor=pointer]:
+                                  - /url: ""
+                            - text: ·
+                            - time [ref=f155e393]:
+                              - generic [ref=f155e394]: Posted 40 minutes ago
+                              - text: 40 minutes ago
+                          - generic [ref=f155e396]:
+                            - paragraph [ref=f155e399]: oh damn this is beautiful
+                            - link "Reply" [ref=f155e401] [cursor=pointer]:
+                              - /url: /hollmusic/god_2/comments/2586836685
+                    - listitem [ref=f155e402]:
+                      - generic [ref=f155e404]:
+                        - link "Nikovani’s avatar" [ref=f155e406] [cursor=pointer]:
+                          - /url: /officialnikovani
+                          - generic "Nikovani’s avatar" [ref=f155e408]
+                        - generic [ref=f155e409]:
+                          - generic [ref=f155e411]:
+                            - generic [ref=f155e412]:
+                              - link "Nikovani" [ref=f155e413] [cursor=pointer]:
+                                - /url: /officialnikovani
+                              - generic [ref=f155e414]:
+                                - text: at
+                                - link "0:30" [ref=f155e415] [cursor=pointer]:
+                                  - /url: ""
+                            - text: ·
+                            - time [ref=f155e417]:
+                              - generic [ref=f155e418]: Posted 48 minutes ago
+                              - text: 48 minutes ago
+                          - generic [ref=f155e420]:
+                            - paragraph [ref=f155e423]: PEAK 🔥🧯
+                            - link "Reply" [ref=f155e425] [cursor=pointer]:
+                              - /url: /hollmusic/god_2/comments/2586834717
+                    - listitem [ref=f155e426]:
+                      - generic [ref=f155e428]:
+                        - link "User 35891706’s avatar" [ref=f155e430] [cursor=pointer]:
+                          - /url: /user-35891706
+                          - generic "User 35891706’s avatar" [ref=f155e432]
+                        - generic [ref=f155e433]:
+                          - generic [ref=f155e435]:
+                            - generic [ref=f155e436]:
+                              - link "User 35891706" [ref=f155e437] [cursor=pointer]:
+                                - /url: /user-35891706
+                              - generic [ref=f155e438]:
+                                - text: at
+                                - link "0:05" [ref=f155e439] [cursor=pointer]:
+                                  - /url: ""
+                            - text: ·
+                            - time [ref=f155e441]:
+                              - generic [ref=f155e442]: Posted 49 minutes ago
+                              - text: 49 minutes ago
+                          - generic [ref=f155e444]:
+                            - paragraph [ref=f155e447]: I haven’t felt this way about a track since 2016.. absolute cinema of a tune
+                            - link "Reply" [ref=f155e449] [cursor=pointer]:
+                              - /url: /hollmusic/god_2/comments/2586834542
+          - generic [ref=f155e454]:
+            - generic [ref=f155e455]:
+              - article [ref=f155e456]:
+                - link "Related tracks View all" [ref=f155e457] [cursor=pointer]:
+                  - /url: /hollmusic/god_2/recommended
+                  - heading "Related tracks" [level=4] [ref=f155e458]
+                  - generic [ref=f155e460]: View all
+              - article [ref=f155e467]:
+                - link "In albums View all" [ref=f155e468] [cursor=pointer]:
+                  - /url: /hollmusic/god_2/albums
+                  - heading "In albums" [level=4] [ref=f155e469]
+                  - generic [ref=f155e471]: View all
+              - article [ref=f155e478]:
+                - link "In playlists View all" [ref=f155e479] [cursor=pointer]:
+                  - /url: /hollmusic/god_2/sets
+                  - heading "In playlists" [level=4] [ref=f155e480]
+                  - generic [ref=f155e482]: View all
+              - article [ref=f155e489]:
+                - link "2,259 likes View all" [ref=f155e490] [cursor=pointer]:
+                  - /url: /hollmusic/god_2/likes
+                  - heading "2,259 likes" [level=4] [ref=f155e491]
+                  - generic [ref=f155e493]: View all
+              - article [ref=f155e500]:
+                - link "117 reposts View all" [ref=f155e501] [cursor=pointer]:
+                  - /url: /hollmusic/god_2/reposts
+                  - heading "117 reposts" [level=4] [ref=f155e502]
+                  - generic [ref=f155e504]: View all
+              - article [ref=f155e511]:
+                - generic [ref=f155e512]:
+                  - heading "Go mobile" [level=4] [ref=f155e513]
+                  - generic "Dismiss"
+                - generic [ref=f155e516]:
+                  - link "Download on the App Store" [ref=f155e517] [cursor=pointer]:
+                    - /url: https://itunes.apple.com/us/app/soundcloud/id336353151?mt=8
+                  - link "Get it on Google Play" [ref=f155e518] [cursor=pointer]:
+                    - /url: https://play.google.com/store/apps/details?id=com.soundcloud.android&hl=us&referrer=utm_source%3Dsoundcloud%26utm_medium%3Dweb%26utm_campaign%3Dweb_xsell_listen_page
+            - generic [ref=f155e519]:
+              - link "Legal" [ref=f155e520] [cursor=pointer]:
+                - /url: /terms-of-use
+              - text: ·
+              - link "Privacy" [ref=f155e521] [cursor=pointer]:
+                - /url: /pages/privacy
+              - text: ·
+              - link "Cookie Policy" [ref=f155e522] [cursor=pointer]:
+                - /url: /pages/cookies
+              - text: ·
+              - link "Cookie Manager" [ref=f155e523] [cursor=pointer]:
+                - /url: "#"
+              - text: ·
+              - link "Imprint" [ref=f155e524] [cursor=pointer]:
+                - /url: /imprint
+              - text: ·
+              - link "Artist Resources" [ref=f155e525] [cursor=pointer]:
+                - /url: https://soundcloud.com/getstarted/getheard
+              - text: ·
+              - link "Newsroom" [ref=f155e526] [cursor=pointer]:
+                - /url: https://soundcloud.com/company/newsroom
+              - text: ·
+              - link "Topics" [ref=f155e527] [cursor=pointer]:
+                - /url: https://soundcloud.com/topic
+              - text: ·
+              - link "Charts" [ref=f155e528] [cursor=pointer]:
+                - /url: /charts/top
+              - text: ·
+              - link "Transparency Reports" [ref=f155e529] [cursor=pointer]:
+                - /url: /transparency-reports
+              - 'button "Language: English (US)" [ref=f155e531] [cursor=pointer]'
+    - contentinfo "miniplayer" [ref=f155e532]:
+      - generic [ref=f155e533]:
+        - generic:
+          - generic:
+            - generic:
+              - generic: Next up
+              - button "Clear"
+              - button "Hide queue"
+        - generic [ref=f155e534]:
+          - button "Skip to previous" [ref=f155e535] [cursor=pointer]
+          - button "Pause current" [ref=f155e536] [cursor=pointer]
+          - button "Skip to next" [ref=f155e541] [cursor=pointer]
+          - button "Shuffle" [ref=f155e543] [cursor=pointer]
+          - button "Repeat track" [ref=f155e545] [cursor=pointer]
+          - generic [ref=f155e547]:
+            - generic [ref=f155e548]:
+              - generic [ref=f155e549]: "Current time: 0 seconds"
+              - text: 0:00
+            - progressbar [ref=f155e550]
+            - generic [ref=f155e553] [cursor=pointer]:
+              - generic [ref=f155e554]: "Duration: 1 minute 30 seconds"
+              - text: 1:30
+          - generic [ref=f155e556]:
+            - generic [ref=f155e557]: Volume
+            - button [ref=f155e559] [cursor=pointer]
+            - slider "Volume":
+              - generic [ref=f155e560] [cursor=pointer]
+              - generic [ref=f155e561] [cursor=pointer]
+              - generic [ref=f155e562] [cursor=pointer]
+          - generic [ref=f155e564]:
+            - link "GOD_2" [ref=f155e565] [cursor=pointer]:
+              - /url: /hollmusic/god_2
+              - generic "GOD_2" [ref=f155e567]
+            - generic [ref=f155e568]:
+              - link "HOL!" [ref=f155e569] [cursor=pointer]:
+                - /url: /hollmusic
+              - 'link "Current track: GOD_2" [ref=f155e571] [cursor=pointer]':
+                - /url: /hollmusic/god_2
+                - text: GOD_2
+            - generic [ref=f155e573]:
+              - button "Like" [ref=f155e574] [cursor=pointer]
+              - button "Follow" [ref=f155e575] [cursor=pointer]
+              - generic "Next up" [ref=f155e576] [cursor=pointer]
+  - generic: Filters Manage preferences

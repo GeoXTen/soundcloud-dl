@@ -213,77 +213,149 @@
         setTimeout(() => t.remove(), 300);
     }
 
-    // Write ID3 tags to MP3 blob (title, artist, album art)
+    // Write ID3v2.3 tags to MP3 blob (title, artist, album art)
     function tagMp3Blob(blob, apiInfo) {
         return new Promise((resolve) => {
-            if (!window.jsmediatags || !apiInfo) { resolve(blob); return; }
-            const reader = new FileReader();
-            reader.onload = function() {
-                const arrayBuffer = reader.result;
-                const tags = {};
-                // Title
-                if (apiInfo.title) tags.title = apiInfo.title;
-                // Artist
-                if (apiInfo.user && apiInfo.user.username) tags.artist = apiInfo.user.username;
-                // Album
-                if (apiInfo.album_title) tags.album = apiInfo.album_title;
-                else if (apiInfo.publisher && apiInfo.publisher.name) tags.album = apiInfo.publisher.name;
-                // Year
-                if (apiInfo.release_date) tags.year = apiInfo.release_date.substring(0, 4);
-                else if (apiInfo.created_at) tags.year = apiInfo.created_at.substring(0, 4);
-                // Genre
-                if (apiInfo.genre) tags.genre = apiInfo.genre;
-                // Track number
-                if (apiInfo.track_number) tags.track = String(apiInfo.track_number);
-                // Comment
-                if (apiInfo.description) tags.comment = { language: 'eng', shortText: '', text: apiInfo.description.substring(0, 200) };
-
+            if (!apiInfo) { resolve(blob); return; }
+            try {
+                const frames = [];
+                // TIT2 - Title
+                if (apiInfo.title) frames.push(makeTextFrame('TIT2', apiInfo.title));
+                // TPE1 - Artist
+                if (apiInfo.user && apiInfo.user.username) frames.push(makeTextFrame('TPE1', apiInfo.user.username));
+                // TALB - Album
+                const album = apiInfo.album_title || (apiInfo.publisher && apiInfo.publisher.name);
+                if (album) frames.push(makeTextFrame('TALB', album));
+                // TDRC - Year
+                const year = (apiInfo.release_date || apiInfo.created_at || '').substring(0, 4);
+                if (year) frames.push(makeTextFrame('TDRC', year));
+                // TCON - Genre
+                if (apiInfo.genre) frames.push(makeTextFrame('TCON', apiInfo.genre));
+                // TRCK - Track number
+                if (apiInfo.track_number) frames.push(makeTextFrame('TRCK', String(apiInfo.track_number)));
+                // COMM - Comment
+                if (apiInfo.description) frames.push(makeCommentFrame(apiInfo.description.substring(0, 200)));
+                // APIC - Album art
                 const coverUrl = apiInfo.artwork_url || (apiInfo.user && apiInfo.user.avatar_url);
                 if (coverUrl) {
-                    // Use large artwork (500x500)
                     const largeUrl = coverUrl.replace('-large', '-t500x500').replace('-t300x300', '-t500x500');
                     fetch(largeUrl).then(r => r.blob()).then(imgBlob => {
                         const imgReader = new FileReader();
                         imgReader.onload = function() {
-                            tags.picture = {
-                                format: 'image/jpeg',
-                                data: new Uint8Array(imgReader.result)
-                            };
-                            writeTags(arrayBuffer, tags, resolve);
+                            frames.push(makeApicFrame(new Uint8Array(imgReader.result)));
+                            resolve(attachTags(blob, frames));
                         };
-                        imgReader.onerror = function() { writeTags(arrayBuffer, tags, resolve); };
+                        imgReader.onerror = function() { resolve(attachTags(blob, frames)); };
                         imgReader.readAsArrayBuffer(imgBlob);
-                    }).catch(() => writeTags(arrayBuffer, tags, resolve));
+                    }).catch(() => resolve(attachTags(blob, frames)));
                 } else {
-                    writeTags(arrayBuffer, tags, resolve);
+                    resolve(attachTags(blob, frames));
                 }
+            } catch(e) {
+                console.log("[direct] ID3 tag error:", e);
+                resolve(blob);
+            }
+        });
+    }
+
+    function strToUint8(str) {
+        const enc = new TextEncoder();
+        return enc.encode(str);
+    }
+
+    function makeTextFrame(id, value) {
+        const data = new Uint8Array([0x00, ...strToUint8(value)]); // 0x00 = ISO-8859-1
+        return makeFrame(id, data);
+    }
+
+    function makeCommentFrame(text) {
+        const lang = strToUint8('eng');
+        const desc = new Uint8Array(1); // empty description
+        const body = new Uint8Array(lang.length + desc.length + strToUint8(text).length);
+        body.set(lang, 0);
+        body.set(desc, lang.length);
+        body.set(strToUint8(text), lang.length + desc.length);
+        return makeFrame('COMM', body);
+    }
+
+    function makeApicFrame(imgData) {
+        const mime = strToUint8('image/jpeg');
+        const desc = new Uint8Array(1);
+        const type = new Uint8Array([0x03]); // 0x03 = front cover
+        const body = new Uint8Array(mime.length + 1 + desc.length + 1 + imgData.length);
+        let offset = 0;
+        body.set(mime, offset); offset += mime.length;
+        body[offset++] = 0x00; // null terminator after mime
+        body[offset++] = 0x03; // picture type
+        body.set(desc, offset); offset += desc.length;
+        body[offset++] = 0x00; // null terminator after desc
+        body.set(imgData, offset);
+        return makeFrame('APIC', body);
+    }
+
+    function makeFrame(id, data) {
+        const idBytes = strToUint8(id);
+        const size = data.length;
+        const sizeBytes = new Uint8Array([
+            (size >> 24) & 0xff,
+            (size >> 16) & 0xff,
+            (size >> 8) & 0xff,
+            size & 0xff
+        ]);
+        const header = new Uint8Array([...idBytes, ...sizeBytes, 0x00, 0x00]);
+        return { header, data };
+    }
+
+    function attachTags(blob, frames) {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const mp3Data = new Uint8Array(reader.result);
+                // Build ID3v2.3 tag
+                let totalFrameSize = 0;
+                for (const f of frames) totalFrameSize += f.header.length + f.data.length;
+                // Tag header: "ID3" + version(2.3) + flags + size(4 bytes synchsafe)
+                const tagSize = synchsafe(totalFrameSize);
+                const tagHeader = new Uint8Array(10);
+                tagHeader[0] = 0x49; // I
+                tagHeader[1] = 0x44; // D
+                tagHeader[2] = 0x33; // 3
+                tagHeader[3] = 0x03; // version 2.3
+                tagHeader[4] = 0x00; // revision
+                tagHeader[5] = 0x00; // no flags
+                tagHeader[6] = (tagSize >> 21) & 0x7f;
+                tagHeader[7] = (tagSize >> 14) & 0x7f;
+                tagHeader[8] = (tagSize >> 7) & 0x7f;
+                tagHeader[9] = tagSize & 0x7f;
+                // Concatenate all
+                const tagParts = [tagHeader];
+                for (const f of frames) { tagParts.push(f.header); tagParts.push(f.data); }
+                const id3Tag = concatUint8(tagParts);
+                // Merge: ID3 tag + original MP3 data
+                const result = concatUint8([id3Tag, mp3Data]);
+                resolve(new Blob([result], { type: 'audio/mpeg' }));
             };
             reader.onerror = function() { resolve(blob); };
             reader.readAsArrayBuffer(blob);
         });
     }
 
-    function writeTags(arrayBuffer, tags, resolve) {
-        try {
-            jsmediatags.write({
-                type: 'file',
-                readers: [],
-                tags: tags,
-                arrayBuffer: arrayBuffer
-            }, {
-                onSuccess: function(tag) {
-                    const blob = new Blob([tag.tag.arrayBuffer || arrayBuffer], { type: 'audio/mpeg' });
-                    resolve(blob);
-                },
-                onError: function(err) {
-                    console.log("[direct] jsmediatags write error:", err);
-                    resolve(new Blob([arrayBuffer], { type: 'audio/mpeg' }));
-                }
-            });
-        } catch(e) {
-            console.log("[direct] jsmediatags write exception:", e);
-            resolve(new Blob([arrayBuffer], { type: 'audio/mpeg' }));
-        }
+    function synchsafe(n) {
+        let result = 0;
+        result |= (n & 0x0fe00000) << 3;
+        result |= (n & 0x001fc000) << 2;
+        result |= (n & 0x00003f80) << 1;
+        result |= (n & 0x0000007f);
+        return result;
+    }
+
+    function concatUint8(arrays) {
+        let totalLen = 0;
+        for (const a of arrays) totalLen += a.length;
+        const result = new Uint8Array(totalLen);
+        let offset = 0;
+        for (const a of arrays) { result.set(a, offset); offset += a.length; }
+        return result;
     }
 
     // Download handler — accepts trackUrl param for multi-track feed injection

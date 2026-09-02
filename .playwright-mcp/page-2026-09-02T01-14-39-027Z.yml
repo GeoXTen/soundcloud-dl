@@ -1,0 +1,162 @@
+- generic [active] [ref=f1e2]:
+  - generic [ref=f1e3]:
+    - heading "Download history" [level=1] [ref=f1e8]
+    - generic [ref=f1e11]:
+      - button [aria-hidden] [ref=f1e12] [cursor=pointer]
+      - generic [ref=f1e13]:
+        - generic [aria-hidden] [ref=f1e14]: Search download history
+        - searchbox "Search download history" [ref=f1e15]
+    - button "Clear all" [ref=f1e18] [cursor=pointer]
+  - generic [ref=f1e20]:
+    - generic [ref=f1e23]:
+      - text: Your
+      - link "browser is managed" [ref=f1e24] [cursor=pointer]:
+        - /url: chrome://management
+      - text: by your organization
+    - grid [ref=f1e25]:
+      - generic [ref=f1e27]:
+        - generic:
+          - row [ref=f1e28]:
+            - heading "Today" [level=2] [ref=f1e29]
+            - generic [ref=f1e31]:
+              - generic [ref=f1e33]:
+                - gridcell "225bffa0-853d-43e5-9e4d-70fae762e533 Failed - Network error" [ref=f1e34]:
+                  - generic "225bffa0-853d-43e5-9e4d-70fae762e533" [ref=f1e35]
+                  - generic [ref=f1e36]: Failed - Network error
+                - gridcell [ref=f1e37]
+                - generic [ref=f1e38]:
+                  - text: "Downloaded by extension:"
+                  - link "SoundCloud Music Downloader by Addoncrop" [ref=f1e39] [cursor=pointer]:
+                    - /url: chrome://extensions/?id=ihaelfjohnpciodjianpgchimpgifgjk
+              - gridcell [ref=f1e40]:
+                - generic [ref=f1e41]:
+                  - button "Copy download link" [ref=f1e42] [cursor=pointer]
+                  - button "Delete from history" [ref=f1e43] [cursor=pointer]
+          - row [ref=f1e44]:
+            - generic [ref=f1e46]:
+              - generic [ref=f1e48]:
+                - gridcell [ref=f1e49]:
+                  - link "882636c2-5192-4040-89c7-013a6c7639ea" [ref=f1e50] [cursor=pointer]:
+                    - /url: https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzExNTM3fX19XX0_&Signature=VnGMcauFurGbie7UHKswDblLod5HX3P-biN2v-ekPPC~bFSqc8y5vYT4F6wbKlafic8YamjB4RPLo5Z1cfFyQ3CIofDAqwwwhuESHP0pGldNZLLXb7rUswkV6J4s~6xFt23ixHNqHzULrI6iLAXUlzdpvEeMXKDK~5xNkzVbB66dVbq1SIvnDCfC991f9aupqlOmCWL2yOlDjEle9pBHv7pJjFts5JmWWd4tRpHXE8Cuf8VUpmykyyGRddszSBsowFVB~BdMBwYgZWsEaM49cYKC6ADUIgxnyO08YCVZoHTt-AHE7wXBebiVfoe0h-xUnM~NxsWTgqlemmATM8~xfg__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ
+                - gridcell [ref=f1e51]
+                - generic [ref=f1e52]:
+                  - text: "Downloaded by extension:"
+                  - link "SoundCloud Music Downloader by Addoncrop" [ref=f1e53] [cursor=pointer]:
+                    - /url: chrome://extensions/?id=ihaelfjohnpciodjianpgchimpgifgjk
+              - gridcell [ref=f1e54]:
+                - generic [ref=f1e55]:
+                  - button "Copy download link" [ref=f1e56] [cursor=pointer]
+                  - button "Show in folder" [ref=f1e57] [cursor=pointer]
+                  - button "Delete from history" [ref=f1e58] [cursor=pointer]
+          - row [ref=f1e59]:
+            - generic [ref=f1e61]:
+              - generic [ref=f1e63]:
+                - gridcell [ref=f1e64]:
+                  - link "96049783-459c-4239-af26-54e5a1e73666" [ref=f1e65] [cursor=pointer]:
+                    - /url: https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzExNDk4fX19XX0_&Signature=UH9nhNAeO7iGctlH0r3R8tsmSC~vBPe~4-iXiNrno4w6JzIb6O87z4t8t6zEbCEVz7N-ZWGobNUramERO6BQp18wrCd~8by0k9yr5UZUjvZGSdWGm5ZhqkSBau4w4QB980D4W5pkOi7vxmpwH5IRySasNRBO0LVk-2jByvHrYLqfYueoH7ANdn7sF3wq3HiLJtDaefNcsjmgJnTPPGAU20E8hZzXGYKXqP568lj9oABJ8nBQXOcIjS3JB2y9agJ4KAdfu~UqpRWJoSmbRwY8ac22KVktiZDhpfpQf-H3UvwFtD4eQBQ~zCXn9FpfeJWHGfeeeMHu7shrbHh207560g__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ
+                - gridcell [ref=f1e66]
+                - generic [ref=f1e67]:
+                  - text: "Downloaded by extension:"
+                  - link "SoundCloud Music Downloader by Addoncrop" [ref=f1e68] [cursor=pointer]:
+                    - /url: chrome://extensions/?id=ihaelfjohnpciodjianpgchimpgifgjk
+              - gridcell [ref=f1e69]:
+                - generic [ref=f1e70]:
+                  - button "Copy download link" [ref=f1e71] [cursor=pointer]
+                  - button "Show in folder" [ref=f1e72] [cursor=pointer]
+                  - button "Delete from history" [ref=f1e73] [cursor=pointer]
+          - row [ref=f1e74]:
+            - generic [ref=f1e76]:
+              - generic [ref=f1e78]:
+                - gridcell [ref=f1e79]:
+                  - link "67b7f849-f364-43aa-b964-f24f226d152d" [ref=f1e80] [cursor=pointer]:
+                    - /url: https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzExMzU0fX19XX0_&Signature=SHDQ8Za5nbqYQerWj4B00FpGst2YWoO2gNR0QjDZ-d00HTaqR9TOuZ5bdQ3B77Pwv2dcHtTqCL1vUyFKaiuhbFQL5QjLILl~xj8LVkUYQLWT8XhYSi~rqcbTikdNskmsrCFC~YkurVzbK72NBYcFS81UXx0SXNRpiLHBoSNkOYXPoYDghE0pcvKlVsW~IDiA5ixBMd2gG80EXbqIYLTGhyGfm134N9vX6Z1sZwWJF6aWJMURRJZye72G4ZpHZ32qf48Ef~dcvz6VQxZ5kMOXfcZAS48GdCZGK~-Obue2Vi354F-ovFaZpet-GJy6tl6i1iqnjpl87nDhfkVunE3gug__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ
+                - gridcell [ref=f1e81]
+                - generic [ref=f1e82]:
+                  - text: "Downloaded by extension:"
+                  - link "SoundCloud Music Downloader by Addoncrop" [ref=f1e83] [cursor=pointer]:
+                    - /url: chrome://extensions/?id=ihaelfjohnpciodjianpgchimpgifgjk
+              - gridcell [ref=f1e84]:
+                - generic [ref=f1e85]:
+                  - button "Copy download link" [ref=f1e86] [cursor=pointer]
+                  - button "Show in folder" [ref=f1e87] [cursor=pointer]
+                  - button "Delete from history" [ref=f1e88] [cursor=pointer]
+          - row [ref=f1e89]:
+            - generic [ref=f1e91]:
+              - generic [ref=f1e93]:
+                - gridcell [ref=f1e94]:
+                  - link "bdde4b39-2ea1-4e5c-b939-3499bfcf3173" [ref=f1e95] [cursor=pointer]:
+                    - /url: https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzExMjE5fX19XX0_&Signature=PuBEn8FW0r-hGYAwTxQpoATGxt28rLCdlVRHnR9Wo91gUCVJO5-iq-xfVdxfNH31hiJiYho~UiVYnSVrywLV6dzb91QFAAiPbUjnLkOccT~BIvm1Vj37Mz6AFcB3i6Y1ZuQfzslIUgCDp5AyMOIBFP4Ji6V08vvdtGFn4DOuhIAEsT47aNPSNFoPUdaQkkr2~OLTtMqAruRFj~lJRFmxYG~LFT1DqIOKJU6xHGQJazLHBE~UtPtKSC7t6paByffX2ZTZqvOS8DgGW6OAElFBTgIqoRdSb6b07XepeOObadORQzL9euAWWVx3NWRbxHkIXHLNBSfOjFrFXil-O2Ed2Q__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ
+                - gridcell [ref=f1e96]
+                - generic [ref=f1e97]:
+                  - text: "Downloaded by extension:"
+                  - link "SoundCloud Music Downloader by Addoncrop" [ref=f1e98] [cursor=pointer]:
+                    - /url: chrome://extensions/?id=ihaelfjohnpciodjianpgchimpgifgjk
+              - gridcell [ref=f1e99]:
+                - generic [ref=f1e100]:
+                  - button "Copy download link" [ref=f1e101] [cursor=pointer]
+                  - button "Show in folder" [ref=f1e102] [cursor=pointer]
+                  - button "Delete from history" [ref=f1e103] [cursor=pointer]
+          - row [ref=f1e104]:
+            - generic [ref=f1e106]:
+              - generic [ref=f1e108]:
+                - gridcell [ref=f1e109]:
+                  - link "802f4a4f-b2b7-4e17-a4ef-f3bf351bc738" [ref=f1e110] [cursor=pointer]:
+                    - /url: https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzEwNjU2fX19XX0_&Signature=DnIQNdjs1S0T7RV2dl34xvWHdu6C62F1PTo~iEjMtOcf1ob4KYGQ4h8mAi36RHHnnwPcHsVxeQ3cSAIbMpIgxeCOvkBux~rRWQPNeL5ROt9ParhxSnkaMZ9cQVNin9iCwbSgo49DOIzJC6CHRlecCcXCAfL5SqQylgaZtd4oqOEJr1MIsScbkUHZE9IPGl58UBngje8lMNXqQOAk525trXVA7viAa19KwUDBuFD4-TrRpWaotSPEDSzEbbqlA3aRNFFqLtHE2Sk40vrucgFSAjRfcwjSZMicvpD7aERowuCG3heYYCgqfTSmPTeZBirczUR7bkHBnwsT-rNXXb8vtw__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ
+                - gridcell [ref=f1e111]
+                - generic [ref=f1e112]:
+                  - text: "Downloaded by extension:"
+                  - link "SoundCloud Music Downloader by Addoncrop" [ref=f1e113] [cursor=pointer]:
+                    - /url: chrome://extensions/?id=ihaelfjohnpciodjianpgchimpgifgjk
+              - gridcell [ref=f1e114]:
+                - generic [ref=f1e115]:
+                  - button "Copy download link" [ref=f1e116] [cursor=pointer]
+                  - button "Show in folder" [ref=f1e117] [cursor=pointer]
+                  - button "Delete from history" [ref=f1e118] [cursor=pointer]
+          - row [ref=f1e119]:
+            - generic [ref=f1e121]:
+              - generic [ref=f1e123]:
+                - gridcell [ref=f1e124]:
+                  - link "aefb0e38-ce75-460e-95a5-24e3ed69bc28" [ref=f1e125] [cursor=pointer]:
+                    - /url: https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzEwNTQwfX19XX0_&Signature=ZfEhAD0PitxPfERsI15SH3SEF3I~f6~KBVmXunvGiTCRNwKida64ZbBvTaEsTXMP8cPm31UHtblgWLVSTCK0lVo9nQpgslLHJ0dOK8qLpBVt8lOI--qBgboyyvrMpmjoyCxldlDosuqqTqVxipKNxu2W-ifO72bLdjGn0NmMft3WGuZGaUXIQXXEJRkRivHMSzB-vpAkILFIZ-FprcKjMSYoPOMWhy4gLpdzqVAHbIPMqGAu8A6BGNSJ5Xy6ycfs55hNI00JwrsxoS9YhlYxPR2DtYJ7xLy5FCWBs9KiomZsYo3c7n1KPtTHDNTMCj5YX-PrV7fqHp~xFixd~cbbfQ__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ
+                - gridcell [ref=f1e126]
+                - generic [ref=f1e127]:
+                  - text: "Downloaded by extension:"
+                  - link "SoundCloud Music Downloader by Addoncrop" [ref=f1e128] [cursor=pointer]:
+                    - /url: chrome://extensions/?id=ihaelfjohnpciodjianpgchimpgifgjk
+              - gridcell [ref=f1e129]:
+                - generic [ref=f1e130]:
+                  - button "Copy download link" [ref=f1e131] [cursor=pointer]
+                  - button "Show in folder" [ref=f1e132] [cursor=pointer]
+                  - button "Delete from history" [ref=f1e133] [cursor=pointer]
+          - row [ref=f1e134]:
+            - generic [ref=f1e136]:
+              - generic [ref=f1e138]:
+                - gridcell [ref=f1e139]:
+                  - link "6cee6069-2791-4beb-ad14-b523bb00bf4c" [ref=f1e140] [cursor=pointer]:
+                    - /url: https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzEwNTAzfX19XX0_&Signature=TpsyoTnsYiznmNYjqRcUt~IXhne7kaJ245Jf6TiyOAPc2RW13Z7M2vEne5oBEj8eZSB2YyIXC7sXQlOSHK6Ob9AHiyti-uqpW8lSzJt~ZYTVmP0OWQdfWkfuuTbCHzvYPe7Ow032nmMQYJQF3DhA2VHVDaZfF8trnzGiZU8lCxP2~vv7stzgm3n62Vj1U7XUIAFD4NQh6I8x~arfvay7PI~KlGzHh-zd7Z8qibn3v~hsySQJy0hPDY0RUYcktnDkmEHVSMkVY0PC4nV~9~RfKGVoYNYJvw4Zc8MZz-tTs3EIQtR2ulsJDYRSdIzek2tBe-M4843wXwkkUNMZQyNPDw__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ
+                - gridcell [ref=f1e141]
+                - generic [ref=f1e142]:
+                  - text: "Downloaded by extension:"
+                  - link "SoundCloud Music Downloader by Addoncrop" [ref=f1e143] [cursor=pointer]:
+                    - /url: chrome://extensions/?id=ihaelfjohnpciodjianpgchimpgifgjk
+              - gridcell [ref=f1e144]:
+                - generic [ref=f1e145]:
+                  - button "Copy download link" [ref=f1e146] [cursor=pointer]
+                  - button "Show in folder" [ref=f1e147] [cursor=pointer]
+                  - button "Delete from history" [ref=f1e148] [cursor=pointer]
+          - row [ref=f1e149]:
+            - generic [ref=f1e151]:
+              - generic [ref=f1e153]:
+                - gridcell [ref=f1e154]:
+                  - link "87212064-2b8c-4494-bc41-048ce99f0462" [ref=f1e155] [cursor=pointer]:
+                    - /url: https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzEwMzc5fX19XX0_&Signature=cSXUwscQPHRSkMv9WX~2rsOFGlZCTpw~vzjmbgF4K1ZzhfnZ6KpaLt6MGRQcJ2VTwIvWyMyC6JGT02mojiOrrEkdUMCn2Clr8tLFei-dKxZ47Fg0Z7yShNpd7mWKSAEVVV82cCEPNHdDyQBHi~Ris-L62L8sJWq0gRtDOyhkCVDBBGnyIdb4tZcBSfBUFBy0f1M~paiE-6mgRTB183d9TEu5kOi~yBay6ujjwFuw4y3hy5c67WskzEyZbpM1WATN2k8VIiRKBiY-3IoGdTTnf5QesksI50svtq0~34I-YHYQzJDEriwtIeJh-1Y32SCjBSO31Cqq4yrkkjVMdY2NQw__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ
+                - gridcell [ref=f1e156]
+                - generic [ref=f1e157]:
+                  - text: "Downloaded by extension:"
+                  - link "SoundCloud Music Downloader by Addoncrop" [ref=f1e158] [cursor=pointer]:
+                    - /url: chrome://extensions/?id=ihaelfjohnpciodjianpgchimpgifgjk
+              - gridcell [ref=f1e159]:
+                - generic [ref=f1e160]:
+                  - button "Copy download link" [ref=f1e161] [cursor=pointer]
+                  - button "Show in folder" [ref=f1e162] [cursor=pointer]
+                  - button "Delete from history" [ref=f1e163] [cursor=pointer]

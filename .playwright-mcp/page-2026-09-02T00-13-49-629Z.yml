@@ -1,0 +1,9 @@
+- generic [active] [ref=f122e1]:
+  - generic [ref=f122e2]:
+    - banner [ref=f122e3]:
+      - link "SoundCloud" [ref=f122e7] [cursor=pointer]:
+        - /url: /
+    - paragraph [ref=f122e10]:
+      - link "Popular searches" [ref=f122e11] [cursor=pointer]:
+        - /url: /popular/searches
+  - generic: Filters Manage preferences

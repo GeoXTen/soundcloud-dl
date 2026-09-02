@@ -1,0 +1,134 @@
+[    1043ms] [INFO] You like to look under the hood? Why not help us build the engine? https://soundcloud.com/jobs @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:32
+[    1587ms] [WARNING] An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing. @ https://a-v2.sndcdn.com/assets/56-18f4b513.js:0
+[    1690ms] [WARNING] [GPT] PubAdsService.disableInitialLoad is deprecated, use googletag.setConfig({disableInitialLoad: ...}) instead.
+https://goo.gle/gpt-message#170 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[    1769ms] [WARNING] An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing. @ https://a-v2.sndcdn.com/assets/56-18f4b513.js:0
+[    2672ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    2672ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'ambient-light-sensor'. @ :0
+[    2672ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    2672ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'battery'. @ :0
+[    2672ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    2672ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    2672ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'document-domain'. @ :0
+[    2672ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    2672ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    2672ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    2672ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    2672ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    2673ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    2673ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    2673ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    2673ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    2673ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    2673ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'wake-lock'. @ :0
+[    3079ms] [LOG] prebid-load.js loaded successfully. @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[    3628ms] [LOG] %craven%c Raven v1.22.2-6hoy9q background-color:#000;margin-left:1px;padding:1px 3px;font-size:0.75em;color:#ffffff; font-size:0.9em; @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[    3759ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://api-auth.soundcloud.com/oauth/authorize?client_id=Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo:0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'ambient-light-sensor'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'battery'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'document-domain'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    6079ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'wake-lock'. @ :0
+[    6268ms] [WARNING] [GSI_LOGGER]: Message ignored due to invalid source. @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[    6272ms] [WARNING] [GSI_LOGGER]: Your client application may not display Google One Tap when FedCM becomes mandatory. Opt-in to FedCM to test that you have the proper cross-origin permission policy set up. Ignore this message if One Tap is displayed after opt-in to FedCM. Learn more: (https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#cross_origin) @ https://accounts.google.com/gsi/intermediatesupport:86
+[    6272ms] [WARNING] [GSI_LOGGER]: Your client application uses one of the Google One Tap prompt UI status methods that may stop functioning when FedCM becomes mandatory. Refer to the migration guide to update your code accordingly and opt-in to FedCM to test your changes. Learn more: https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#display_moment and https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#skipped_moment @ https://accounts.google.com/gsi/intermediatesupport:86
+[    6274ms] [WARNING] [GSI_LOGGER]: Message ignored due to invalid source. @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[    6275ms] [WARNING] [GSI_LOGGER]: Message ignored due to invalid source. @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[    6275ms] [ERROR] Not signed in with the identity provider. @ https://secure.soundcloud.com/one-tap?client_id=Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo&device_id=414609-333789-309748-110238&theme=dark&ui_evo=true&embedded_in_iframe=true&app_id=46941&tracking=local&redirect_uri=https%3A%2F%2Fsoundcloud.com%2Fsignin%2Fcallback&state=eyJjbGllbnRfaWQiOiJQYjcycmFuaG95dDZndzdoTTdUa3pVSXRYbE1XU05TbyIsIm5vbmNlIjoiNnAtUmoudGtZVk84LnVzU0Rnd3M0VH52NXhyRVVtQ0NCaGNJbjRNVk81eUw3MXF1OHk3d1BNb1FRQ2NIZm55YyJ9&code_challenge=eC91VtvRmCP9i-mTeIDljF8LRB0y8h94HWt7Q-1LBZ0&code_challenge_method=S256#start_url=https%3A%2F%2Fsoundcloud.com%2Fhollmusic%2Fgod_2&start_view=sign_in&is_visible=false:0
+[    8515ms] [ERROR] [GSI_LOGGER]: FedCM get() rejects with NetworkError: Error retrieving a token. @ https://accounts.google.com/gsi/intermediatesupport:87
+[    8516ms] [WARNING] [GSI_LOGGER]: Message ignored due to invalid source. @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[   41309ms] [WARNING] [GPT] Slot.getTargetingKeys is deprecated, use Slot.getConfig('targeting') instead.
+https://goo.gle/gpt-message#201 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  110252ms] [LOG] [DIAG-CS] Diagnostic content script loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:4
+[  110253ms] [LOG] [DIAG-CS] sendMessage monitoring active @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:31
+[  110253ms] [LOG] [DIAG-CS] MutationObserver attached @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:51
+[  110255ms] [LOG] [DIAG-CS] sendMessage called: {"recipient":"__CROSSPILOT_MESSAGE__","action":"sandbox-content-scripts-data","keys":["messageRecipient","action","data"]} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:25
+[  110255ms] [LOG] [DIAG-CS] Time since load: 3ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:26
+[  110261ms] TypeError: Error in invocation of runtime.sendMessage(optional string extensionId, any message, optional object options, optional function callback): No matching signature.
+    at chrome.runtime.sendMessage (chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:30:36)
+    at r.default.send (chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/sandbox-content.js:1:2431)
+    at 7086 (chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/sandbox-content.js:1:1340)
+    at s (chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/sandbox-content.js:1:12538)
+    at chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/sandbox-content.js:1:12579
+    at chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/sandbox-content.js:1:12587
+[  110256ms] [LOG] [DIAG-CS] CrossPilot attribute detected on HTML @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:40
+[  110256ms] [LOG] [DIAG-CS] Time since load: 3ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:41
+[  110428ms] [INFO] You like to look under the hood? Why not help us build the engine? https://soundcloud.com/jobs @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:32
+[  110548ms] [LOG] prebid-load.js loaded successfully. @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  110614ms] [WARNING] [GPT] PubAdsService.disableInitialLoad is deprecated, use googletag.setConfig({disableInitialLoad: ...}) instead.
+https://goo.gle/gpt-message#170 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  110682ms] [LOG] %craven%c Raven v1.22.2-6hoy9q background-color:#000;margin-left:1px;padding:1px 3px;font-size:0.75em;color:#ffffff; font-size:0.9em; @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  111247ms] [WARNING] [GPT] Slot.getTargetingKeys is deprecated, use Slot.getConfig('targeting') instead.
+https://goo.gle/gpt-message#201 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'ambient-light-sensor'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'battery'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'document-domain'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  111719ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'wake-lock'. @ :0
+[  111984ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  111989ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  112280ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  112297ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://api-auth.soundcloud.com/oauth/authorize?client_id=Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo:0
+[  250028ms] [LOG] [DIAG-CS] Diagnostic content script loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:4
+[  250028ms] [LOG] [DIAG-CS] sendMessage monitoring active @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:34
+[  250028ms] [LOG] [DIAG-CS] MutationObserver attached @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:54
+[  250030ms] [LOG] [DIAG-CS] sendMessage called: {"recipient":"__CROSSPILOT_MESSAGE__","action":"sandbox-content-scripts-data","keys":["messageRecipient","action","data"]} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:27
+[  250030ms] [LOG] [DIAG-CS] Time since load: 3ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:28
+[  250030ms] [LOG] [DIAG-CS] Args count: 1 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:29
+[  250031ms] [LOG] [DIAG-CS] CrossPilot attribute detected on HTML @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:43
+[  250031ms] [LOG] [DIAG-CS] Time since load: 3ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:44
+[  250583ms] [INFO] You like to look under the hood? Why not help us build the engine? https://soundcloud.com/jobs @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:32
+[  250692ms] [LOG] prebid-load.js loaded successfully. @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  250750ms] [WARNING] [GPT] PubAdsService.disableInitialLoad is deprecated, use googletag.setConfig({disableInitialLoad: ...}) instead.
+https://goo.gle/gpt-message#170 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  251015ms] [LOG] %craven%c Raven v1.22.2-6hoy9q background-color:#000;margin-left:1px;padding:1px 3px;font-size:0.75em;color:#ffffff; font-size:0.9em; @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  251453ms] [WARNING] [GPT] Slot.getTargetingKeys is deprecated, use Slot.getConfig('targeting') instead.
+https://goo.gle/gpt-message#201 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  252330ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  252330ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'ambient-light-sensor'. @ :0
+[  252330ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  252330ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'battery'. @ :0
+[  252330ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  252330ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  252330ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'document-domain'. @ :0
+[  252330ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  252330ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  252330ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  252330ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  252330ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  252330ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  252330ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  252331ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  252331ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  252331ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  252331ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'wake-lock'. @ :0
+[  252618ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  252643ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  252944ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  253272ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://api-auth.soundcloud.com/oauth/authorize?client_id=Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo:0

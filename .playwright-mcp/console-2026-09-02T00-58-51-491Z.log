@@ -1,0 +1,563 @@
+[     555ms] [INFO] You like to look under the hood? Why not help us build the engine? https://soundcloud.com/jobs @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:32
+[     636ms] [LOG] [DIAG-CS] Diagnostic content script loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:4
+[     637ms] [LOG] [DIAG-CS] sendMessage monitoring active @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:54
+[     637ms] [LOG] [DIAG-CS] MutationObserver attached @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:74
+[     639ms] [LOG] [DIAG-CS] sendMessage called: {"recipient":"__CROSSPILOT_MESSAGE__","action":"sandbox-content-scripts-data","keys":["messageRecipient","action","data"]} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:27
+[     639ms] [LOG] [DIAG-CS] Time since load: 2ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:28
+[     639ms] [LOG] [DIAG-CS] Args count: 1 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:29
+[     639ms] [LOG] [DIAG-CS] CrossPilot attribute detected on HTML @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:63
+[     639ms] [LOG] [DIAG-CS] Time since load: 3ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:64
+[     640ms] [LOG] [direct] SoundCloud direct downloader loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:2
+[     642ms] [LOG] [DIAG-CS] sendMessage promise resolved: null @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:41
+[     656ms] [LOG] prebid-load.js loaded successfully. @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[     691ms] [WARNING] [GPT] PubAdsService.disableInitialLoad is deprecated, use googletag.setConfig({disableInitialLoad: ...}) instead.
+https://goo.gle/gpt-message#170 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[     744ms] [LOG] %craven%c Raven v1.22.2-6hoy9q background-color:#000;margin-left:1px;padding:1px 3px;font-size:0.75em;color:#ffffff; font-size:0.9em; @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[    1040ms] [WARNING] [GPT] Slot.getTargetingKeys is deprecated, use Slot.getConfig('targeting') instead.
+https://goo.gle/gpt-message#201 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[    1169ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1363ms] [LOG] [direct] Download button injected (top stats) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:223
+[    1372ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1398ms] [LOG] [direct] Download button injected (player) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:245
+[    1398ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1408ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1492ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1527ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1553ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1554ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1566ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1616ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1666ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1688ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1765ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1821ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1848ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1854ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'ambient-light-sensor'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'battery'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'document-domain'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[    1902ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'wake-lock'. @ :0
+[    1956ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    2006ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    2037ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    2154ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    2206ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    2292ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    2371ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    2398ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    2520ms] [LOG] [direct] Download button injected (player) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:245
+[    2521ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    2521ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://api-auth.soundcloud.com/oauth/authorize?client_id=Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo:0
+[    2530ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    2650ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    2822ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    3150ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    3571ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    3643ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    4063ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    4154ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    4569ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    4657ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    5019ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    5143ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    5290ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    5559ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    5650ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    6154ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    6518ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    6573ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    6644ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    7157ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    7572ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    7644ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    8061ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    8152ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    8564ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    8653ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    9016ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    9143ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    9289ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    9559ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[    9648ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   10152ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   10521ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   10557ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   10647ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   11151ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   11565ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   11655ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   11746ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   12145ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   12565ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   12655ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   13142ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   13292ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   13561ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   13650ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   14011ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   14155ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   14522ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   14575ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   14648ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   15150ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   15566ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   15655ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   15748ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   16142ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   16565ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   16655ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   17146ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   17564ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   17603ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   17657ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   18143ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   18561ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   18648ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   19138ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   19156ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   19574ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   19644ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   20146ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   20559ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   20648ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   20667ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   21155ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   21568ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   21641ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   21897ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   22149ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   22569ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   22643ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   23151ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   23570ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   23643ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   24148ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   24565ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   24656ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   25145ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   25563ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   25653ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   26014ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   26157ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   26212ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   26571ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   26641ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   27145ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   27558ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   27648ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   28015ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   28141ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   28573ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   28644ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   29148ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   29276ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   29569ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   29643ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   30022ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   30148ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   30513ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   30569ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   30657ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   31151ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   31152ms] [LOG] [direct] gave up after 60 attempts @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:257
+[   31569ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   32361ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   32577ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   33565ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   33584ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   34575ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   34809ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   35569ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   36574ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   36668ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   37572ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   37900ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   38567ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   39122ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   39574ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   40356ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   40571ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   41566ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   41587ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   42560ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   43423ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   43568ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   44576ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   44955ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   45577ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   46560ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   47019ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   47107ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   47562ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   48363ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   48558ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   49016ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   49564ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   49895ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   50563ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   51455ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   51561ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   52569ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   52677ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   53575ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   54525ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   54562ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   55578ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   56374ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   56564ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   57562ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   57634ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   58568ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   58866ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   59561ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   60016ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   60571ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   61012ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   61048ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   61568ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   62573ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   63200ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   63570ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   64409ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   64570ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   65008ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   65565ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   66571ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   67572ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   67790ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   68568ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   69024ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   69566ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   69636ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   70559ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   70843ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   71565ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   72399ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   72575ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   73575ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   73630ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   74014ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   74567ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   75568ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[   76434ms] [INFO] You like to look under the hood? Why not help us build the engine? https://soundcloud.com/jobs @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:32
+[   76526ms] [WARNING] [GPT] PubAdsService.disableInitialLoad is deprecated, use googletag.setConfig({disableInitialLoad: ...}) instead.
+https://goo.gle/gpt-message#170 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[   76588ms] [LOG] prebid-load.js loaded successfully. @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[   76660ms] [LOG] %craven%c Raven v1.22.2-6hoy9q background-color:#000;margin-left:1px;padding:1px 3px;font-size:0.75em;color:#ffffff; font-size:0.9em; @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[   76703ms] [LOG] [DIAG-CS] Diagnostic content script loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:4
+[   76703ms] [LOG] [DIAG-CS] sendMessage monitoring active @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:54
+[   76704ms] [LOG] [DIAG-CS] MutationObserver attached @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:74
+[   76704ms] [LOG] [DIAG-CS] sendMessage called: {"recipient":"__CROSSPILOT_MESSAGE__","action":"sandbox-content-scripts-data","keys":["messageRecipient","action","data"]} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:27
+[   76704ms] [LOG] [DIAG-CS] Time since load: 0ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:28
+[   76704ms] [LOG] [DIAG-CS] Args count: 1 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:29
+[   76704ms] [LOG] [DIAG-CS] CrossPilot attribute detected on HTML @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:63
+[   76704ms] [LOG] [DIAG-CS] Time since load: 1ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:64
+[   76705ms] [LOG] [direct] SoundCloud direct downloader loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:2
+[   76720ms] [LOG] [DIAG-CS] sendMessage promise resolved: null @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:41
+[   77202ms] [WARNING] [GPT] Slot.getTargetingKeys is deprecated, use Slot.getConfig('targeting') instead.
+https://goo.gle/gpt-message#201 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[   77234ms] [LOG] [direct] Download button injected (player) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:241
+[   77475ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   77493ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   77545ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   77555ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'ambient-light-sensor'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'battery'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'document-domain'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[   77670ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'wake-lock'. @ :0
+[   77724ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   77785ms] [LOG] [direct] Download button injected (left Sorted by) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:210
+[   77786ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   77809ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   77861ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   77942ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   77951ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[   77956ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[   77957ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   78026ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   78064ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   78084ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   78130ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://api-auth.soundcloud.com/oauth/authorize?client_id=Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo:0
+[   78161ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   78195ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   78259ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[   78267ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   78329ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   78371ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   78381ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   78413ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   78497ms] [LOG] [direct] Download button injected (player) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:241
+[   78497ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   78647ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   78663ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   80667ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   86180ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   86545ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   88179ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[   90180ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[  107177ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[  109178ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[  120178ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[  121177ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[  125178ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[  129179ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[  134177ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[  143728ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[  144155ms] [INFO] You like to look under the hood? Why not help us build the engine? https://soundcloud.com/jobs @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:32
+[  144210ms] [LOG] [DIAG-CS] Diagnostic content script loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:4
+[  144211ms] [LOG] [DIAG-CS] sendMessage monitoring active @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:54
+[  144211ms] [LOG] [DIAG-CS] MutationObserver attached @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:74
+[  144211ms] [LOG] [DIAG-CS] sendMessage called: {"recipient":"__CROSSPILOT_MESSAGE__","action":"sandbox-content-scripts-data","keys":["messageRecipient","action","data"]} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:27
+[  144211ms] [LOG] [DIAG-CS] Time since load: 1ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:28
+[  144211ms] [LOG] [DIAG-CS] Args count: 1 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:29
+[  144211ms] [LOG] [DIAG-CS] CrossPilot attribute detected on HTML @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:63
+[  144211ms] [LOG] [DIAG-CS] Time since load: 1ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:64
+[  144212ms] [LOG] [direct] SoundCloud direct downloader loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:2
+[  144229ms] [LOG] [DIAG-CS] sendMessage promise resolved: null @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:41
+[  144234ms] [LOG] prebid-load.js loaded successfully. @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  144242ms] [WARNING] [GPT] PubAdsService.disableInitialLoad is deprecated, use googletag.setConfig({disableInitialLoad: ...}) instead.
+https://goo.gle/gpt-message#170 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  144318ms] [LOG] %craven%c Raven v1.22.2-6hoy9q background-color:#000;margin-left:1px;padding:1px 3px;font-size:0.75em;color:#ffffff; font-size:0.9em; @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  144605ms] [WARNING] [GPT] Slot.getTargetingKeys is deprecated, use Slot.getConfig('targeting') instead.
+https://goo.gle/gpt-message#201 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  144714ms] [LOG] [direct] Download button injected (player) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:242
+[  144875ms] [LOG] [direct] Download button injected (middle next to More) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:220
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'ambient-light-sensor'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'battery'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'document-domain'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  145011ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'wake-lock'. @ :0
+[  145480ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://api-auth.soundcloud.com/oauth/authorize?client_id=Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo:0
+[  145542ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  145548ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  145773ms] [LOG] [direct] Download button injected (player) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:242
+[  145847ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  262278ms] [INFO] You like to look under the hood? Why not help us build the engine? https://soundcloud.com/jobs @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:32
+[  262318ms] [LOG] [DIAG-CS] Diagnostic content script loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:4
+[  262318ms] [LOG] [DIAG-CS] sendMessage monitoring active @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:54
+[  262318ms] [LOG] [DIAG-CS] MutationObserver attached @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:74
+[  262318ms] [LOG] [DIAG-CS] sendMessage called: {"recipient":"__CROSSPILOT_MESSAGE__","action":"sandbox-content-scripts-data","keys":["messageRecipient","action","data"]} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:27
+[  262318ms] [LOG] [DIAG-CS] Time since load: 1ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:28
+[  262319ms] [LOG] [DIAG-CS] Args count: 1 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:29
+[  262319ms] [LOG] [DIAG-CS] CrossPilot attribute detected on HTML @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:63
+[  262319ms] [LOG] [DIAG-CS] Time since load: 1ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:64
+[  262320ms] [LOG] [direct] SoundCloud direct downloader loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:2
+[  262330ms] [LOG] [DIAG-CS] sendMessage promise resolved: null @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:41
+[  262347ms] [LOG] prebid-load.js loaded successfully. @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  262356ms] [WARNING] [GPT] PubAdsService.disableInitialLoad is deprecated, use googletag.setConfig({disableInitialLoad: ...}) instead.
+https://goo.gle/gpt-message#170 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  262496ms] [LOG] %craven%c Raven v1.22.2-6hoy9q background-color:#000;margin-left:1px;padding:1px 3px;font-size:0.75em;color:#ffffff; font-size:0.9em; @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  262780ms] [WARNING] [GPT] Slot.getTargetingKeys is deprecated, use Slot.getConfig('targeting') instead.
+https://goo.gle/gpt-message#201 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  262825ms] [LOG] [direct] Download button injected (player mini) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[  263039ms] [LOG] [direct] Download button injected (middle next to More) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:220
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'ambient-light-sensor'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'battery'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'document-domain'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  263171ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'wake-lock'. @ :0
+[  263502ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  263507ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  263643ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://api-auth.soundcloud.com/oauth/authorize?client_id=Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo:0
+[  263801ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  264043ms] [LOG] [direct] Download button injected (player mini) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:244
+[  277173ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=5d41402abc4b2a76b9719d911017c592:0
+[  277411ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=LapsedConsumerSubscriptionBanner:0
+[  277623ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=showWithdrawFromSubscriptionLink:0
+[  277835ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=showWithdrawFromSubscriptionLink:0
+[  278403ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=showWithdrawFromSubscriptionLink:0
+[  278641ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=buildXhrWithAuthTransportFactory:0
+[  278852ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=a7c02a899fe843dfbea609e8cfb420f0:0
+[  279125ms] [LOG] [direct] client_id from script (validated): Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:26
+[  279361ms] [LOG] [direct] track info: GOD_2 user: HOL! media: {transcodings: Array(5)} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:130
+[  279361ms] [LOG] [direct] using transcoding: mp3_1_0 https://api-v2.soundcloud.com/media/soundcloud:tracks:2392658898/943148cf-d501-4b90-8746-d1a7947f67b8/stream/progressive @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:137
+[  279599ms] [LOG] [direct] stream url: https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzExMjE5fX19XX0_&Signature=PuBEn8FW0r-hGYAwTxQpoATGxt28rLCdlVRHnR9Wo91gUCVJO5-iq-xfVdxfNH31hiJiYho~UiVYnSVrywLV6dzb91QFAAiPbUjnLkOccT~BIvm1Vj37Mz6AFcB3i6Y1ZuQfzslIUgCDp5AyMOIBFP4Ji6V08vvdtGFn4DOuhIAEsT47aNPSNFoPUdaQkkr2~OLTtMqAruRFj~lJRFmxYG~LFT1DqIOKJU6xHGQJazLHBE~UtPtKSC7t6paByffX2ZTZqvOS8DgGW6OAElFBTgIqoRdSb6b07XepeOObadORQzL9euAWWVx3NWRbxHkIXHLNBSfOjFrFXil-O2Ed2Q__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:139
+[  279599ms] [LOG] [direct] downloading: HOL_ - GOD_2.mp3 https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzExMjE5fX19XX0_&Signature=PuBEn8FW0r-hGYAwTxQpoATGxt28rLCdlVRHnR9Wo91gUCVJO5-iq-xfVdxfNH31hiJiYho~UiVYnSVrywLV6dzb91QFAAiPbUjnLkOccT~BIvm1Vj37Mz6AFcB3i6Y1ZuQfzslIUgCDp5AyMOIBFP4Ji6V08vvdtGFn4DOuhIAEsT47aNPSNFoPUdaQkkr2~OLTtMqAruRFj~lJRFmxYG~LFT1DqIOKJU6xHGQJazLHBE~UtPtKSC7t6paByffX2ZTZqvOS8DgGW6OAElFBTgIqoRdSb6b07XepeOObadORQzL9euAWWVx3NWRbxHkIXHLNBSfOjFrFXil-O2Ed2Q__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:179
+[  279599ms] [LOG] [DIAG-CS] sendMessage called: {"recipient":"__SC_DIRECT__","action":"download","keys":["messageRecipient","action","url","filename"]} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:27
+[  279599ms] [LOG] [DIAG-CS] Time since load: 17282ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:28
+[  279599ms] [LOG] [DIAG-CS] Args count: 2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:29
+[  279803ms] [LOG] [DIAG-CS] sendMessage response: {"success":true,"downloadId":6} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:33
+[  279803ms] [LOG] [direct] download response: {success: true, downloadId: 6} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:182
+[  408179ms] [INFO] You like to look under the hood? Why not help us build the engine? https://soundcloud.com/jobs @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:32
+[  408212ms] [LOG] [DIAG-CS] Diagnostic content script loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:4
+[  408212ms] [LOG] [DIAG-CS] sendMessage monitoring active @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:54
+[  408213ms] [LOG] [DIAG-CS] MutationObserver attached @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:74
+[  408213ms] [LOG] [DIAG-CS] sendMessage called: {"recipient":"__CROSSPILOT_MESSAGE__","action":"sandbox-content-scripts-data","keys":["messageRecipient","action","data"]} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:27
+[  408213ms] [LOG] [DIAG-CS] Time since load: 0ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:28
+[  408213ms] [LOG] [DIAG-CS] Args count: 1 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:29
+[  408213ms] [LOG] [DIAG-CS] CrossPilot attribute detected on HTML @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:63
+[  408213ms] [LOG] [DIAG-CS] Time since load: 1ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:64
+[  408214ms] [LOG] [direct] SoundCloud direct downloader loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:2
+[  408220ms] [LOG] [DIAG-CS] sendMessage promise resolved: null @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:41
+[  408237ms] [LOG] prebid-load.js loaded successfully. @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  408248ms] [WARNING] [GPT] PubAdsService.disableInitialLoad is deprecated, use googletag.setConfig({disableInitialLoad: ...}) instead.
+https://goo.gle/gpt-message#170 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  408354ms] [LOG] %craven%c Raven v1.22.2-6hoy9q background-color:#000;margin-left:1px;padding:1px 3px;font-size:0.75em;color:#ffffff; font-size:0.9em; @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  408628ms] [WARNING] [GPT] Slot.getTargetingKeys is deprecated, use Slot.getConfig('targeting') instead.
+https://goo.gle/gpt-message#201 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  408719ms] [LOG] [direct] Download button injected (player mini) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:248
+[  408756ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://ep2.adtrafficquality.google') does not match the recipient window's origin ('https://soundcloud.com'). @ https://ep2.adtrafficquality.google/sodar/sodar2.js:34
+[  408838ms] [ERROR] Access to XMLHttpRequest at 'https://ep2.adtrafficquality.google/sodar/sodar2/255/runner.html' from origin 'https://soundcloud.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://soundcloud.com/hollmusic/god_2:0
+[  408839ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://ep2.adtrafficquality.google/sodar/sodar2/255/runner.html:0
+[  408917ms] [LOG] [direct] Download button injected (middle next to More) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:224
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'ambient-light-sensor'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'battery'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'document-domain'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  409029ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'wake-lock'. @ :0
+[  409481ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://api-auth.soundcloud.com/oauth/authorize?client_id=Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo:0
+[  409588ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  409599ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  409887ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  412337ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=5d41402abc4b2a76b9719d911017c592:0
+[  412606ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=LapsedConsumerSubscriptionBanner:0
+[  412820ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=showWithdrawFromSubscriptionLink:0
+[  413033ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=showWithdrawFromSubscriptionLink:0
+[  413244ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=showWithdrawFromSubscriptionLink:0
+[  413482ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=buildXhrWithAuthTransportFactory:0
+[  413694ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=a7c02a899fe843dfbea609e8cfb420f0:0
+[  414008ms] [LOG] [direct] client_id from script (validated): Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:26
+[  414248ms] [LOG] [direct] track info: GOD_2 user: HOL! media: {transcodings: Array(5)} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:130
+[  414248ms] [LOG] [direct] using transcoding: mp3_1_0 https://api-v2.soundcloud.com/media/soundcloud:tracks:2392658898/943148cf-d501-4b90-8746-d1a7947f67b8/stream/progressive @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:137
+[  414675ms] [LOG] [direct] stream url: https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzExMzU0fX19XX0_&Signature=SHDQ8Za5nbqYQerWj4B00FpGst2YWoO2gNR0QjDZ-d00HTaqR9TOuZ5bdQ3B77Pwv2dcHtTqCL1vUyFKaiuhbFQL5QjLILl~xj8LVkUYQLWT8XhYSi~rqcbTikdNskmsrCFC~YkurVzbK72NBYcFS81UXx0SXNRpiLHBoSNkOYXPoYDghE0pcvKlVsW~IDiA5ixBMd2gG80EXbqIYLTGhyGfm134N9vX6Z1sZwWJF6aWJMURRJZye72G4ZpHZ32qf48Ef~dcvz6VQxZ5kMOXfcZAS48GdCZGK~-Obue2Vi354F-ovFaZpet-GJy6tl6i1iqnjpl87nDhfkVunE3gug__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:139
+[  414675ms] [LOG] [direct] downloading: HOL_ - GOD_2.mp3 https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzExMzU0fX19XX0_&Signature=SHDQ8Za5nbqYQerWj4B00FpGst2YWoO2gNR0QjDZ-d00HTaqR9TOuZ5bdQ3B77Pwv2dcHtTqCL1vUyFKaiuhbFQL5QjLILl~xj8LVkUYQLWT8XhYSi~rqcbTikdNskmsrCFC~YkurVzbK72NBYcFS81UXx0SXNRpiLHBoSNkOYXPoYDghE0pcvKlVsW~IDiA5ixBMd2gG80EXbqIYLTGhyGfm134N9vX6Z1sZwWJF6aWJMURRJZye72G4ZpHZ32qf48Ef~dcvz6VQxZ5kMOXfcZAS48GdCZGK~-Obue2Vi354F-ovFaZpet-GJy6tl6i1iqnjpl87nDhfkVunE3gug__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:182
+[  414675ms] [LOG] [DIAG-CS] sendMessage called: {"recipient":"__SC_DIRECT__","action":"download","keys":["messageRecipient","action","url","filename"]} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:27
+[  414675ms] [LOG] [DIAG-CS] Time since load: 6462ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:28
+[  414675ms] [LOG] [DIAG-CS] Args count: 2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:29
+[  414725ms] [LOG] [DIAG-CS] sendMessage response: {"success":true,"downloadId":7} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:33
+[  414725ms] [LOG] [direct] download response: {success: true, downloadId: 7} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:185
+[  550905ms] [INFO] You like to look under the hood? Why not help us build the engine? https://soundcloud.com/jobs @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:32
+[  550939ms] [LOG] [DIAG-CS] Diagnostic content script loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:4
+[  550940ms] [LOG] [DIAG-CS] sendMessage monitoring active @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:54
+[  550940ms] [LOG] [DIAG-CS] MutationObserver attached @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:74
+[  550940ms] [LOG] [DIAG-CS] sendMessage called: {"recipient":"__CROSSPILOT_MESSAGE__","action":"sandbox-content-scripts-data","keys":["messageRecipient","action","data"]} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:27
+[  550940ms] [LOG] [DIAG-CS] Time since load: 1ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:28
+[  550940ms] [LOG] [DIAG-CS] Args count: 1 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:29
+[  550940ms] [LOG] [DIAG-CS] CrossPilot attribute detected on HTML @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:63
+[  550940ms] [LOG] [DIAG-CS] Time since load: 1ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:64
+[  550941ms] [LOG] [direct] SoundCloud direct downloader loaded at https://soundcloud.com/hollmusic/god_2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:2
+[  550949ms] [LOG] [DIAG-CS] sendMessage promise resolved: null @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:41
+[  550971ms] [WARNING] [GPT] PubAdsService.disableInitialLoad is deprecated, use googletag.setConfig({disableInitialLoad: ...}) instead.
+https://goo.gle/gpt-message#170 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  551445ms] [LOG] [direct] no container found, retry @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:252
+[  551729ms] [LOG] prebid-load.js loaded successfully. @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  551782ms] [LOG] %craven%c Raven v1.22.2-6hoy9q background-color:#000;margin-left:1px;padding:1px 3px;font-size:0.75em;color:#ffffff; font-size:0.9em; @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  551810ms] [WARNING] [GPT] Slot.getTargeting is deprecated, use Slot.getConfig('targeting') instead.
+https://goo.gle/gpt-message#201 @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:99
+[  551976ms] [LOG] [direct] Download button injected (middle next to More) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:225
+[  551977ms] [LOG] [direct] Download button injected (player mini) @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:249
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'ambient-light-sensor'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'battery'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'document-domain'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized origin: 'none'. @ :0
+[  552083ms] [WARNING] Error with Feature-Policy header: Unrecognized feature: 'wake-lock'. @ :0
+[  552533ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  552537ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  552554ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://api-auth.soundcloud.com/oauth/authorize?client_id=Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo:0
+[  552828ms] [WARNING] The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio @ https://a-v2.sndcdn.com/assets/55-9b366a26.js:12
+[  555863ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=5d41402abc4b2a76b9719d911017c592:0
+[  556102ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=LapsedConsumerSubscriptionBanner:0
+[  556315ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=showWithdrawFromSubscriptionLink:0
+[  556525ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=showWithdrawFromSubscriptionLink:0
+[  556738ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=showWithdrawFromSubscriptionLink:0
+[  556978ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=buildXhrWithAuthTransportFactory:0
+[  557190ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ https://api-v2.soundcloud.com/tracks/2392658898?client_id=a7c02a899fe843dfbea609e8cfb420f0:0
+[  557453ms] [LOG] [direct] client_id from script (validated): Pb72ranhoyt6gw7hM7TkzUItXlMWSNSo @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:26
+[  558036ms] [LOG] [direct] track info: GOD_2 user: HOL! media: {transcodings: Array(5)} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:131
+[  558037ms] [LOG] [direct] using transcoding: mp3_1_0 https://api-v2.soundcloud.com/media/soundcloud:tracks:2392658898/943148cf-d501-4b90-8746-d1a7947f67b8/stream/progressive @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:138
+[  558266ms] [LOG] [direct] stream url: https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzExNDk4fX19XX0_&Signature=UH9nhNAeO7iGctlH0r3R8tsmSC~vBPe~4-iXiNrno4w6JzIb6O87z4t8t6zEbCEVz7N-ZWGobNUramERO6BQp18wrCd~8by0k9yr5UZUjvZGSdWGm5ZhqkSBau4w4QB980D4W5pkOi7vxmpwH5IRySasNRBO0LVk-2jByvHrYLqfYueoH7ANdn7sF3wq3HiLJtDaefNcsjmgJnTPPGAU20E8hZzXGYKXqP568lj9oABJ8nBQXOcIjS3JB2y9agJ4KAdfu~UqpRWJoSmbRwY8ac22KVktiZDhpfpQf-H3UvwFtD4eQBQ~zCXn9FpfeJWHGfeeeMHu7shrbHh207560g__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:140
+[  558266ms] [LOG] [direct] downloading: HOL_GOD_2.mp3 https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzExNDk4fX19XX0_&Signature=UH9nhNAeO7iGctlH0r3R8tsmSC~vBPe~4-iXiNrno4w6JzIb6O87z4t8t6zEbCEVz7N-ZWGobNUramERO6BQp18wrCd~8by0k9yr5UZUjvZGSdWGm5ZhqkSBau4w4QB980D4W5pkOi7vxmpwH5IRySasNRBO0LVk-2jByvHrYLqfYueoH7ANdn7sF3wq3HiLJtDaefNcsjmgJnTPPGAU20E8hZzXGYKXqP568lj9oABJ8nBQXOcIjS3JB2y9agJ4KAdfu~UqpRWJoSmbRwY8ac22KVktiZDhpfpQf-H3UvwFtD4eQBQ~zCXn9FpfeJWHGfeeeMHu7shrbHh207560g__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:183
+[  558266ms] [LOG] [DIAG-CS] sendMessage called: {"recipient":"__SC_DIRECT__","action":"download","keys":["messageRecipient","action","url","filename"]} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:27
+[  558267ms] [LOG] [DIAG-CS] Time since load: 7327ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:28
+[  558267ms] [LOG] [DIAG-CS] Args count: 2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:29
+[  558315ms] [LOG] [DIAG-CS] sendMessage response: {"success":true,"downloadId":8} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:33
+[  558316ms] [LOG] [direct] download response: {success: true, downloadId: 8} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:186
+[  596981ms] [LOG] [direct] track info: GOD_2 user: HOL! media: {transcodings: Array(5)} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:131
+[  596981ms] [LOG] [direct] using transcoding: mp3_1_0 https://api-v2.soundcloud.com/media/soundcloud:tracks:2392658898/943148cf-d501-4b90-8746-d1a7947f67b8/stream/progressive @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:138
+[  597211ms] [LOG] [direct] stream url: https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzExNTM3fX19XX0_&Signature=VnGMcauFurGbie7UHKswDblLod5HX3P-biN2v-ekPPC~bFSqc8y5vYT4F6wbKlafic8YamjB4RPLo5Z1cfFyQ3CIofDAqwwwhuESHP0pGldNZLLXb7rUswkV6J4s~6xFt23ixHNqHzULrI6iLAXUlzdpvEeMXKDK~5xNkzVbB66dVbq1SIvnDCfC991f9aupqlOmCWL2yOlDjEle9pBHv7pJjFts5JmWWd4tRpHXE8Cuf8VUpmykyyGRddszSBsowFVB~BdMBwYgZWsEaM49cYKC6ADUIgxnyO08YCVZoHTt-AHE7wXBebiVfoe0h-xUnM~NxsWTgqlemmATM8~xfg__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:140
+[  597212ms] [LOG] [direct] downloading: HOL_GOD_2.mp3 https://cf-media.sndcdn.com/dVpUMSJ2LYgB.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vZFZwVU1TSjJMWWdCLjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4MzExNTM3fX19XX0_&Signature=VnGMcauFurGbie7UHKswDblLod5HX3P-biN2v-ekPPC~bFSqc8y5vYT4F6wbKlafic8YamjB4RPLo5Z1cfFyQ3CIofDAqwwwhuESHP0pGldNZLLXb7rUswkV6J4s~6xFt23ixHNqHzULrI6iLAXUlzdpvEeMXKDK~5xNkzVbB66dVbq1SIvnDCfC991f9aupqlOmCWL2yOlDjEle9pBHv7pJjFts5JmWWd4tRpHXE8Cuf8VUpmykyyGRddszSBsowFVB~BdMBwYgZWsEaM49cYKC6ADUIgxnyO08YCVZoHTt-AHE7wXBebiVfoe0h-xUnM~NxsWTgqlemmATM8~xfg__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:183
+[  597212ms] [LOG] [DIAG-CS] sendMessage called: {"recipient":"__SC_DIRECT__","action":"download","keys":["messageRecipient","action","url","filename"]} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:27
+[  597212ms] [LOG] [DIAG-CS] Time since load: 46272ms @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:28
+[  597212ms] [LOG] [DIAG-CS] Args count: 2 @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:29
+[  597259ms] [LOG] [DIAG-CS] sendMessage response: {"success":true,"downloadId":9} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/diagnostic-content.js:33
+[  597259ms] [LOG] [direct] download response: {success: true, downloadId: 9} @ chrome-extension://ihaelfjohnpciodjianpgchimpgifgjk/js/direct.js:186
