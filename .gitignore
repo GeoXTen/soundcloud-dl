@@ -1,6 +1,1 @@
-.playwright-mcp/
-*.ps1
-*.zip
-*.pem
-*.crx
-.playwright-mcp
+﻿node_modules/
