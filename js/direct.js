@@ -235,6 +235,8 @@
                 if (apiInfo.track_number) frames.push(makeTextFrame('TRCK', String(apiInfo.track_number)));
                 // COMM - Comment
                 if (apiInfo.description) frames.push(makeCommentFrame(apiInfo.description.substring(0, 200)));
+                // TENC - Encoded By
+                frames.push(makeTextFrame('TENC', 'SoundCloud Downloader by Geo'));
                 // APIC - Album art
                 const coverUrl = apiInfo.artwork_url || (apiInfo.user && apiInfo.user.avatar_url);
                 if (coverUrl) {
@@ -314,7 +316,20 @@
         return new Promise((resolve) => {
             const reader = new FileReader();
             reader.onload = function() {
-                const mp3Data = new Uint8Array(reader.result);
+                let mp3Data = new Uint8Array(reader.result);
+                // Strip existing ID3v2 tag (at beginning of file)
+                if (mp3Data[0] === 0x49 && mp3Data[1] === 0x44 && mp3Data[2] === 0x33) {
+                    const size = ((mp3Data[6] & 0x7f) << 21) | ((mp3Data[7] & 0x7f) << 14) | ((mp3Data[8] & 0x7f) << 7) | (mp3Data[9] & 0x7f);
+                    const tagLen = 10 + size;
+                    mp3Data = mp3Data.slice(tagLen);
+                }
+                // Strip ID3v1 tag (at end of file, 128 bytes starting with "TAG")
+                if (mp3Data.length > 128 &&
+                    mp3Data[mp3Data.length - 128] === 0x54 && // T
+                    mp3Data[mp3Data.length - 127] === 0x41 && // A
+                    mp3Data[mp3Data.length - 126] === 0x47) { // G
+                    mp3Data = mp3Data.slice(0, mp3Data.length - 128);
+                }
                 // Build ID3v2.3 tag
                 let totalFrameSize = 0;
                 for (const f of frames) totalFrameSize += f.header.length + f.data.length;
