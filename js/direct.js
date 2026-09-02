@@ -253,7 +253,17 @@
         const seenContainers = new Set();
         const OWNER_KEYWORDS = ['your insights', 'edit', 'analytics', 'stats'];
 
-        // Step 1: Find all track links
+        // DEBUG: dump what elements exist
+        const allBtns = document.querySelectorAll('button');
+        const allDivBtns = document.querySelectorAll('div[role="button"], a[role="button"], span[role="button"]');
+        const allClickable = document.querySelectorAll('[role="button"], [onclick], [class*="button"], [class*="btn"]');
+        console.log("[direct] buttons:", allBtns.length, "role=button:", allDivBtns.length, "clickable:", allClickable.length);
+
+        // Try ALL clickable elements, not just <button>
+        const allActionEls = document.querySelectorAll('button, [role="button"], a[class*="button"], div[class*="button"], span[class*="button"]');
+        console.log("[direct] total action-like elements:", allActionEls.length);
+
+        // Find track links
         document.querySelectorAll('a[href*="soundcloud.com/"]').forEach(a => {
             const href = a.getAttribute('href');
             if (!href) return;
@@ -263,32 +273,35 @@
             const parts = path.split('/').filter(Boolean);
             if (parts.length < 2 || parts[0].includes('.')) return;
 
-            // Step 2: Walk up from the link to find the card container
-            // A card has both the track link AND action buttons
+            // Walk up to find card container
             let card = a;
             for (let i = 0; i < 25; i++) {
                 card = card.parentElement;
                 if (!card || card === document.body) break;
 
-                // Check if this container has a button row (3+ buttons)
-                const btns = Array.from(card.querySelectorAll('button'));
-                if (btns.length < 3) continue;
+                // Look for action bar: find element with 3+ action-like children
+                const candidates = card.querySelectorAll('button, [role="button"]');
+                if (candidates.length < 3) continue;
 
-                // Find the tightest button row inside this card
-                // (a div/span whose direct children are buttons)
+                // Group by parent
+                const parentMap = new Map();
+                candidates.forEach(el => {
+                    const p = el.parentElement;
+                    if (!p) return;
+                    if (!parentMap.has(p)) parentMap.set(p, []);
+                    parentMap.get(p).push(el);
+                });
+
+                // Find the best button row
                 let bestRow = null;
                 let bestCount = 0;
-                card.querySelectorAll('button').forEach(b => {
-                    const row = b.parentElement;
-                    if (!row) return;
-                    const rowBtns = Array.from(row.children).filter(c => c.tagName === 'BUTTON');
-                    if (rowBtns.length > bestCount && rowBtns.length >= 3 && rowBtns.length <= 8) {
-                        // Check it has action buttons
-                        const texts = rowBtns.map(x => (x.getAttribute('aria-label') || x.textContent || '').trim().toLowerCase());
+                parentMap.forEach((els, parent) => {
+                    if (els.length >= 3 && els.length <= 8 && els.length > bestCount) {
+                        const texts = els.map(e => (e.getAttribute('aria-label') || e.textContent || '').trim().toLowerCase());
                         if (texts.some(t => t.includes('like') || t.includes('unlike') || t.includes('repost') || t.includes('share') || t.includes('more') || t === '...')) {
                             if (!OWNER_KEYWORDS.some(kw => texts.some(t => t.includes(kw)))) {
-                                bestRow = row;
-                                bestCount = rowBtns.length;
+                                bestRow = parent;
+                                bestCount = els.length;
                             }
                         }
                     }
