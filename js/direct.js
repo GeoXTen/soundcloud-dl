@@ -246,48 +246,47 @@
         return btn;
     }
 
-    // Find all "More" action buttons in feed cards (not in footer/player)
-    function findAllMoreButtons() {
+    // Find all action bar containers in feed cards
+    function findFeedActionBars() {
         const results = [];
-        // Method 1: aria-label
-        document.querySelectorAll('button[aria-label="More actions"], button[aria-label="More"]').forEach(b => {
-            if (!b.closest('footer, [role="contentinfo"], [class*="miniplayer"], [class*="playback"]')) {
-                results.push(b);
+        const seen = new Set();
+
+        // Find ALL track links on the page
+        document.querySelectorAll('a[href*="soundcloud.com/"]').forEach(a => {
+            const href = a.getAttribute('href');
+            if (!href || href.includes('/you/') || href.includes('/search') || href.includes('/discover') || href.includes('/tags/')) return;
+            const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
+            const parts = full.replace('https://soundcloud.com/', '').split('/').filter(Boolean);
+            if (parts.length < 2 || parts[0].startsWith('you')) return;
+
+            // Walk up from the track link to find the track card container
+            let card = a;
+            for (let i = 0; i < 20; i++) {
+                card = card.parentElement;
+                if (!card || card === document.body) break;
+
+                // Look for a button container (action bar) with 2+ buttons
+                const btns = card.querySelectorAll('button');
+                if (btns.length >= 3) {
+                    // This looks like the action bar area — find the button row
+                    // The action bar is usually a div containing multiple buttons
+                    for (const btn of btns) {
+                        const btnParent = btn.parentElement;
+                        if (btnParent && btnParent.querySelectorAll('button').length >= 3) {
+                            // Found action bar container
+                            const key = btnParent;
+                            if (!seen.has(key)) {
+                                seen.add(key);
+                                results.push({ container: btnParent, trackUrl: full });
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
             }
         });
-        // Method 2: text match (if aria-label method found nothing)
-        if (results.length === 0) {
-            Array.from(document.querySelectorAll('button')).forEach(b => {
-                const t = (b.textContent || "").trim();
-                const ttl = b.getAttribute("title") || b.getAttribute("aria-label") || "";
-                if ((t === "More" || t === "..." || ttl.includes("More")) && !b.closest('footer, [role="contentinfo"], [class*="miniplayer"], [class*="playback"]')) {
-                    results.push(b);
-                }
-            });
-        }
         return results;
-    }
-
-    // Find track URL associated with a "More" button by walking up to its track card
-    function findTrackUrlForMoreBtn(moreBtn) {
-        // Walk up DOM to find the track card container
-        let card = moreBtn;
-        for (let i = 0; i < 15; i++) {
-            card = card.parentElement;
-            if (!card) break;
-            // Check for track links in this container
-            const links = card.querySelectorAll('a[href*="soundcloud.com/"]');
-            for (const a of links) {
-                const href = a.getAttribute('href');
-                if (href && !href.includes('/you/') && !href.includes('/search') && !href.includes('/discover') && !href.includes('/tags/')) {
-                    const parts = href.replace(/^\//, '').replace(/^https?:\/\/soundcloud\.com\//, '').split('/').filter(Boolean);
-                    if (parts.length >= 2 && !parts[0].startsWith('you')) {
-                        return href.startsWith('http') ? href : `https://soundcloud.com${href}`;
-                    }
-                }
-            }
-        }
-        return null;
     }
 
     // Inject style for player mini button (once)
@@ -320,16 +319,16 @@
         document.querySelectorAll('[id^="sc-direct-download-btn"], .sc-dl-feed-btn').forEach(el => el.remove());
 
         // === FEED PAGE: inject button on EVERY track card ===
-        const moreBtns = findAllMoreButtons();
-        if (moreBtns.length > 0) {
-            moreBtns.forEach(moreBtn => {
-                const trackUrl = findTrackUrlForMoreBtn(moreBtn);
+        const feedBars = findFeedActionBars();
+        if (feedBars.length > 0) {
+            feedBars.forEach(({ container, trackUrl }) => {
                 const btn = makeFeedBtn(trackUrl);
                 btn.classList.add("sc-dl-feed-btn");
-                moreBtn.parentElement.insertBefore(btn, moreBtn.nextSibling);
+                // Append to the action bar (after all existing buttons)
+                container.appendChild(btn);
                 injected = true;
             });
-            console.log(`[direct] injected ${moreBtns.length} feed download button(s)`);
+            console.log(`[direct] injected ${feedBars.length} feed download button(s)`);
         }
 
         // === PLAYER BAR: mini orange circle ===
