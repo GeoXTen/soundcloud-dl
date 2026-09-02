@@ -183,16 +183,17 @@
         if (isMini) btn.style.opacity = "0.7";
         try {
             const cid = await getClientId(); if (!cid) throw new Error("Could not get client_id");
-            // If trackUrl provided (feed page), resolve that specific track
-            let trackId;
+            let trackId = null;
+            // Feed page: resolve the specific track URL
             if (trackUrl) {
-                trackId = getTrackIdFromUrl(trackUrl);
-                if (trackId && trackId.includes('/')) {
-                    // It's a slug, need to resolve
-                    trackId = await resolveTrackId(cid, trackUrl);
-                }
+                trackId = await resolveTrackId(cid, trackUrl);
             }
+            // Fallback: player bar or page
             if (!trackId) trackId = getTrackId();
+            // If still a slug, resolve it
+            if (trackId && trackId.includes('/')) {
+                trackId = await resolveTrackId(cid, `https://soundcloud.com/${trackId}`);
+            }
             if (!trackId) trackId = await resolveTrackId(cid);
             if (!trackId) throw new Error("Could not find track ID");
             const streamUrl = await getStreamUrl(trackId, cid);
@@ -251,45 +252,68 @@
         const results = [];
         const seen = new Set();
         const OWNER_KEYWORDS = ['your insights', 'edit', 'analytics', 'stats'];
+        // Blacklist non-track URL patterns
+        const BLACKLIST = ['checkout.soundcloud.com', '/pages/', '/legal/', '/tags/', '/search', '/discover', '/you/', '/settings/', '/notifications', 'cookie', 'privacy'];
 
+        // Find actual track title links: soundcloud.com/username/track-name
         document.querySelectorAll('a[href*="soundcloud.com/"]').forEach(a => {
             const href = a.getAttribute('href');
-            if (!href || href.includes('/you/') || href.includes('/search') || href.includes('/discover') || href.includes('/tags/')) return;
+            if (!href) return;
             const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
-            const parts = full.replace('https://soundcloud.com/', '').split('/').filter(Boolean);
-            if (parts.length < 2 || parts[0].startsWith('you')) return;
+
+            // Must match soundcloud.com/username/track-name (2+ path segments, no blacklisted)
+            if (BLACKLIST.some(b => full.toLowerCase().includes(b))) return;
+            const path = full.replace('https://soundcloud.com/', '');
+            const parts = path.split('/').filter(Boolean);
+            if (parts.length < 2) return;
+            // First segment must be a username (no dots, no dashes-only)
+            if (parts[0].includes('.') || parts[0] === '') return;
+
+            // Check this link is actually a track title (not a repost badge, not a comment link)
+            // The track title link is usually inside a heading or has specific styling
+            const isTitleLink = a.closest('h2, h3, [class*="trackTitle"], [class*="soundTitle"]');
+            // Or it's the main clickable track name in the card
+            const isInTrackCard = a.closest('[class*="sound"], [class*="track"], [class*="sc-media"]');
 
             let card = a;
             for (let i = 0; i < 20; i++) {
                 card = card.parentElement;
                 if (!card || card === document.body) break;
 
-                const btns = card.querySelectorAll('button');
-                if (btns.length >= 3) {
-                    for (const btn of btns) {
-                        const btnParent = btn.parentElement;
-                        if (btnParent && btnParent.querySelectorAll('button').length >= 3) {
-                            const btnTexts = Array.from(btnParent.querySelectorAll('button')).map(b => (b.textContent || '').trim().toLowerCase());
-                            const isOwner = OWNER_KEYWORDS.some(kw => btnTexts.some(t => t.includes(kw)));
-                            if (isOwner) {
-                                console.log("[direct] SKIP owner bar:", btnTexts.join(' | '));
-                                break;
-                            }
+                // Look for action bar: a container with like/repost buttons
+                const btns = Array.from(card.querySelectorAll('button'));
+                if (btns.length < 3) continue;
 
-                            const key = btnParent;
-                            if (!seen.has(key)) {
-                                seen.add(key);
-                                results.push({ container: btnParent, trackUrl: full });
-                                console.log("[direct] FOUND feed bar:", full, "buttons:", btnTexts.join(' | '));
-                            }
-                            break;
-                        }
+                // Check if this container has typical action bar buttons
+                const btnTexts = btns.map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
+                const hasLike = btnTexts.some(t => t.includes('like') || t.includes('unlike') || t === '');
+                const hasShare = btnTexts.some(t => t.includes('share'));
+                const hasMore = btnTexts.some(t => t.includes('more') || t === '...');
+
+                // Must have at least like + one other action
+                if (!hasLike && !hasShare && !hasMore) continue;
+
+                // Skip owner toolbars
+                const isOwner = OWNER_KEYWORDS.some(kw => btnTexts.some(t => t.includes(kw)));
+                if (isOwner) continue;
+
+                // Find the button row (parent with 3+ buttons)
+                for (const btn of btns) {
+                    const btnParent = btn.parentElement;
+                    if (!btnParent) continue;
+                    const rowBtns = btnParent.querySelectorAll('button');
+                    if (rowBtns.length < 3) continue;
+
+                    const key = btnParent;
+                    if (!seen.has(key)) {
+                        seen.add(key);
+                        results.push({ container: btnParent, trackUrl: full });
                     }
                     break;
                 }
+                break;
             }
         });
-        console.log("[direct] total feed bars found:", results.length);
         return results;
     }
 
