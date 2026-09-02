@@ -380,13 +380,4 @@
             }, 1000);
         }
     }, 1000);
-
-    // Re-inject when new elements appear (SPA dynamic loading)
-    const PLAYER_BTN_ID = BTN_ID + "-player";
-    const obs = new MutationObserver(() => {
-        if (!document.getElementById(PLAYER_BTN_ID) && document.querySelector('footer, [role="contentinfo"]')) {
-            createButtons();
-        }
-    });
-    obs.observe(document.body, {childList:true, subtree:true});
 })();
