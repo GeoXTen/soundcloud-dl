@@ -11,14 +11,14 @@
         "128": "images/icons/128.png"
     },
     "default_locale": "en",
-    "homepage_url": "https://addoncrop.com/soundcloud-music-downloader/",
+    "homepage_url": "https://github.com/GeoXTen/soundcloud-dl",
 
     "action": {
         "default_icon": "images/icons/popup.png",
         "default_popup": "html/popup.html"
     },
 
-    "author": "Addoncrop",
+    "author": "GeoXTen",
     "background": {
         "service_worker": "js/service-worker.js"
     },
