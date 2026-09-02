@@ -252,16 +252,15 @@
         const results = [];
         const seenRows = new Set();
 
-        // Find button group containers by class or structure
-        const candidates = document.querySelectorAll('.sc-button-group, [class*="soundActions"], [class*="actionBar"], [class*="buttonGroup"]');
-        console.log("[direct] button group candidates:", candidates.length);
+        // SoundCloud uses playableTile__actionWrapper for feed action bars
+        const actionBars = document.querySelectorAll('.playableTile__actionWrapper, [class*="actionWrapper"], [class*="soundActions__"]');
+        console.log("[direct] action bar candidates:", actionBars.length);
 
-        candidates.forEach(row => {
+        actionBars.forEach(row => {
             if (seenRows.has(row)) return;
             if (row.closest('footer, [role="contentinfo"], [class*="playback"], [class*="miniplayer"]')) return;
 
-            // Find all clickable elements inside
-            const allBtns = row.querySelectorAll('button, a[class*="sc-button"], [role="button"], [class*="sc-button"]');
+            const allBtns = row.querySelectorAll('button, a[class*="sc-button"], [role="button"]');
             if (allBtns.length < 3 || allBtns.length > 10) return;
 
             const texts = Array.from(allBtns).map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
@@ -269,32 +268,53 @@
             if (!hasAction) return;
             if (texts.some(t => t.includes('your insights') || t.includes('analytics'))) return;
 
+            // Walk up to find track link — go to the card container
             let trackUrl = null;
-            let el = row;
-            for (let i = 0; i < 15; i++) {
-                el = el.parentElement;
-                if (!el || el === document.body) break;
-                const link = el.querySelector('a[href*="soundcloud.com/"]');
+            const card = row.closest('.audibleTile, .playableTile, [class*="sound"], [class*="track"], li, article');
+            if (card) {
+                const link = card.querySelector('a[href*="soundcloud.com/"]');
                 if (link) {
                     const href = link.getAttribute('href');
                     if (href) {
                         const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
-                        if (!full.includes('checkout.') && !full.includes('/pages/') && !full.includes('/you/') && !full.includes('/search') && !full.includes('/discover') && !full.includes('/tags/') && !full.includes('/legal/')) {
+                        if (!full.includes('checkout.') && !full.includes('/pages/') && !full.includes('/you/') && !full.includes('/search') && !full.includes('/discover')) {
                             const path = full.replace('https://soundcloud.com/', '');
                             const p = path.split('/').filter(Boolean);
                             if (p.length >= 2 && !p[0].includes('.')) {
                                 trackUrl = full;
-                                break;
                             }
                         }
                     }
                 }
             }
 
+            // Fallback: walk up manually
+            if (!trackUrl) {
+                let el = row;
+                for (let i = 0; i < 15; i++) {
+                    el = el.parentElement;
+                    if (!el || el === document.body) break;
+                    const links = el.querySelectorAll('a[href*="soundcloud.com/"]');
+                    for (const a of links) {
+                        const href = a.getAttribute('href');
+                        if (!href) continue;
+                        const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
+                        if (full.includes('checkout.') || full.includes('/pages/') || full.includes('/you/') || full.includes('/search') || full.includes('/discover') || full.includes('/tags/') || full.includes('/legal/')) continue;
+                        const path = full.replace('https://soundcloud.com/', '');
+                        const p = path.split('/').filter(Boolean);
+                        if (p.length >= 2 && !p[0].includes('.')) {
+                            trackUrl = full;
+                            break;
+                        }
+                    }
+                    if (trackUrl) break;
+                }
+            }
+
             if (trackUrl) {
                 seenRows.add(row);
                 results.push({ container: row, trackUrl });
-                console.log("[direct] MATCHED group:", trackUrl.substring(30));
+                console.log("[direct] MATCHED:", trackUrl.substring(40));
             }
         });
         return results;
