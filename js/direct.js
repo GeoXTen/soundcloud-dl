@@ -251,20 +251,23 @@
     function findFeedActionBars() {
         const results = [];
         const seenRows = new Set();
-        const OWNER_KEYWORDS = ['your insights', 'edit', 'analytics', 'stats'];
 
         document.querySelectorAll('button, [role="button"]').forEach(btn => {
             const row = btn.parentElement;
             if (!row || seenRows.has(row)) return;
             if (row.closest('footer, [role="contentinfo"], [class*="playback"], [class*="miniplayer"]')) return;
 
+            // Count button descendants in this row only
             const allBtns = row.querySelectorAll('button, [role="button"]');
             if (allBtns.length < 3 || allBtns.length > 8) return;
 
+            // Check that this row's OWN buttons include action buttons
             const texts = Array.from(allBtns).map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
             const hasAction = texts.some(t => t.includes('like') || t.includes('unlike') || t.includes('repost') || t.includes('share') || t.includes('more') || t === '...');
             if (!hasAction) return;
-            if (OWNER_KEYWORDS.some(kw => texts.some(t => t.includes(kw)))) return;
+
+            // Skip owner toolbars — check THIS row's buttons only (not parent)
+            if (texts.some(t => t.includes('your insights') || t.includes('analytics'))) return;
 
             // Walk up to find track link
             let trackUrl = null;
@@ -294,29 +297,6 @@
                 results.push({ container: row, trackUrl });
             }
         });
-
-        // DEBUG: if 0 results, dump what button groups exist
-        if (results.length === 0) {
-            const debugRows = new Map();
-            document.querySelectorAll('button, [role="button"]').forEach(btn => {
-                const row = btn.parentElement;
-                if (!row) return;
-                const key = row;
-                if (!debugRows.has(key)) debugRows.set(key, { count: 0, texts: [] });
-                const info = debugRows.get(key);
-                info.count++;
-                info.texts.push((btn.getAttribute('aria-label') || btn.textContent || '').trim().substring(0, 15));
-            });
-            // Show rows with 3+ buttons
-            let shown = 0;
-            debugRows.forEach((info, row) => {
-                if (info.count >= 3 && info.count <= 8 && shown < 3) {
-                    console.log("[direct] DEBUG row:", info.count, "btns:", info.texts.join(' | '), "parent:", row.className.substring(0, 60));
-                    shown++;
-                }
-            });
-        }
-
         return results;
     }
 
