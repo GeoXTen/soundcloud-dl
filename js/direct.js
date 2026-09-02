@@ -271,7 +271,7 @@
             return null;
         }
 
-        // Type 1: List items (artist tracks page, stream) — soundList__item with soundActions
+        // Type 1: List items (artist tracks page, stream, reposts) — soundList__item with soundActions
         const listItems = document.querySelectorAll('.soundList__item, .sc-list-nostyle > li');
         listItems.forEach(item => {
             if (seenContainers.has(item)) return;
@@ -281,13 +281,55 @@
             const allBtns = actionBar.querySelectorAll('button, a[class*="sc-button"], [role="button"]');
             if (allBtns.length < 1) return;
 
-            // Get track URL from artwork link or title link
+            // Get track URL — prefer individual track links over album/set links
             let trackUrl = null;
-            const artLink = item.querySelector('a.sound__coverArt, a[class*="coverArt"], a[class*="artwork"]');
-            if (artLink) trackUrl = getTrackUrl(artLink.getAttribute('href'));
+
+            // 1. Try artwork cover link (most reliable for individual tracks)
+            const artLink = item.querySelector('a.sound__coverArt');
+            if (artLink) {
+                const href = artLink.getAttribute('href');
+                if (href && !href.includes('/sets/') && !href.includes('/albums/')) {
+                    trackUrl = getTrackUrl(href);
+                }
+            }
+
+            // 2. Try title link
             if (!trackUrl) {
-                const titleLink = item.querySelector('.soundTitle__titleContainer a, a.soundTitle__title');
-                if (titleLink) trackUrl = getTrackUrl(titleLink.getAttribute('href'));
+                const titleLinks = item.querySelectorAll('.soundTitle__titleContainer a, .soundTitle a[href]');
+                for (const a of titleLinks) {
+                    const href = a.getAttribute('href');
+                    if (href && !href.includes('/sets/') && !href.includes('/albums/')) {
+                        trackUrl = getTrackUrl(href);
+                        if (trackUrl) break;
+                    }
+                }
+            }
+
+            // 3. Fallback: find ANY link to an individual track (not set/playlist/user)
+            if (!trackUrl) {
+                const links = item.querySelectorAll('a[href]');
+                for (const a of links) {
+                    const href = a.getAttribute('href');
+                    if (!href) continue;
+                    if (href.includes('/sets/') || href.includes('/albums/') ||
+                        href.includes('checkout.') || href.includes('gate.sc') ||
+                        href.includes('/tags/') || href.includes('/you/')) continue;
+                    const url = getTrackUrl(href);
+                    if (url) { trackUrl = url; break; }
+                }
+            }
+
+            // 4. Last resort: extract from aria-label "Track: X by Y"
+            if (!trackUrl) {
+                const group = item.querySelector('[role="group"][aria-label]');
+                if (group) {
+                    const label = group.getAttribute('aria-label') || '';
+                    const match = label.match(/Track:\s*(.+?)\s*by\s+/i);
+                    if (match) {
+                        // Use the track name to construct a search - but we can't resolve without API
+                        // Skip this, rely on player bar fallback in handleDownload
+                    }
+                }
             }
 
             if (trackUrl) {
