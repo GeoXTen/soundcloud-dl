@@ -1,0 +1,3 @@
+.playwright-mcp/
+*.ps1
+.playwright-mcp

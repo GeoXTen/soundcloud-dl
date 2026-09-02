@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Options</title>
+
+    <link rel="stylesheet" href="../css/options.css">
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+    // MV3 polyfill: chrome.runtime.getBackgroundPage() is removed in MV3.
+    // The background engine runs in the service worker context.
+    // This shim creates a proxy that communicates via messaging.
+    if (chrome && chrome.runtime && !chrome.runtime.getBackgroundPage) {
+        chrome.runtime.getBackgroundPage = function() {
+            return new Promise(function(resolve) {
+                var proxy = new Proxy({}, {
+                    get: function(target, prop) {
+                        // Properties that the options page accesses
+                        if (prop === Symbol.toPrimitive || prop === Symbol.toStringTag || prop === "then" || prop === "constructor" || prop === "toString" || prop === "valueOf") {
+                            return undefined;
+                        }
+                        // Return a function for method calls
+                        return function() {
+                            var args = Array.prototype.slice.call(arguments);
+                            return new Promise(function(res, rej) {
+                                try {
+                                    chrome.runtime.sendMessage({
+                                        _backgroundCall: true,
+                                        method: prop,
+                                        args: args
+                                    }, function(response) {
+                                        if (chrome.runtime.lastError) {
+                                            rej(new Error(chrome.runtime.lastError.message));
+                                        } else {
+                                            res(response && response.result);
+                                        }
+                                    });
+                                } catch(e) {
+                                    rej(e);
+                                }
+                            });
+                        };
+                    }
+                });
+                resolve({ engine: proxy });
+            });
+        };
+    }
+    </script>
+
+    <script src="../js/options.js"></script>
+</body>
+</html>
