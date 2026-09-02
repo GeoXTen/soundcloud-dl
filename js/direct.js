@@ -237,7 +237,7 @@
         const btn = document.createElement("button");
         btn.className = "sc-button sc-button-small sc-button-icon sc-dl-feed-btn";
         btn.title = "Download this track";
-        btn.style.cssText = "background:#ff5500;color:#fff;border-color:#ff5500;cursor:pointer;";
+        btn.style.cssText = "background:#ff5500;color:#fff;border-color:#ff5500;cursor:pointer;display:inline-flex!important;flex-shrink:0;vertical-align:middle;";
         btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>';
         btn.addEventListener("click", (e) => handleDownload(e, trackUrl));
         return btn;
@@ -368,7 +368,13 @@
             feedBars.forEach(({ container, trackUrl }) => {
                 if (container.querySelector('.sc-dl-feed-btn')) return;
                 const btn = makeFeedBtn(trackUrl);
-                container.insertBefore(btn, container.firstChild);
+                // Insert before the "More" (three dots) button to stay inline
+                const moreBtn = container.querySelector('[aria-label*="More"], [title*="More"], button:last-child');
+                if (moreBtn) {
+                    container.insertBefore(btn, moreBtn);
+                } else {
+                    container.appendChild(btn);
+                }
                 injected = true;
                 console.log("[direct] injected button for:", trackUrl);
             });
