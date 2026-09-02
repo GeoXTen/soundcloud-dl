@@ -251,25 +251,18 @@
     function findFeedActionBars() {
         const results = [];
         const seenRows = new Set();
-        let debugDone = false;
 
-        document.querySelectorAll('button, [role="button"]').forEach(btn => {
-            const row = btn.parentElement;
-            if (!row || seenRows.has(row)) return;
+        // Find button group containers by class or structure
+        const candidates = document.querySelectorAll('.sc-button-group, [class*="soundActions"], [class*="actionBar"], [class*="buttonGroup"]');
+        console.log("[direct] button group candidates:", candidates.length);
+
+        candidates.forEach(row => {
+            if (seenRows.has(row)) return;
             if (row.closest('footer, [role="contentinfo"], [class*="playback"], [class*="miniplayer"]')) return;
 
-            const allBtns = row.querySelectorAll('button, [role="button"]');
-            const count = allBtns.length;
-
-            // Only log first 5 interesting rows
-            if (!debugDone && count >= 3) {
-                const texts = Array.from(allBtns).map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().substring(0, 12));
-                const hasAct = texts.some(t => t.toLowerCase().includes('like') || t.toLowerCase().includes('repost') || t.toLowerCase().includes('share') || t.toLowerCase().includes('more') || t === '...');
-                console.log("[direct] ROW count=" + count + " hasAction=" + hasAct + " texts=" + texts.join(' | ') + " rowTag=" + row.tagName + " rowClass=" + (row.className || '').substring(0, 40));
-                if (count >= 3 && count <= 8 && hasAct) debugDone = true;
-            }
-
-            if (count < 3 || count > 8) return;
+            // Find all clickable elements inside
+            const allBtns = row.querySelectorAll('button, a[class*="sc-button"], [role="button"], [class*="sc-button"]');
+            if (allBtns.length < 3 || allBtns.length > 10) return;
 
             const texts = Array.from(allBtns).map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
             const hasAction = texts.some(t => t.includes('like') || t.includes('unlike') || t.includes('repost') || t.includes('share') || t.includes('more') || t === '...');
@@ -301,6 +294,7 @@
             if (trackUrl) {
                 seenRows.add(row);
                 results.push({ container: row, trackUrl });
+                console.log("[direct] MATCHED group:", trackUrl.substring(30));
             }
         });
         return results;
