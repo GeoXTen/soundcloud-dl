@@ -250,7 +250,6 @@
     function findFeedActionBars() {
         const results = [];
         const seen = new Set();
-        // Owner toolbar keywords — skip these containers
         const OWNER_KEYWORDS = ['your insights', 'edit', 'analytics', 'stats'];
 
         document.querySelectorAll('a[href*="soundcloud.com/"]').forEach(a => {
@@ -270,15 +269,18 @@
                     for (const btn of btns) {
                         const btnParent = btn.parentElement;
                         if (btnParent && btnParent.querySelectorAll('button').length >= 3) {
-                            // Skip owner toolbars
                             const btnTexts = Array.from(btnParent.querySelectorAll('button')).map(b => (b.textContent || '').trim().toLowerCase());
                             const isOwner = OWNER_KEYWORDS.some(kw => btnTexts.some(t => t.includes(kw)));
-                            if (isOwner) break;
+                            if (isOwner) {
+                                console.log("[direct] SKIP owner bar:", btnTexts.join(' | '));
+                                break;
+                            }
 
                             const key = btnParent;
                             if (!seen.has(key)) {
                                 seen.add(key);
                                 results.push({ container: btnParent, trackUrl: full });
+                                console.log("[direct] FOUND feed bar:", full, "buttons:", btnTexts.join(' | '));
                             }
                             break;
                         }
@@ -287,6 +289,7 @@
                 }
             }
         });
+        console.log("[direct] total feed bars found:", results.length);
         return results;
     }
 
@@ -321,15 +324,17 @@
 
         // === FEED PAGE: inject button on EVERY track card ===
         const feedBars = findFeedActionBars();
+        console.log("[direct] feed bars to inject:", feedBars.length);
         if (feedBars.length > 0) {
             feedBars.forEach(({ container, trackUrl }) => {
+                // Skip if we already injected here
+                if (container.querySelector('.sc-dl-feed-btn')) return;
                 const btn = makeFeedBtn(trackUrl);
                 btn.classList.add("sc-dl-feed-btn");
-                // Append to the action bar (after all existing buttons)
                 container.appendChild(btn);
                 injected = true;
+                console.log("[direct] injected button for:", trackUrl);
             });
-            console.log(`[direct] injected ${feedBars.length} feed download button(s)`);
         }
 
         // === PLAYER BAR: mini orange circle ===
