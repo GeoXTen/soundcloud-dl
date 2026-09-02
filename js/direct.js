@@ -368,7 +368,12 @@
             feedBars.forEach(({ container, trackUrl }) => {
                 if (container.querySelector('.sc-dl-feed-btn')) return;
                 const btn = makeFeedBtn(trackUrl);
-                container.appendChild(btn);
+                const btnGroup = container.querySelector('.sc-button-group');
+                if (btnGroup) {
+                    btnGroup.appendChild(btn);
+                } else {
+                    container.appendChild(btn);
+                }
                 injected = true;
                 console.log("[direct] injected button for:", trackUrl);
             });
