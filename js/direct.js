@@ -253,59 +253,39 @@
         const seen = new Set();
         const OWNER_KEYWORDS = ['your insights', 'edit', 'analytics', 'stats'];
 
-        // Strategy: find all button rows that look like track action bars
-        // A track action bar has 3-7 buttons (heart, repost, share, queue, more, maybe comments)
-        // and is NOT in the footer/player
-        document.querySelectorAll('button').forEach(btn => {
-            const row = btn.parentElement;
-            if (!row) return;
-            const rowBtns = Array.from(row.querySelectorAll('button'));
-            if (rowBtns.length < 3 || rowBtns.length > 8) return;
-            // Skip if already processed this row
-            if (seen.has(row)) return;
-            // Skip footer/player
-            if (row.closest('footer, [role="contentinfo"], [class*="playback"]')) return;
+        // Find ALL track links, then find the nearest button row for each
+        document.querySelectorAll('a[href*="soundcloud.com/"]').forEach(a => {
+            const href = a.getAttribute('href');
+            if (!href) return;
+            const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
+            // Skip non-track URLs
+            if (full.includes('checkout.') || full.includes('/pages/') || full.includes('/you/') || full.includes('/search') || full.includes('/discover') || full.includes('/tags/') || full.includes('/legal/')) return;
+            const path = full.replace('https://soundcloud.com/', '');
+            const parts = path.split('/').filter(Boolean);
+            if (parts.length < 2 || parts[0].includes('.')) return;
 
-            const texts = rowBtns.map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
+            // Walk up from this link to find the nearest button row
+            let el = a;
+            for (let i = 0; i < 25; i++) {
+                el = el.parentElement;
+                if (!el || el === document.body) break;
 
-            // Skip owner toolbars
-            if (OWNER_KEYWORDS.some(kw => texts.some(t => t.includes(kw)))) return;
+                // Check if THIS element has 3+ buttons directly (the action bar row)
+                const directBtns = Array.from(el.children).filter(c => c.tagName === 'BUTTON');
+                if (directBtns.length >= 3) {
+                    // Found a button row — check it's not an owner toolbar
+                    const allRowBtns = Array.from(el.querySelectorAll('button'));
+                    const texts = allRowBtns.map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
+                    if (OWNER_KEYWORDS.some(kw => texts.some(t => t.includes(kw)))) break;
+                    // Must have like/repost/share
+                    if (!texts.some(t => t.includes('like') || t.includes('unlike') || t.includes('repost') || t.includes('share'))) break;
 
-            // Check if this looks like a track action bar (has heart/like or repost)
-            const hasHeart = texts.some(t => t.includes('like') || t.includes('unlike'));
-            const hasRepost = texts.some(t => t.includes('repost'));
-            const hasShare = texts.some(t => t.includes('share'));
-            const hasMore = texts.some(t => t.includes('more') || t === '...');
-
-            if (!hasHeart && !hasRepost && !hasShare && !hasMore) return;
-
-            // Find the track URL by walking up to find a track link
-            let trackUrl = null;
-            let card = row;
-            for (let i = 0; i < 15; i++) {
-                card = card.parentElement;
-                if (!card || card === document.body) break;
-                const links = card.querySelectorAll('a[href*="soundcloud.com/"]');
-                for (const a of links) {
-                    const href = a.getAttribute('href');
-                    if (!href) continue;
-                    const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
-                    // Skip non-track links
-                    if (full.includes('checkout.') || full.includes('/pages/') || full.includes('/you/') || full.includes('/search') || full.includes('/discover')) continue;
-                    const path = full.replace('https://soundcloud.com/', '');
-                    const parts = path.split('/').filter(Boolean);
-                    if (parts.length >= 2 && !parts[0].includes('.')) {
-                        trackUrl = full;
-                        break;
+                    if (!seen.has(el)) {
+                        seen.add(el);
+                        results.push({ container: el, trackUrl: full });
                     }
+                    break;
                 }
-                if (trackUrl) break;
-            }
-
-            if (trackUrl) {
-                seen.add(row);
-                results.push({ container: row, trackUrl });
-                console.log("[direct] MATCHED:", trackUrl, "buttons:", texts.join(' | '));
             }
         });
         return results;
@@ -408,22 +388,6 @@
     // Re-inject when SoundCloud lazy-loads new feed items on scroll
     let debounceTimer = null;
     const scrollObs = new MutationObserver(() => {
-        // Only re-inject if there are feed items without download buttons
-        const feedBars = document.querySelectorAll('button');
-        let hasUnbuttoned = false;
-        for (const b of feedBars) {
-            const row = b.parentElement;
-            if (!row || row.closest('footer, [role="contentinfo"]')) continue;
-            const rowBtns = Array.from(row.querySelectorAll('button'));
-            if (rowBtns.length >= 3 && rowBtns.length <= 8) {
-                if (!row.querySelector('.sc-dl-feed-btn')) {
-                    hasUnbuttoned = true;
-                    break;
-                }
-            }
-        }
-        if (!hasUnbuttoned) return;
-        // Debounce: wait 300ms after last mutation
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => { createButtons(); }, 300);
     });
