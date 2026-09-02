@@ -184,14 +184,45 @@
         return null;
     }
 
+    // Toast download indicator
+    let toastCount = 0;
+    function showDownloadToast(name) {
+        const id = "sc-dl-toast-" + (++toastCount);
+        let c = document.getElementById("sc-dl-toast-container");
+        if (!c) {
+            c = document.createElement("div");
+            c.id = "sc-dl-toast-container";
+            c.style.cssText = "position:fixed;top:20px;right:20px;z-index:999999;display:flex;flex-direction:column;gap:8px;pointer-events:none;";
+            document.body.appendChild(c);
+        }
+        const t = document.createElement("div");
+        t.id = id;
+        t.style.cssText = "pointer-events:auto;background:#1a1a2e;color:#fff;padding:12px 18px;border-radius:10px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;display:flex;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(0,0,0,0.4);border:1px solid rgba(255,85,0,0.3);opacity:0;transform:translateX(40px);transition:all 0.3s cubic-bezier(0.4,0,0.2,1);min-width:220px;max-width:320px;";
+        // Spinner (react-spinners-kit PushSpinner style)
+        t.innerHTML = '<div style="flex-shrink:0;width:22px;height:22px;position:relative;"><div style="width:100%;height:100%;border:3px solid rgba(255,85,0,0.2);border-top-color:#ff5500;border-radius:50%;animation:sc-dl-spin 0.8s linear infinite;"></div></div><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (name || "track") + '</span>';
+        c.appendChild(t);
+        requestAnimationFrame(() => { t.style.opacity = "1"; t.style.transform = "translateX(0)"; });
+        return id;
+    }
+    function hideDownloadToast(id) {
+        if (!id) return;
+        const t = document.getElementById(id);
+        if (!t) return;
+        t.style.opacity = "0";
+        t.style.transform = "translateX(40px)";
+        setTimeout(() => t.remove(), 300);
+    }
+
     // Download handler — accepts trackUrl param for multi-track feed injection
     async function handleDownload(e, trackUrl) {
         const btn = e.currentTarget;
         e.preventDefault(); e.stopPropagation();
         const isMini = btn.id.includes("-player");
-        btn.disabled = true; btn.classList.add("loading"); const orig = btn.innerHTML;
+        btn.disabled = true; const orig = btn.innerHTML;
         btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 4a8 8 0 018 8h-2a6 6 0 00-6-6V4z"/></svg>';
         if (isMini) btn.style.opacity = "0.7";
+        const toastName = trackUrl ? trackUrl.split('/').filter(Boolean).pop().replace(/-/g, ' ') : "track";
+        const toast = showDownloadToast(toastName);
         try {
             const cid = await getClientId(); if (!cid) throw new Error("Could not get client_id");
             let trackId = null;
@@ -217,6 +248,9 @@
             let filename = getArtistTitle(lastApiInfo) || getTrackTitle(lastApiInfo && lastApiInfo.title);
             if (!filename.endsWith(".mp3")) filename += ".mp3";
             filename = filename.replace(/^\.+/, "").substring(0, 180);
+            // Update toast with actual filename
+            const toastEl = document.getElementById(toast);
+            if (toastEl) { const sp = toastEl.querySelector('span'); if (sp) sp.textContent = filename; }
             try {
                 const blob = await fetch(streamUrl).then(r => {
                     if (!r.ok) throw new Error("fetch mp3 failed " + r.status);
@@ -227,18 +261,21 @@
                 a.href = blobUrl; a.download = filename; a.style.display = "none";
                 document.body.appendChild(a); a.click();
                 setTimeout(() => { URL.revokeObjectURL(blobUrl); a.remove(); }, 1000);
-                btn.disabled = false; btn.classList.remove("loading"); btn.innerHTML = orig; btn.style.opacity = "";
+                btn.disabled = false; btn.innerHTML = orig; btn.style.opacity = "";
+                hideDownloadToast(toast);
                 return;
             } catch(e) {
                 console.log("[direct] blob download failed:", e.message);
             }
             chrome.runtime.sendMessage({messageRecipient:"__SC_DIRECT__", action:"download", url: streamUrl, filename: filename}, (resp) => {
-                btn.disabled = false; btn.classList.remove("loading"); btn.innerHTML = orig; btn.style.opacity = "";
+                btn.disabled = false; btn.innerHTML = orig; btn.style.opacity = "";
+                hideDownloadToast(toast);
             });
-            setTimeout(() => { if (btn.disabled) { btn.disabled = false; btn.classList.remove("loading"); btn.innerHTML = orig; btn.style.opacity = ""; } }, 8000);
+            setTimeout(() => { if (btn.disabled) { btn.disabled = false; btn.innerHTML = orig; btn.style.opacity = ""; hideDownloadToast(toast); } }, 8000);
         } catch(err) {
             console.log("[direct] download failed:", err.message);
-            btn.disabled = false; btn.classList.remove("loading");
+            btn.disabled = false;
+            hideDownloadToast(toast);
             if (isMini) { btn.innerHTML = orig; btn.style.opacity = ""; btn.title = err.message; }
             else { btn.innerHTML = orig; }
         }
@@ -385,6 +422,32 @@
             }
         });
 
+        // Type 3: Likes/Library grid tiles — audibleTile.playableTile without playableTile__actionWrapper
+        const gridTiles = document.querySelectorAll('.audibleTile.playableTile');
+        gridTiles.forEach(tile => {
+            if (tile.closest('footer, [role="contentinfo"], [class*="playback"], [class*="miniplayer"]')) return;
+            const tileKey = tile.className + tile.querySelector('a[href]')?.getAttribute('href');
+            if (seenContainers.has(tileKey)) return;
+
+            // Get track URL from artwork link or any track link
+            let trackUrl = null;
+            const artLink = tile.querySelector('a[href]');
+            if (artLink) trackUrl = getTrackUrl(artLink.getAttribute('href'));
+            if (!trackUrl) {
+                const allLinks = tile.querySelectorAll('a[href]');
+                for (const a of allLinks) {
+                    const url = getTrackUrl(a.getAttribute('href'));
+                    if (url) { trackUrl = url; break; }
+                }
+            }
+            if (!trackUrl) return;
+
+            // Find the action row — either .playableTile__actionWrapper or the tile itself
+            const actionRow = tile.querySelector('.playableTile__actionWrapper') || tile;
+            seenContainers.add(tileKey);
+            results.push({ container: actionRow, trackUrl });
+        });
+
         return results;
     }
 
@@ -395,7 +458,6 @@
         const st = document.createElement("style");
         st.id = PLAYER_ID + "-style";
         st.textContent = `
-            @keyframes sc-dl-spin{to{transform:rotate(360deg)}}
             #${PLAYER_ID}{
                 width:32px!important;height:32px!important;min-width:32px!important;min-height:32px!important;max-width:32px!important;
                 border-radius:50%!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
@@ -408,8 +470,7 @@
             #${PLAYER_ID}:hover{transform:scale(1.1)!important;box-shadow:0 4px 12px rgba(255,85,0,0.5)!important;}
             #${PLAYER_ID}:active{transform:scale(0.95)!important;}
             #${PLAYER_ID} svg{pointer-events:none!important;}
-            .sc-dl-feed-btn[disabled],.sc-dl-feed-btn.loading{opacity:0.7!important;pointer-events:none!important;}
-            .sc-dl-feed-btn svg{animation:sc-dl-spin 0.8s linear infinite!important;}
+            @keyframes sc-dl-spin{to{transform:rotate(360deg)}}
         `;
         document.head.appendChild(st);
     }
@@ -426,7 +487,8 @@
             feedBars.forEach(({ container, trackUrl }) => {
                 if (container.querySelector('.sc-dl-feed-btn')) return;
                 const btn = makeFeedBtn(trackUrl);
-                const btnGroup = container.querySelector('.sc-button-group');
+                // Try sc-button-group first, then sc-button-toolbar, then append to container
+                const btnGroup = container.querySelector('.sc-button-group, .sc-button-toolbar');
                 if (btnGroup) {
                     btnGroup.appendChild(btn);
                 } else {
