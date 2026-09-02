@@ -331,8 +331,6 @@
         console.log("[direct] total track buttons:", results.length);
         return results;
     }
-        return results;
-    }
 
     // Inject style for player mini button (once)
     function injectPlayerStyle() {
