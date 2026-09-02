@@ -1,4 +1,5 @@
 // Direct SoundCloud downloader - bypasses CrossPilot, no eval needed
+// Requires lame.min.js for MP3 trimming
 (function() {
     console.log("[direct] SoundCloud direct downloader loaded at", location.href);
     const BTN_ID = "sc-direct-download-btn";
@@ -211,6 +212,224 @@
         t.style.opacity = "0";
         t.style.transform = "translateX(40px)";
         setTimeout(() => t.remove(), 300);
+    }
+
+    // Trim popup UI
+    function showTrimPopup(apiInfo, streamUrl, filename) {
+        return new Promise((resolve) => {
+            const duration = apiInfo.duration ? Math.floor(apiInfo.duration / 1000) : 0;
+            const formatTime = (s) => {
+                const h = Math.floor(s / 3600);
+                const m = Math.floor((s % 3600) / 60);
+                const sec = s % 60;
+                return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+            };
+            const parseTime = (str) => {
+                const parts = str.split(':').map(Number);
+                if (parts.length === 3) return parts[0]*3600 + parts[1]*60 + parts[2];
+                if (parts.length === 2) return parts[0]*60 + parts[1];
+                return parts[0] || 0;
+            };
+
+            // Remove existing popup
+            const existing = document.getElementById('sc-dl-trim-popup');
+            if (existing) existing.remove();
+
+            const overlay = document.createElement('div');
+            overlay.id = 'sc-dl-trim-popup';
+            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:999998;display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;';
+
+            const popup = document.createElement('div');
+            popup.style.cssText = 'background:#1a1a2e;border-radius:16px;padding:24px;width:380px;max-width:90vw;color:#fff;box-shadow:0 8px 40px rgba(0,0,0,0.5);border:1px solid rgba(255,85,0,0.2);';
+
+            const trackName = filename.replace('.mp3', '').substring(0, 40);
+            const durationStr = duration ? formatTime(duration) : '--:--:--';
+
+            popup.innerHTML = `
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+                    <div style="width:40px;height:40px;background:rgba(255,85,0,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#ff5500"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px;">${trackName}</div>
+                        <div style="font-size:12px;color:#888;">Duration: ${durationStr}</div>
+                    </div>
+                </div>
+
+                <div style="background:#12122a;border-radius:10px;padding:16px;margin-bottom:16px;">
+                    <div style="font-size:13px;color:#aaa;margin-bottom:12px;">Trim (optional)</div>
+                    
+                    <div style="display:flex;gap:12px;margin-bottom:12px;">
+                        <div style="flex:1;">
+                            <label style="font-size:11px;color:#666;display:block;margin-bottom:4px;">From</label>
+                            <input id="sc-trim-from" type="text" value="00:00:00" placeholder="00:00:00"
+                                style="width:100%;background:#0a0a1a;border:1px solid #333;border-radius:6px;padding:8px 10px;color:#fff;font-size:13px;font-family:monospace;outline:none;box-sizing:border-box;"
+                            />
+                        </div>
+                        <div style="flex:1;">
+                            <label style="font-size:11px;color:#666;display:block;margin-bottom:4px;">To</label>
+                            <input id="sc-trim-to" type="text" value="${durationStr}" placeholder="${durationStr}"
+                                style="width:100%;background:#0a0a1a;border:1px solid #333;border-radius:6px;padding:8px 10px;color:#fff;font-size:13px;font-family:monospace;outline:none;box-sizing:border-box;"
+                            />
+                        </div>
+                    </div>
+
+                    ${duration ? `
+                    <div style="position:relative;height:32px;margin:8px 0;">
+                        <div style="position:absolute;top:14px;left:0;right:0;height:4px;background:#333;border-radius:2px;"></div>
+                        <div id="sc-trim-range" style="position:absolute;top:14px;height:4px;background:#ff5500;border-radius:2px;left:0;right:0;"></div>
+                        <input id="sc-trim-slider-from" type="range" min="0" max="${duration}" value="0" step="1"
+                            style="position:absolute;top:6px;left:0;width:100%;-webkit-appearance:none;background:transparent;pointer-events:none;z-index:2;margin:0;"
+                        />
+                        <input id="sc-trim-slider-to" type="range" min="0" max="${duration}" value="${duration}" step="1"
+                            style="position:absolute;top:6px;left:0;width:100%;-webkit-appearance:none;background:transparent;pointer-events:none;z-index:2;margin:0;"
+                        />
+                        <style>
+                            #sc-trim-slider-from::-webkit-slider-thumb,#sc-trim-slider-to::-webkit-slider-thumb{
+                                -webkit-appearance:none;width:16px;height:16px;background:#ff5500;border-radius:50%;cursor:pointer;
+                                pointer-events:all;box-shadow:0 2px 6px rgba(0,0,0,0.4);position:relative;z-index:3;
+                            }
+                            #sc-trim-slider-from::-webkit-slider-runnable-track,#sc-trim-slider-to::-webkit-slider-runnable-track{
+                                background:transparent;height:32px;
+                            }
+                        </style>
+                    </div>
+                    ` : ''}
+                </div>
+
+                <div style="display:flex;gap:10px;">
+                    <button id="sc-trim-cancel" style="flex:1;background:#222;color:#aaa;border:1px solid #333;border-radius:8px;padding:10px;font-size:13px;cursor:pointer;">Cancel</button>
+                    <button id="sc-trim-full" style="flex:1;background:#333;color:#fff;border:1px solid #444;border-radius:8px;padding:10px;font-size:13px;cursor:pointer;">Download Full</button>
+                    <button id="sc-trim-download" style="flex:1;background:#ff5500;color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;">Download</button>
+                </div>
+            `;
+
+            overlay.appendChild(popup);
+            document.body.appendChild(overlay);
+
+            // Elements
+            const fromInput = popup.querySelector('#sc-trim-from');
+            const toInput = popup.querySelector('#sc-trim-to');
+            const sliderFrom = popup.querySelector('#sc-trim-slider-from');
+            const sliderTo = popup.querySelector('#sc-trim-slider-to');
+            const rangeBar = popup.querySelector('#sc-trim-range');
+            const cancelBtn = popup.querySelector('#sc-trim-cancel');
+            const fullBtn = popup.querySelector('#sc-trim-full');
+            const downloadBtn = popup.querySelector('#sc-trim-download');
+
+            // Update range bar
+            function updateRange() {
+                if (!duration) return;
+                const from = parseInt(sliderFrom.value);
+                const to = parseInt(sliderTo.value);
+                const left = (Math.min(from, to) / duration) * 100;
+                const right = (Math.max(from, to) / duration) * 100;
+                rangeBar.style.left = left + '%';
+                rangeBar.style.width = (right - left) + '%';
+                fromInput.value = formatTime(Math.min(from, to));
+                toInput.value = formatTime(Math.max(from, to));
+            }
+
+            if (sliderFrom) {
+                sliderFrom.addEventListener('input', updateRange);
+                sliderTo.addEventListener('input', updateRange);
+            }
+
+            // Input sync
+            fromInput.addEventListener('change', () => {
+                if (sliderFrom && duration) sliderFrom.value = parseTime(fromInput.value);
+                updateRange();
+            });
+            toInput.addEventListener('change', () => {
+                if (sliderTo && duration) sliderTo.value = parseTime(toInput.value);
+                updateRange();
+            });
+
+            // Buttons
+            cancelBtn.addEventListener('click', () => { overlay.remove(); resolve(null); });
+            fullBtn.addEventListener('click', () => { overlay.remove(); resolve({ trim: false }); });
+            downloadBtn.addEventListener('click', () => {
+                const from = parseTime(fromInput.value);
+                const to = parseTime(toInput.value);
+                if (from >= to || to <= 0) {
+                    downloadBtn.style.background = '#ff3333';
+                    setTimeout(() => downloadBtn.style.background = '#ff5500', 500);
+                    return;
+                }
+                overlay.remove();
+                resolve({ trim: true, from, to });
+            });
+            overlay.addEventListener('click', (e) => { if (e.target === overlay) { overlay.remove(); resolve(null); } });
+        });
+    }
+
+    // Trim MP3 using Web Audio API + lamejs
+    function trimMp3(blob, fromSec, toSec) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = async function() {
+                try {
+                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    const audioBuffer = await audioCtx.decodeAudioData(reader.result);
+
+                    const sampleRate = audioBuffer.sampleRate;
+                    const channels = audioBuffer.numberOfChannels;
+                    const startSample = Math.floor(fromSec * sampleRate);
+                    const endSample = Math.floor(toSec * sampleRate);
+                    const length = endSample - startSample;
+
+                    if (length <= 0) { reject(new Error("Invalid trim range")); return; }
+
+                    // Extract channels
+                    const left = audioBuffer.getChannelData(0).subarray(startSample, endSample);
+                    const right = channels > 1 ? audioBuffer.getChannelData(1).subarray(startSample, endSample) : left;
+
+                    // Convert Float32 to Int16 for lamejs
+                    function floatTo16(float32) {
+                        const int16 = new Int16Array(float32.length);
+                        for (let i = 0; i < float32.length; i++) {
+                            const s = Math.max(-1, Math.min(1, float32[i]));
+                            int16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+                        }
+                        return int16;
+                    }
+
+                    const left16 = floatTo16(left);
+                    const right16 = floatTo16(right);
+
+                    // Encode to MP3 using lamejs
+                    const mp3Encoder = new lamejs.Mp3Encoder(channels, sampleRate, 128);
+                    const mp3Data = [];
+                    const chunkSize = 1152;
+
+                    for (let i = 0; i < left16.length; i += chunkSize) {
+                        const leftChunk = left16.subarray(i, i + chunkSize);
+                        const rightChunk = right16.subarray(i, i + chunkSize);
+                        const mp3buf = channels > 1
+                            ? mp3Encoder.encodeBuffer(leftChunk, rightChunk)
+                            : mp3Encoder.encodeBuffer(leftChunk);
+                        if (mp3buf.length > 0) mp3Data.push(new Uint8Array(mp3buf));
+                    }
+
+                    const end = mp3Encoder.flush();
+                    if (end.length > 0) mp3Data.push(new Uint8Array(end));
+
+                    // Combine chunks
+                    let totalLen = 0;
+                    for (const chunk of mp3Data) totalLen += chunk.length;
+                    const result = new Uint8Array(totalLen);
+                    let offset = 0;
+                    for (const chunk of mp3Data) { result.set(chunk, offset); offset += chunk.length; }
+
+                    audioCtx.close();
+                    resolve(new Blob([result], { type: 'audio/mpeg' }));
+                } catch(e) {
+                    reject(e);
+                }
+            };
+            reader.onerror = () => reject(new Error("Failed to read audio"));
+            reader.readAsArrayBuffer(blob);
+        });
     }
 
     // Write ID3v2.3 tags to MP3 blob (title, artist, album art)
@@ -470,17 +689,37 @@
             let filename = getArtistTitle(lastApiInfo) || getTrackTitle(lastApiInfo && lastApiInfo.title);
             if (!filename.endsWith(".mp3")) filename += ".mp3";
             filename = filename.replace(/^\.+/, "").substring(0, 180);
+
+            // Show trim popup
+            const trimResult = await showTrimPopup(lastApiInfo, streamUrl, filename);
+            if (!trimResult) {
+                btn.disabled = false; btn.innerHTML = orig; btn.style.opacity = "";
+                hideDownloadToast(toast);
+                return;
+            }
+
             // Update toast with actual filename
             const toastEl = document.getElementById(toast);
             if (toastEl) { const sp = toastEl.querySelector('span'); if (sp) sp.textContent = filename; }
+
             try {
                 const rawBlob = await fetch(streamUrl).then(r => {
                     if (!r.ok) throw new Error("fetch mp3 failed " + r.status);
                     return r.blob();
                 });
-                // Write ID3 tags (title, artist, album art)
-                const blob = await tagMp3Blob(rawBlob, lastApiInfo);
-                const blobUrl = URL.createObjectURL(blob);
+
+                let finalBlob;
+                if (trimResult.trim && typeof lamejs !== 'undefined') {
+                    // Trim mode: decode, trim, re-encode
+                    if (toastEl) { const sp = toastEl.querySelector('span'); if (sp) sp.textContent = "Trimming... " + filename; }
+                    finalBlob = await trimMp3(rawBlob, trimResult.from, trimResult.to);
+                    finalBlob = await tagMp3Blob(finalBlob, lastApiInfo);
+                } else {
+                    // Full mode
+                    finalBlob = await tagMp3Blob(rawBlob, lastApiInfo);
+                }
+
+                const blobUrl = URL.createObjectURL(finalBlob);
                 const a = document.createElement("a");
                 a.href = blobUrl; a.download = filename; a.style.display = "none";
                 document.body.appendChild(a); a.click();
