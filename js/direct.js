@@ -281,54 +281,31 @@
             const allBtns = actionBar.querySelectorAll('button, a[class*="sc-button"], [role="button"]');
             if (allBtns.length < 1) return;
 
-            // Get track URL — prefer individual track links over album/set links
+            // Get track URL — try multiple strategies
             let trackUrl = null;
 
-            // 1. Try artwork cover link (most reliable for individual tracks)
+            // 1. Try artwork cover link (most reliable)
             const artLink = item.querySelector('a.sound__coverArt');
-            if (artLink) {
-                const href = artLink.getAttribute('href');
-                if (href && !href.includes('/sets/') && !href.includes('/albums/')) {
-                    trackUrl = getTrackUrl(href);
-                }
-            }
+            if (artLink) trackUrl = getTrackUrl(artLink.getAttribute('href'));
 
-            // 2. Try title link
+            // 2. Try title link (individual track link)
             if (!trackUrl) {
                 const titleLinks = item.querySelectorAll('.soundTitle__titleContainer a, .soundTitle a[href]');
                 for (const a of titleLinks) {
                     const href = a.getAttribute('href');
-                    if (href && !href.includes('/sets/') && !href.includes('/albums/')) {
-                        trackUrl = getTrackUrl(href);
-                        if (trackUrl) break;
-                    }
-                }
-            }
-
-            // 3. Fallback: find ANY link to an individual track (not set/playlist/user)
-            if (!trackUrl) {
-                const links = item.querySelectorAll('a[href]');
-                for (const a of links) {
-                    const href = a.getAttribute('href');
-                    if (!href) continue;
-                    if (href.includes('/sets/') || href.includes('/albums/') ||
-                        href.includes('checkout.') || href.includes('gate.sc') ||
-                        href.includes('/tags/') || href.includes('/you/')) continue;
                     const url = getTrackUrl(href);
                     if (url) { trackUrl = url; break; }
                 }
             }
 
-            // 4. Last resort: extract from aria-label "Track: X by Y"
+            // 3. Fallback: ANY valid link in the item
             if (!trackUrl) {
-                const group = item.querySelector('[role="group"][aria-label]');
-                if (group) {
-                    const label = group.getAttribute('aria-label') || '';
-                    const match = label.match(/Track:\s*(.+?)\s*by\s+/i);
-                    if (match) {
-                        // Use the track name to construct a search - but we can't resolve without API
-                        // Skip this, rely on player bar fallback in handleDownload
-                    }
+                const links = item.querySelectorAll('a[href]');
+                for (const a of links) {
+                    const href = a.getAttribute('href');
+                    if (!href || href.includes('checkout.') || href.includes('gate.sc') || href.includes('/tags/')) continue;
+                    const url = getTrackUrl(href);
+                    if (url) { trackUrl = url; break; }
                 }
             }
 
