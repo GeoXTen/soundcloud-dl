@@ -250,61 +250,55 @@
     // Find all action bar containers in feed cards
     function findFeedActionBars() {
         const results = [];
-        const seen = new Set();
+        const seenContainers = new Set();
         const OWNER_KEYWORDS = ['your insights', 'edit', 'analytics', 'stats'];
 
-        // Find all button rows on the page
-        document.querySelectorAll('button').forEach(btn => {
-            // Skip if this button is already a download button
-            if (btn.classList.contains('sc-dl-feed-btn')) return;
+        // Step 1: Find all track links
+        document.querySelectorAll('a[href*="soundcloud.com/"]').forEach(a => {
+            const href = a.getAttribute('href');
+            if (!href) return;
+            const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
+            if (full.includes('checkout.') || full.includes('/pages/') || full.includes('/you/') || full.includes('/search') || full.includes('/discover') || full.includes('/tags/') || full.includes('/legal/')) return;
+            const path = full.replace('https://soundcloud.com/', '');
+            const parts = path.split('/').filter(Boolean);
+            if (parts.length < 2 || parts[0].includes('.')) return;
 
-            const row = btn.parentElement;
-            if (!row || seen.has(row)) return;
+            // Step 2: Walk up from the link to find the card container
+            // A card has both the track link AND action buttons
+            let card = a;
+            for (let i = 0; i < 25; i++) {
+                card = card.parentElement;
+                if (!card || card === document.body) break;
 
-            // Skip footer/player
-            if (row.closest('footer, [role="contentinfo"], [class*="playback"], [class*="miniplayer"]')) return;
+                // Check if this container has a button row (3+ buttons)
+                const btns = Array.from(card.querySelectorAll('button'));
+                if (btns.length < 3) continue;
 
-            // Count button siblings
-            const rowBtns = Array.from(row.children).filter(c => c.tagName === 'BUTTON');
-            if (rowBtns.length < 3 || rowBtns.length > 8) return;
-
-            // Check it has typical action bar buttons
-            const texts = rowBtns.map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
-            const hasAction = texts.some(t =>
-                t.includes('like') || t.includes('unlike') ||
-                t.includes('repost') || t.includes('share') ||
-                t.includes('more') || t === '...'
-            );
-            if (!hasAction) return;
-
-            // Skip owner toolbars
-            if (OWNER_KEYWORDS.some(kw => texts.some(t => t.includes(kw)))) return;
-
-            // Walk up to find track URL
-            let trackUrl = null;
-            let el = row;
-            for (let i = 0; i < 20; i++) {
-                el = el.parentElement;
-                if (!el || el === document.body) break;
-                const links = el.querySelectorAll('a[href*="soundcloud.com/"]');
-                for (const a of links) {
-                    const href = a.getAttribute('href');
-                    if (!href) continue;
-                    const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
-                    if (full.includes('checkout.') || full.includes('/pages/') || full.includes('/you/') || full.includes('/search') || full.includes('/discover')) continue;
-                    const path = full.replace('https://soundcloud.com/', '');
-                    const p = path.split('/').filter(Boolean);
-                    if (p.length >= 2 && !p[0].includes('.')) {
-                        trackUrl = full;
-                        break;
+                // Find the tightest button row inside this card
+                // (a div/span whose direct children are buttons)
+                let bestRow = null;
+                let bestCount = 0;
+                card.querySelectorAll('button').forEach(b => {
+                    const row = b.parentElement;
+                    if (!row) return;
+                    const rowBtns = Array.from(row.children).filter(c => c.tagName === 'BUTTON');
+                    if (rowBtns.length > bestCount && rowBtns.length >= 3 && rowBtns.length <= 8) {
+                        // Check it has action buttons
+                        const texts = rowBtns.map(x => (x.getAttribute('aria-label') || x.textContent || '').trim().toLowerCase());
+                        if (texts.some(t => t.includes('like') || t.includes('unlike') || t.includes('repost') || t.includes('share') || t.includes('more') || t === '...')) {
+                            if (!OWNER_KEYWORDS.some(kw => texts.some(t => t.includes(kw)))) {
+                                bestRow = row;
+                                bestCount = rowBtns.length;
+                            }
+                        }
                     }
-                }
-                if (trackUrl) break;
-            }
+                });
 
-            if (trackUrl) {
-                seen.add(row);
-                results.push({ container: row, trackUrl });
+                if (bestRow && !seenContainers.has(bestRow)) {
+                    seenContainers.add(bestRow);
+                    results.push({ container: bestRow, trackUrl: full });
+                }
+                break;
             }
         });
         return results;
