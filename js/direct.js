@@ -241,9 +241,10 @@
                     const largeUrl = coverUrl.replace('-large', '-t500x500').replace('-t300x300', '-t500x500');
                     fetch(largeUrl).then(r => r.blob()).then(imgBlob => {
                         const imgReader = new FileReader();
-                        imgReader.onload = function() {
-                            frames.push(makeApicFrame(new Uint8Array(imgReader.result)));
-                            resolve(attachTags(blob, frames));
+                    imgReader.onload = function() {
+                        const apic = makeApicFrame(new Uint8Array(imgReader.result));
+                        if (apic) frames.push(apic);
+                        resolve(attachTags(blob, frames));
                         };
                         imgReader.onerror = function() { resolve(attachTags(blob, frames)); };
                         imgReader.readAsArrayBuffer(imgBlob);
@@ -279,18 +280,21 @@
     }
 
     function makeApicFrame(imgData) {
-        const mime = strToUint8('image/jpeg');
-        const desc = new Uint8Array(1);
-        const type = new Uint8Array([0x03]); // 0x03 = front cover
-        const body = new Uint8Array(mime.length + 1 + desc.length + 1 + imgData.length);
-        let offset = 0;
-        body.set(mime, offset); offset += mime.length;
-        body[offset++] = 0x00; // null terminator after mime
-        body[offset++] = 0x03; // picture type
-        body.set(desc, offset); offset += desc.length;
-        body[offset++] = 0x00; // null terminator after desc
-        body.set(imgData, offset);
-        return makeFrame('APIC', body);
+        try {
+            const mime = strToUint8('image/jpeg');
+            // body: mime + null + picType(1) + desc(1 empty) + null + imgData
+            const body = new Uint8Array(mime.length + 1 + 1 + 1 + 1 + imgData.length);
+            let offset = 0;
+            body.set(mime, offset); offset += mime.length;
+            body[offset++] = 0x00;
+            body[offset++] = 0x03;
+            body[offset++] = 0x00;
+            body[offset++] = 0x00;
+            body.set(imgData, offset);
+            return makeFrame('APIC', body);
+        } catch(e) {
+            return null;
+        }
     }
 
     function makeFrame(id, data) {
