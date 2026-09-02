@@ -252,14 +252,17 @@
         const results = [];
         const seen = new Set();
         const OWNER_KEYWORDS = ['your insights', 'edit', 'analytics', 'stats'];
+        const BLACKLIST = ['checkout.', '/pages/', '/you/', '/search', '/discover', '/tags/', '/legal/'];
 
-        // Find ALL track links, then find the nearest button row for each
-        document.querySelectorAll('a[href*="soundcloud.com/"]').forEach(a => {
+        // Find ALL track links
+        const allLinks = document.querySelectorAll('a[href*="soundcloud.com/"]');
+        console.log("[direct] total SC links:", allLinks.length);
+
+        allLinks.forEach(a => {
             const href = a.getAttribute('href');
             if (!href) return;
             const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
-            // Skip non-track URLs
-            if (full.includes('checkout.') || full.includes('/pages/') || full.includes('/you/') || full.includes('/search') || full.includes('/discover') || full.includes('/tags/') || full.includes('/legal/')) return;
+            if (BLACKLIST.some(b => full.includes(b))) return;
             const path = full.replace('https://soundcloud.com/', '');
             const parts = path.split('/').filter(Boolean);
             if (parts.length < 2 || parts[0].includes('.')) return;
@@ -270,14 +273,13 @@
                 el = el.parentElement;
                 if (!el || el === document.body) break;
 
-                // Check if THIS element has 3+ buttons directly (the action bar row)
+                // Check if THIS element has 3+ button children directly
                 const directBtns = Array.from(el.children).filter(c => c.tagName === 'BUTTON');
                 if (directBtns.length >= 3) {
-                    // Found a button row — check it's not an owner toolbar
-                    const allRowBtns = Array.from(el.querySelectorAll('button'));
-                    const texts = allRowBtns.map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
+                    const texts = directBtns.map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
+                    console.log("[direct] found row at depth", i, "for", full.substring(30), "buttons:", texts.join(' | '));
+
                     if (OWNER_KEYWORDS.some(kw => texts.some(t => t.includes(kw)))) break;
-                    // Must have like/repost/share
                     if (!texts.some(t => t.includes('like') || t.includes('unlike') || t.includes('repost') || t.includes('share'))) break;
 
                     if (!seen.has(el)) {
@@ -285,6 +287,11 @@
                         results.push({ container: el, trackUrl: full });
                     }
                     break;
+                }
+                // Also check: element might contain wrapper divs
+                const wrapperBtns = el.querySelectorAll(':scope > div > button, :scope > span > button');
+                if (wrapperBtns.length >= 3) {
+                    // Skip — too nested
                 }
             }
         });
