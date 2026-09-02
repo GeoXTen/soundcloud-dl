@@ -189,10 +189,8 @@
         const btn = e.currentTarget;
         e.preventDefault(); e.stopPropagation();
         const isMini = btn.id.includes("-player");
-        btn.disabled = true; const orig = btn.innerHTML;
-        btn.innerHTML = isMini
-            ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="white" style="animation:spin 0.8s linear infinite;"><path d="M12 4a8 8 0 018 8h-2a6 6 0 00-6-6V4z"/><style>@keyframes spin{to{transform:rotate(360deg)}}</style></svg>'
-            : '<svg width="16" height="16" viewBox="0 0 24 24" fill="white" style="animation:spin 0.8s linear infinite;"><path d="M12 4a8 8 0 018 8h-2a6 6 0 00-6-6V4z"/></svg>';
+        btn.disabled = true; btn.classList.add("loading"); const orig = btn.innerHTML;
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 4a8 8 0 018 8h-2a6 6 0 00-6-6V4z"/></svg>';
         if (isMini) btn.style.opacity = "0.7";
         try {
             const cid = await getClientId(); if (!cid) throw new Error("Could not get client_id");
@@ -229,18 +227,18 @@
                 a.href = blobUrl; a.download = filename; a.style.display = "none";
                 document.body.appendChild(a); a.click();
                 setTimeout(() => { URL.revokeObjectURL(blobUrl); a.remove(); }, 1000);
-                btn.disabled = false; btn.innerHTML = orig; btn.style.opacity = "";
+                btn.disabled = false; btn.classList.remove("loading"); btn.innerHTML = orig; btn.style.opacity = "";
                 return;
             } catch(e) {
                 console.log("[direct] blob download failed:", e.message);
             }
             chrome.runtime.sendMessage({messageRecipient:"__SC_DIRECT__", action:"download", url: streamUrl, filename: filename}, (resp) => {
-                btn.disabled = false; btn.innerHTML = orig; btn.style.opacity = "";
+                btn.disabled = false; btn.classList.remove("loading"); btn.innerHTML = orig; btn.style.opacity = "";
             });
-            setTimeout(() => { if (btn.disabled) { btn.disabled = false; btn.innerHTML = orig; btn.style.opacity = ""; } }, 8000);
+            setTimeout(() => { if (btn.disabled) { btn.disabled = false; btn.classList.remove("loading"); btn.innerHTML = orig; btn.style.opacity = ""; } }, 8000);
         } catch(err) {
             console.log("[direct] download failed:", err.message);
-            btn.disabled = false;
+            btn.disabled = false; btn.classList.remove("loading");
             if (isMini) { btn.innerHTML = orig; btn.style.opacity = ""; btn.title = err.message; }
             else { btn.innerHTML = orig; }
         }
@@ -397,6 +395,7 @@
         const st = document.createElement("style");
         st.id = PLAYER_ID + "-style";
         st.textContent = `
+            @keyframes sc-dl-spin{to{transform:rotate(360deg)}}
             #${PLAYER_ID}{
                 width:32px!important;height:32px!important;min-width:32px!important;min-height:32px!important;max-width:32px!important;
                 border-radius:50%!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
@@ -409,6 +408,8 @@
             #${PLAYER_ID}:hover{transform:scale(1.1)!important;box-shadow:0 4px 12px rgba(255,85,0,0.5)!important;}
             #${PLAYER_ID}:active{transform:scale(0.95)!important;}
             #${PLAYER_ID} svg{pointer-events:none!important;}
+            .sc-dl-feed-btn[disabled],.sc-dl-feed-btn.loading{opacity:0.7!important;pointer-events:none!important;}
+            .sc-dl-feed-btn svg{animation:sc-dl-spin 0.8s linear infinite!important;}
         `;
         document.head.appendChild(st);
     }
