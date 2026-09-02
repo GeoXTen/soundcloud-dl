@@ -267,7 +267,31 @@
     }
 
     function makeTextFrame(id, value) {
-        const data = new Uint8Array([0x00, ...strToUint8(value)]); // 0x00 = ISO-8859-1
+        let data;
+        // Check if value has non-ASCII chars — use UTF-16LE with BOM
+        if (/[^\x00-\x7F]/.test(value)) {
+            const encoder = new TextEncoder();
+            const utf8 = encoder.encode(value);
+            // Simple UTF-8 to UTF-16LE conversion
+            const utf16 = [];
+            let i = 0;
+            while (i < utf8.length) {
+                let cp;
+                const b = utf8[i];
+                if (b < 0x80) { cp = b; i++; }
+                else if ((b & 0xE0) === 0xC0) { cp = ((b & 0x1F) << 6) | (utf8[i+1] & 0x3F); i += 2; }
+                else if ((b & 0xF0) === 0xE0) { cp = ((b & 0x0F) << 12) | ((utf8[i+1] & 0x3F) << 6) | (utf8[i+2] & 0x3F); i += 3; }
+                else { cp = ((b & 0x07) << 18) | ((utf8[i+1] & 0x3F) << 12) | ((utf8[i+2] & 0x3F) << 6) | (utf8[i+3] & 0x3F); i += 4; }
+                utf16.push(cp & 0xFF, (cp >> 8) & 0xFF);
+            }
+            const bom = new Uint8Array([0xFF, 0xFE]); // UTF-16LE BOM
+            const textData = new Uint8Array(utf16);
+            data = new Uint8Array(bom.length + textData.length);
+            data.set(bom, 0);
+            data.set(textData, bom.length);
+        } else {
+            data = new Uint8Array([0x00, ...strToUint8(value)]); // ISO-8859-1
+        }
         return makeFrame(id, data);
     }
 
@@ -284,14 +308,14 @@
     function makeApicFrame(imgData) {
         try {
             const mime = strToUint8('image/jpeg');
-            // body: mime + null + picType(1) + desc(1 empty) + null + imgData
-            const body = new Uint8Array(mime.length + 1 + 1 + 1 + 1 + imgData.length);
+            // body: encoding(1) + mime + null + picType(1) + desc(null) + imgData
+            const body = new Uint8Array(1 + mime.length + 1 + 1 + 1 + imgData.length);
             let offset = 0;
+            body[offset++] = 0x00; // text encoding: ISO-8859-1
             body.set(mime, offset); offset += mime.length;
-            body[offset++] = 0x00;
-            body[offset++] = 0x03;
-            body[offset++] = 0x00;
-            body[offset++] = 0x00;
+            body[offset++] = 0x00; // null terminator after mime
+            body[offset++] = 0x03; // picture type: front cover
+            body[offset++] = 0x00; // empty description (null-terminated)
             body.set(imgData, offset);
             return makeFrame('APIC', body);
         } catch(e) {
