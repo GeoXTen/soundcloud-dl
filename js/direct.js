@@ -252,17 +252,54 @@
         return btn;
     }
 
-    // Find all action bar containers in feed cards
+    // Find all action bar containers in feed/list items
     function findFeedActionBars() {
         const results = [];
-        const seenRows = new Set();
+        const seenContainers = new Set();
 
-        // SoundCloud uses playableTile__actionWrapper for feed action bars
-        const actionBars = document.querySelectorAll('.playableTile__actionWrapper, [class*="actionWrapper"], [class*="soundActions__"]');
-        console.log("[direct] action bar candidates:", actionBars.length);
+        // Helper: validate and normalize a track URL
+        function getTrackUrl(href) {
+            if (!href) return null;
+            const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
+            if (full.includes('checkout.') || full.includes('/pages/') || full.includes('/you/') ||
+                full.includes('/search') || full.includes('/discover') || full.includes('/stream') ||
+                full.includes('/signin') || full.includes('/tags/') || full.includes('/legal/') ||
+                full.includes('/charts/') || full.includes('/settings/')) return null;
+            const path = full.replace('https://soundcloud.com/', '');
+            const p = path.split('/').filter(Boolean);
+            if (p.length >= 2 && !p[0].includes('.')) return full;
+            return null;
+        }
 
-        actionBars.forEach(row => {
-            if (seenRows.has(row)) return;
+        // Type 1: List items (artist tracks page, stream) — soundList__item with soundActions
+        const listItems = document.querySelectorAll('.soundList__item, .sc-list-nostyle > li');
+        listItems.forEach(item => {
+            if (seenContainers.has(item)) return;
+            const actionBar = item.querySelector('.soundActions, [class*="soundActions"]');
+            if (!actionBar) return;
+
+            const allBtns = actionBar.querySelectorAll('button, a[class*="sc-button"], [role="button"]');
+            if (allBtns.length < 1) return;
+
+            // Get track URL from artwork link or title link
+            let trackUrl = null;
+            const artLink = item.querySelector('a.sound__coverArt, a[class*="coverArt"], a[class*="artwork"]');
+            if (artLink) trackUrl = getTrackUrl(artLink.getAttribute('href'));
+            if (!trackUrl) {
+                const titleLink = item.querySelector('.soundTitle__titleContainer a, a.soundTitle__title');
+                if (titleLink) trackUrl = getTrackUrl(titleLink.getAttribute('href'));
+            }
+
+            if (trackUrl) {
+                seenContainers.add(item);
+                results.push({ container: actionBar, trackUrl });
+                console.log("[direct] list track:", trackUrl);
+            }
+        });
+
+        // Type 2: Tiles (discover page) — playableTile__actionWrapper with audibleTile
+        const tiles = document.querySelectorAll('.playableTile__actionWrapper');
+        tiles.forEach(row => {
             if (row.closest('footer, [role="contentinfo"], [class*="playback"], [class*="miniplayer"]')) return;
 
             const allBtns = row.querySelectorAll('button, a[class*="sc-button"], [role="button"]');
@@ -273,55 +310,27 @@
             if (!hasAction) return;
             if (texts.some(t => t.includes('your insights') || t.includes('analytics'))) return;
 
-            // Walk up to find track link — go to the card container
-            let trackUrl = null;
-            const card = row.closest('.audibleTile, .playableTile, [class*="sound"], [class*="track"], li, article');
-            if (card) {
-                const link = card.querySelector('a[href*="soundcloud.com/"]');
-                if (link) {
-                    const href = link.getAttribute('href');
-                    if (href) {
-                        const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
-                        if (!full.includes('checkout.') && !full.includes('/pages/') && !full.includes('/you/') && !full.includes('/search') && !full.includes('/discover')) {
-                            const path = full.replace('https://soundcloud.com/', '');
-                            const p = path.split('/').filter(Boolean);
-                            if (p.length >= 2 && !p[0].includes('.')) {
-                                trackUrl = full;
-                            }
-                        }
-                    }
-                }
-            }
+            // Find the individual card
+            const tile = row.closest('.audibleTile, .playableTile');
+            if (!tile) return;
+            const tileId = tile.outerHTML.substring(0, 100);
+            if (seenContainers.has(tileId)) return;
 
-            // Fallback: walk up manually
-            if (!trackUrl) {
-                let el = row;
-                for (let i = 0; i < 15; i++) {
-                    el = el.parentElement;
-                    if (!el || el === document.body) break;
-                    const links = el.querySelectorAll('a[href*="soundcloud.com/"]');
-                    for (const a of links) {
-                        const href = a.getAttribute('href');
-                        if (!href) continue;
-                        const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
-                        if (full.includes('checkout.') || full.includes('/pages/') || full.includes('/you/') || full.includes('/search') || full.includes('/discover') || full.includes('/tags/') || full.includes('/legal/')) continue;
-                        const path = full.replace('https://soundcloud.com/', '');
-                        const p = path.split('/').filter(Boolean);
-                        if (p.length >= 2 && !p[0].includes('.')) {
-                            trackUrl = full;
-                            break;
-                        }
-                    }
-                    if (trackUrl) break;
-                }
-            }
+            // Get track URL from the artwork link
+            let trackUrl = null;
+            const artLink = tile.querySelector('a.playableTile__artworkLink, a[class*="artworkLink"]');
+            if (artLink) trackUrl = getTrackUrl(artLink.getAttribute('href'));
 
             if (trackUrl) {
-                seenRows.add(row);
+                seenContainers.add(tileId);
                 results.push({ container: row, trackUrl });
-                console.log("[direct] feed btn:", trackUrl);
+                console.log("[direct] tile track:", trackUrl);
             }
         });
+
+        console.log("[direct] total track buttons:", results.length);
+        return results;
+    }
         return results;
     }
 
