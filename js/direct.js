@@ -368,13 +368,7 @@
             feedBars.forEach(({ container, trackUrl }) => {
                 if (container.querySelector('.sc-dl-feed-btn')) return;
                 const btn = makeFeedBtn(trackUrl);
-                // Insert before the "More" (three dots) button to stay inline
-                const moreBtn = container.querySelector('[aria-label*="More"], [title*="More"], button:last-child');
-                if (moreBtn) {
-                    container.insertBefore(btn, moreBtn);
-                } else {
-                    container.appendChild(btn);
-                }
+                container.appendChild(btn);
                 injected = true;
                 console.log("[direct] injected button for:", trackUrl);
             });
