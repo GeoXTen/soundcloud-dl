@@ -252,47 +252,59 @@
         const results = [];
         const seen = new Set();
         const OWNER_KEYWORDS = ['your insights', 'edit', 'analytics', 'stats'];
-        const BLACKLIST = ['checkout.', '/pages/', '/you/', '/search', '/discover', '/tags/', '/legal/'];
 
-        // Find ALL track links
-        const allLinks = document.querySelectorAll('a[href*="soundcloud.com/"]');
-        console.log("[direct] total SC links:", allLinks.length);
+        // Find all button rows on the page
+        document.querySelectorAll('button').forEach(btn => {
+            // Skip if this button is already a download button
+            if (btn.classList.contains('sc-dl-feed-btn')) return;
 
-        allLinks.forEach(a => {
-            const href = a.getAttribute('href');
-            if (!href) return;
-            const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
-            if (BLACKLIST.some(b => full.includes(b))) return;
-            const path = full.replace('https://soundcloud.com/', '');
-            const parts = path.split('/').filter(Boolean);
-            if (parts.length < 2 || parts[0].includes('.')) return;
+            const row = btn.parentElement;
+            if (!row || seen.has(row)) return;
 
-            // Walk up from this link to find the nearest button row
-            let el = a;
-            for (let i = 0; i < 25; i++) {
+            // Skip footer/player
+            if (row.closest('footer, [role="contentinfo"], [class*="playback"], [class*="miniplayer"]')) return;
+
+            // Count button siblings
+            const rowBtns = Array.from(row.children).filter(c => c.tagName === 'BUTTON');
+            if (rowBtns.length < 3 || rowBtns.length > 8) return;
+
+            // Check it has typical action bar buttons
+            const texts = rowBtns.map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
+            const hasAction = texts.some(t =>
+                t.includes('like') || t.includes('unlike') ||
+                t.includes('repost') || t.includes('share') ||
+                t.includes('more') || t === '...'
+            );
+            if (!hasAction) return;
+
+            // Skip owner toolbars
+            if (OWNER_KEYWORDS.some(kw => texts.some(t => t.includes(kw)))) return;
+
+            // Walk up to find track URL
+            let trackUrl = null;
+            let el = row;
+            for (let i = 0; i < 20; i++) {
                 el = el.parentElement;
                 if (!el || el === document.body) break;
-
-                // Check if THIS element has 3+ button children directly
-                const directBtns = Array.from(el.children).filter(c => c.tagName === 'BUTTON');
-                if (directBtns.length >= 3) {
-                    const texts = directBtns.map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
-                    console.log("[direct] found row at depth", i, "for", full.substring(30), "buttons:", texts.join(' | '));
-
-                    if (OWNER_KEYWORDS.some(kw => texts.some(t => t.includes(kw)))) break;
-                    if (!texts.some(t => t.includes('like') || t.includes('unlike') || t.includes('repost') || t.includes('share'))) break;
-
-                    if (!seen.has(el)) {
-                        seen.add(el);
-                        results.push({ container: el, trackUrl: full });
+                const links = el.querySelectorAll('a[href*="soundcloud.com/"]');
+                for (const a of links) {
+                    const href = a.getAttribute('href');
+                    if (!href) continue;
+                    const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
+                    if (full.includes('checkout.') || full.includes('/pages/') || full.includes('/you/') || full.includes('/search') || full.includes('/discover')) continue;
+                    const path = full.replace('https://soundcloud.com/', '');
+                    const p = path.split('/').filter(Boolean);
+                    if (p.length >= 2 && !p[0].includes('.')) {
+                        trackUrl = full;
+                        break;
                     }
-                    break;
                 }
-                // Also check: element might contain wrapper divs
-                const wrapperBtns = el.querySelectorAll(':scope > div > button, :scope > span > button');
-                if (wrapperBtns.length >= 3) {
-                    // Skip — too nested
-                }
+                if (trackUrl) break;
+            }
+
+            if (trackUrl) {
+                seen.add(row);
+                results.push({ container: row, trackUrl });
             }
         });
         return results;
@@ -329,7 +341,7 @@
 
         // === FEED PAGE: inject button on EVERY track card ===
         const feedBars = findFeedActionBars();
-        console.log("[direct] feed bars to inject:", feedBars.length);
+        console.log("[direct] feed bars found:", feedBars.length);
         if (feedBars.length > 0) {
             feedBars.forEach(({ container, trackUrl }) => {
                 // Skip if we already injected here
