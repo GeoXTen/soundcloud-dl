@@ -240,7 +240,11 @@
                 // APIC - Album art
                 const coverUrl = apiInfo.artwork_url || (apiInfo.user && apiInfo.user.avatar_url);
                 if (coverUrl) {
-                    const largeUrl = coverUrl.replace('-large', '-t500x500').replace('-t300x300', '-t500x500');
+                    // Get largest artwork (original > t500x500 > t300x300)
+                    const largeUrl = coverUrl
+                        .replace(/-\w+x\w+\./, '-t500x500.')
+                        .replace('-large.', '-t500x500.')
+                        .replace('-original.', '-t500x500.');
                     fetch(largeUrl).then(r => r.blob()).then(imgBlob => {
                         const imgReader = new FileReader();
                     imgReader.onload = function() {
