@@ -252,68 +252,60 @@
         const results = [];
         const seen = new Set();
         const OWNER_KEYWORDS = ['your insights', 'edit', 'analytics', 'stats'];
-        const BLACKLIST = ['checkout.soundcloud.com', '/pages/', '/legal/', '/tags/', '/search', '/discover', '/you/', '/settings/', '/notifications', 'cookie', 'privacy'];
 
-        // Debug: find all track-like links
-        const allLinks = document.querySelectorAll('a[href*="soundcloud.com/"]');
-        console.log("[direct] total soundcloud links:", allLinks.length);
+        // Strategy: find all button rows that look like track action bars
+        // A track action bar has 3-7 buttons (heart, repost, share, queue, more, maybe comments)
+        // and is NOT in the footer/player
+        document.querySelectorAll('button').forEach(btn => {
+            const row = btn.parentElement;
+            if (!row) return;
+            const rowBtns = Array.from(row.querySelectorAll('button'));
+            if (rowBtns.length < 3 || rowBtns.length > 8) return;
+            // Skip if already processed this row
+            if (seen.has(row)) return;
+            // Skip footer/player
+            if (row.closest('footer, [role="contentinfo"], [class*="playback"]')) return;
 
-        allLinks.forEach(a => {
-            const href = a.getAttribute('href');
-            if (!href) return;
-            const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
+            const texts = rowBtns.map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
 
-            if (BLACKLIST.some(b => full.toLowerCase().includes(b))) return;
-            const path = full.replace('https://soundcloud.com/', '');
-            const parts = path.split('/').filter(Boolean);
-            if (parts.length < 2) return;
-            if (parts[0].includes('.') || parts[0] === '') return;
+            // Skip owner toolbars
+            if (OWNER_KEYWORDS.some(kw => texts.some(t => t.includes(kw)))) return;
 
-            // Debug: log candidate links
-            console.log("[direct] candidate link:", full, "text:", (a.textContent||'').trim().substring(0,40));
+            // Check if this looks like a track action bar (has heart/like or repost)
+            const hasHeart = texts.some(t => t.includes('like') || t.includes('unlike'));
+            const hasRepost = texts.some(t => t.includes('repost'));
+            const hasShare = texts.some(t => t.includes('share'));
+            const hasMore = texts.some(t => t.includes('more') || t === '...');
 
-            let card = a;
-            for (let i = 0; i < 20; i++) {
+            if (!hasHeart && !hasRepost && !hasShare && !hasMore) return;
+
+            // Find the track URL by walking up to find a track link
+            let trackUrl = null;
+            let card = row;
+            for (let i = 0; i < 15; i++) {
                 card = card.parentElement;
                 if (!card || card === document.body) break;
-
-                const btns = Array.from(card.querySelectorAll('button'));
-                if (btns.length < 3) continue;
-
-                // Log what buttons we see in this container
-                const btnLabels = btns.map(b => {
-                    const label = b.getAttribute('aria-label') || '';
-                    const text = (b.textContent||'').trim().substring(0,20);
-                    const cls = b.className.substring(0,40);
-                    return `[label="${label}" text="${text}" class="${cls}"]`;
-                });
-                console.log("[direct] container with", btns.length, "buttons:", btnLabels.join(', '));
-
-                const btnTexts = btns.map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
-                const hasLike = btnTexts.some(t => t.includes('like') || t.includes('unlike') || t === '');
-                const hasShare = btnTexts.some(t => t.includes('share'));
-                const hasMore = btnTexts.some(t => t.includes('more') || t === '...');
-
-                if (!hasLike && !hasShare && !hasMore) continue;
-
-                const isOwner = OWNER_KEYWORDS.some(kw => btnTexts.some(t => t.includes(kw)));
-                if (isOwner) continue;
-
-                for (const btn of btns) {
-                    const btnParent = btn.parentElement;
-                    if (!btnParent) continue;
-                    const rowBtns = btnParent.querySelectorAll('button');
-                    if (rowBtns.length < 3) continue;
-
-                    const key = btnParent;
-                    if (!seen.has(key)) {
-                        seen.add(key);
-                        results.push({ container: btnParent, trackUrl: full });
-                        console.log("[direct] MATCHED:", full);
+                const links = card.querySelectorAll('a[href*="soundcloud.com/"]');
+                for (const a of links) {
+                    const href = a.getAttribute('href');
+                    if (!href) continue;
+                    const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
+                    // Skip non-track links
+                    if (full.includes('checkout.') || full.includes('/pages/') || full.includes('/you/') || full.includes('/search') || full.includes('/discover')) continue;
+                    const path = full.replace('https://soundcloud.com/', '');
+                    const parts = path.split('/').filter(Boolean);
+                    if (parts.length >= 2 && !parts[0].includes('.')) {
+                        trackUrl = full;
+                        break;
                     }
-                    break;
                 }
-                break;
+                if (trackUrl) break;
+            }
+
+            if (trackUrl) {
+                seen.add(row);
+                results.push({ container: row, trackUrl });
+                console.log("[direct] MATCHED:", trackUrl, "buttons:", texts.join(' | '));
             }
         });
         return results;
