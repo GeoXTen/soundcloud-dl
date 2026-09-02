@@ -30,7 +30,7 @@
 "content_scripts": [
      {
          "matches": ["*://*.soundcloud.com/*"],
-         "js": ["js/diagnostic-content.js", "js/sandbox-content.js", "js/direct.js"],
+         "js": ["js/jsmediatags.min.js", "js/diagnostic-content.js", "js/sandbox-content.js", "js/direct.js"],
          "run_at": "document_idle",
          "all_frames": false
      }

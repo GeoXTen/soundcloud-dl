@@ -1,0 +1,24 @@
+{
+  "name": "soundcloud_music_downloader_7.0.5_chrome",
+  "version": "1.0.0",
+  "description": "Chrome/Brave extension for downloading SoundCloud tracks as MP3. Manifest V3 compatible.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeoXTen/soundcloud-dl.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/GeoXTen/soundcloud-dl/issues"
+  },
+  "homepage": "https://github.com/GeoXTen/soundcloud-dl#readme",
+  "dependencies": {
+    "jsmediatags": "^3.9.7"
+  }
+}

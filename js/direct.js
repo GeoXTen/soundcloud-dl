@@ -213,6 +213,79 @@
         setTimeout(() => t.remove(), 300);
     }
 
+    // Write ID3 tags to MP3 blob (title, artist, album art)
+    function tagMp3Blob(blob, apiInfo) {
+        return new Promise((resolve) => {
+            if (!window.jsmediatags || !apiInfo) { resolve(blob); return; }
+            const reader = new FileReader();
+            reader.onload = function() {
+                const arrayBuffer = reader.result;
+                const tags = {};
+                // Title
+                if (apiInfo.title) tags.title = apiInfo.title;
+                // Artist
+                if (apiInfo.user && apiInfo.user.username) tags.artist = apiInfo.user.username;
+                // Album
+                if (apiInfo.album_title) tags.album = apiInfo.album_title;
+                else if (apiInfo.publisher && apiInfo.publisher.name) tags.album = apiInfo.publisher.name;
+                // Year
+                if (apiInfo.release_date) tags.year = apiInfo.release_date.substring(0, 4);
+                else if (apiInfo.created_at) tags.year = apiInfo.created_at.substring(0, 4);
+                // Genre
+                if (apiInfo.genre) tags.genre = apiInfo.genre;
+                // Track number
+                if (apiInfo.track_number) tags.track = String(apiInfo.track_number);
+                // Comment
+                if (apiInfo.description) tags.comment = { language: 'eng', shortText: '', text: apiInfo.description.substring(0, 200) };
+
+                const coverUrl = apiInfo.artwork_url || (apiInfo.user && apiInfo.user.avatar_url);
+                if (coverUrl) {
+                    // Use large artwork (500x500)
+                    const largeUrl = coverUrl.replace('-large', '-t500x500').replace('-t300x300', '-t500x500');
+                    fetch(largeUrl).then(r => r.blob()).then(imgBlob => {
+                        const imgReader = new FileReader();
+                        imgReader.onload = function() {
+                            tags.picture = {
+                                format: 'image/jpeg',
+                                data: new Uint8Array(imgReader.result)
+                            };
+                            writeTags(arrayBuffer, tags, resolve);
+                        };
+                        imgReader.onerror = function() { writeTags(arrayBuffer, tags, resolve); };
+                        imgReader.readAsArrayBuffer(imgBlob);
+                    }).catch(() => writeTags(arrayBuffer, tags, resolve));
+                } else {
+                    writeTags(arrayBuffer, tags, resolve);
+                }
+            };
+            reader.onerror = function() { resolve(blob); };
+            reader.readAsArrayBuffer(blob);
+        });
+    }
+
+    function writeTags(arrayBuffer, tags, resolve) {
+        try {
+            jsmediatags.write({
+                type: 'file',
+                readers: [],
+                tags: tags,
+                arrayBuffer: arrayBuffer
+            }, {
+                onSuccess: function(tag) {
+                    const blob = new Blob([tag.tag.arrayBuffer || arrayBuffer], { type: 'audio/mpeg' });
+                    resolve(blob);
+                },
+                onError: function(err) {
+                    console.log("[direct] jsmediatags write error:", err);
+                    resolve(new Blob([arrayBuffer], { type: 'audio/mpeg' }));
+                }
+            });
+        } catch(e) {
+            console.log("[direct] jsmediatags write exception:", e);
+            resolve(new Blob([arrayBuffer], { type: 'audio/mpeg' }));
+        }
+    }
+
     // Download handler — accepts trackUrl param for multi-track feed injection
     async function handleDownload(e, trackUrl) {
         const btn = e.currentTarget;
@@ -252,10 +325,12 @@
             const toastEl = document.getElementById(toast);
             if (toastEl) { const sp = toastEl.querySelector('span'); if (sp) sp.textContent = filename; }
             try {
-                const blob = await fetch(streamUrl).then(r => {
+                const rawBlob = await fetch(streamUrl).then(r => {
                     if (!r.ok) throw new Error("fetch mp3 failed " + r.status);
                     return r.blob();
                 });
+                // Write ID3 tags (title, artist, album art)
+                const blob = await tagMp3Blob(rawBlob, lastApiInfo);
                 const blobUrl = URL.createObjectURL(blob);
                 const a = document.createElement("a");
                 a.href = blobUrl; a.download = filename; a.style.display = "none";
