@@ -250,70 +250,73 @@
     // Find all action bar containers in feed cards
     function findFeedActionBars() {
         const results = [];
-        const seenContainers = new Set();
+        const seenRows = new Set();
         const OWNER_KEYWORDS = ['your insights', 'edit', 'analytics', 'stats'];
 
-        // DEBUG: dump what elements exist
-        const allBtns = document.querySelectorAll('button');
-        const allDivBtns = document.querySelectorAll('div[role="button"], a[role="button"], span[role="button"]');
-        const allClickable = document.querySelectorAll('[role="button"], [onclick], [class*="button"], [class*="btn"]');
-        console.log("[direct] buttons:", allBtns.length, "role=button:", allDivBtns.length, "clickable:", allClickable.length);
+        document.querySelectorAll('button, [role="button"]').forEach(btn => {
+            const row = btn.parentElement;
+            if (!row || seenRows.has(row)) return;
+            if (row.closest('footer, [role="contentinfo"], [class*="playback"], [class*="miniplayer"]')) return;
 
-        // Try ALL clickable elements, not just <button>
-        const allActionEls = document.querySelectorAll('button, [role="button"], a[class*="button"], div[class*="button"], span[class*="button"]');
-        console.log("[direct] total action-like elements:", allActionEls.length);
+            const allBtns = row.querySelectorAll('button, [role="button"]');
+            if (allBtns.length < 3 || allBtns.length > 8) return;
 
-        // Find track links
-        document.querySelectorAll('a[href*="soundcloud.com/"]').forEach(a => {
-            const href = a.getAttribute('href');
-            if (!href) return;
-            const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
-            if (full.includes('checkout.') || full.includes('/pages/') || full.includes('/you/') || full.includes('/search') || full.includes('/discover') || full.includes('/tags/') || full.includes('/legal/')) return;
-            const path = full.replace('https://soundcloud.com/', '');
-            const parts = path.split('/').filter(Boolean);
-            if (parts.length < 2 || parts[0].includes('.')) return;
+            const texts = Array.from(allBtns).map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
+            const hasAction = texts.some(t => t.includes('like') || t.includes('unlike') || t.includes('repost') || t.includes('share') || t.includes('more') || t === '...');
+            if (!hasAction) return;
+            if (OWNER_KEYWORDS.some(kw => texts.some(t => t.includes(kw)))) return;
 
-            // Walk up to find card container
-            let card = a;
-            for (let i = 0; i < 25; i++) {
-                card = card.parentElement;
-                if (!card || card === document.body) break;
-
-                // Look for action bar: find element with 3+ action-like children
-                const candidates = card.querySelectorAll('button, [role="button"]');
-                if (candidates.length < 3) continue;
-
-                // Group by parent
-                const parentMap = new Map();
-                candidates.forEach(el => {
-                    const p = el.parentElement;
-                    if (!p) return;
-                    if (!parentMap.has(p)) parentMap.set(p, []);
-                    parentMap.get(p).push(el);
-                });
-
-                // Find the best button row
-                let bestRow = null;
-                let bestCount = 0;
-                parentMap.forEach((els, parent) => {
-                    if (els.length >= 3 && els.length <= 8 && els.length > bestCount) {
-                        const texts = els.map(e => (e.getAttribute('aria-label') || e.textContent || '').trim().toLowerCase());
-                        if (texts.some(t => t.includes('like') || t.includes('unlike') || t.includes('repost') || t.includes('share') || t.includes('more') || t === '...')) {
-                            if (!OWNER_KEYWORDS.some(kw => texts.some(t => t.includes(kw)))) {
-                                bestRow = parent;
-                                bestCount = els.length;
+            // Walk up to find track link
+            let trackUrl = null;
+            let el = row;
+            for (let i = 0; i < 15; i++) {
+                el = el.parentElement;
+                if (!el || el === document.body) break;
+                const link = el.querySelector('a[href*="soundcloud.com/"]');
+                if (link) {
+                    const href = link.getAttribute('href');
+                    if (href) {
+                        const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
+                        if (!full.includes('checkout.') && !full.includes('/pages/') && !full.includes('/you/') && !full.includes('/search') && !full.includes('/discover') && !full.includes('/tags/') && !full.includes('/legal/')) {
+                            const path = full.replace('https://soundcloud.com/', '');
+                            const p = path.split('/').filter(Boolean);
+                            if (p.length >= 2 && !p[0].includes('.')) {
+                                trackUrl = full;
+                                break;
                             }
                         }
                     }
-                });
-
-                if (bestRow && !seenContainers.has(bestRow)) {
-                    seenContainers.add(bestRow);
-                    results.push({ container: bestRow, trackUrl: full });
                 }
-                break;
+            }
+
+            if (trackUrl) {
+                seenRows.add(row);
+                results.push({ container: row, trackUrl });
             }
         });
+
+        // DEBUG: if 0 results, dump what button groups exist
+        if (results.length === 0) {
+            const debugRows = new Map();
+            document.querySelectorAll('button, [role="button"]').forEach(btn => {
+                const row = btn.parentElement;
+                if (!row) return;
+                const key = row;
+                if (!debugRows.has(key)) debugRows.set(key, { count: 0, texts: [] });
+                const info = debugRows.get(key);
+                info.count++;
+                info.texts.push((btn.getAttribute('aria-label') || btn.textContent || '').trim().substring(0, 15));
+            });
+            // Show rows with 3+ buttons
+            let shown = 0;
+            debugRows.forEach((info, row) => {
+                if (info.count >= 3 && info.count <= 8 && shown < 3) {
+                    console.log("[direct] DEBUG row:", info.count, "btns:", info.texts.join(' | '), "parent:", row.className.substring(0, 60));
+                    shown++;
+                }
+            });
+        }
+
         return results;
     }
 
