@@ -252,52 +252,53 @@
         const results = [];
         const seen = new Set();
         const OWNER_KEYWORDS = ['your insights', 'edit', 'analytics', 'stats'];
-        // Blacklist non-track URL patterns
         const BLACKLIST = ['checkout.soundcloud.com', '/pages/', '/legal/', '/tags/', '/search', '/discover', '/you/', '/settings/', '/notifications', 'cookie', 'privacy'];
 
-        // Find actual track title links: soundcloud.com/username/track-name
-        document.querySelectorAll('a[href*="soundcloud.com/"]').forEach(a => {
+        // Debug: find all track-like links
+        const allLinks = document.querySelectorAll('a[href*="soundcloud.com/"]');
+        console.log("[direct] total soundcloud links:", allLinks.length);
+
+        allLinks.forEach(a => {
             const href = a.getAttribute('href');
             if (!href) return;
             const full = href.startsWith('http') ? href : `https://soundcloud.com${href}`;
 
-            // Must match soundcloud.com/username/track-name (2+ path segments, no blacklisted)
             if (BLACKLIST.some(b => full.toLowerCase().includes(b))) return;
             const path = full.replace('https://soundcloud.com/', '');
             const parts = path.split('/').filter(Boolean);
             if (parts.length < 2) return;
-            // First segment must be a username (no dots, no dashes-only)
             if (parts[0].includes('.') || parts[0] === '') return;
 
-            // Check this link is actually a track title (not a repost badge, not a comment link)
-            // The track title link is usually inside a heading or has specific styling
-            const isTitleLink = a.closest('h2, h3, [class*="trackTitle"], [class*="soundTitle"]');
-            // Or it's the main clickable track name in the card
-            const isInTrackCard = a.closest('[class*="sound"], [class*="track"], [class*="sc-media"]');
+            // Debug: log candidate links
+            console.log("[direct] candidate link:", full, "text:", (a.textContent||'').trim().substring(0,40));
 
             let card = a;
             for (let i = 0; i < 20; i++) {
                 card = card.parentElement;
                 if (!card || card === document.body) break;
 
-                // Look for action bar: a container with like/repost buttons
                 const btns = Array.from(card.querySelectorAll('button'));
                 if (btns.length < 3) continue;
 
-                // Check if this container has typical action bar buttons
+                // Log what buttons we see in this container
+                const btnLabels = btns.map(b => {
+                    const label = b.getAttribute('aria-label') || '';
+                    const text = (b.textContent||'').trim().substring(0,20);
+                    const cls = b.className.substring(0,40);
+                    return `[label="${label}" text="${text}" class="${cls}"]`;
+                });
+                console.log("[direct] container with", btns.length, "buttons:", btnLabels.join(', '));
+
                 const btnTexts = btns.map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
                 const hasLike = btnTexts.some(t => t.includes('like') || t.includes('unlike') || t === '');
                 const hasShare = btnTexts.some(t => t.includes('share'));
                 const hasMore = btnTexts.some(t => t.includes('more') || t === '...');
 
-                // Must have at least like + one other action
                 if (!hasLike && !hasShare && !hasMore) continue;
 
-                // Skip owner toolbars
                 const isOwner = OWNER_KEYWORDS.some(kw => btnTexts.some(t => t.includes(kw)));
                 if (isOwner) continue;
 
-                // Find the button row (parent with 3+ buttons)
                 for (const btn of btns) {
                     const btnParent = btn.parentElement;
                     if (!btnParent) continue;
@@ -308,6 +309,7 @@
                     if (!seen.has(key)) {
                         seen.add(key);
                         results.push({ container: btnParent, trackUrl: full });
+                        console.log("[direct] MATCHED:", full);
                     }
                     break;
                 }
