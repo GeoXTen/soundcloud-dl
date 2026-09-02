@@ -186,10 +186,15 @@
             let trackId = null;
             // Feed page: resolve the specific track URL
             if (trackUrl) {
+                console.log("[direct] resolving feed track:", trackUrl);
                 trackId = await resolveTrackId(cid, trackUrl);
+                console.log("[direct] resolved feed track ID:", trackId);
             }
             // Fallback: player bar or page
-            if (!trackId) trackId = getTrackId();
+            if (!trackId) {
+                console.log("[direct] feed resolve failed, trying player/page");
+                trackId = getTrackId();
+            }
             // If still a slug, resolve it
             if (trackId && trackId.includes('/')) {
                 trackId = await resolveTrackId(cid, `https://soundcloud.com/${trackId}`);
@@ -314,7 +319,7 @@
             if (trackUrl) {
                 seenRows.add(row);
                 results.push({ container: row, trackUrl });
-                console.log("[direct] MATCHED:", trackUrl.substring(40));
+                console.log("[direct] feed btn:", trackUrl);
             }
         });
         return results;
