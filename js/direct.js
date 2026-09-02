@@ -297,7 +297,6 @@
 
     function makeCommentFrame(text) {
         const lang = strToUint8('eng');
-        const desc = new Uint8Array(1); // empty description
         let textData;
         if (/[^\x00-\x7F]/.test(text)) {
             const utf8 = new TextEncoder().encode(text);
@@ -313,18 +312,27 @@
                 utf16.push(cp & 0xFF, (cp >> 8) & 0xFF);
             }
             const bom = new Uint8Array([0xFF, 0xFE]);
-            textData = new Uint8Array(1 + bom.length + utf16.length);
-            textData[0] = 0x01;
-            textData.set(bom, 1);
-            textData.set(new Uint8Array(utf16), 1 + bom.length);
+            const descUtf16 = new Uint8Array([0x00, 0x00]); // empty description in UTF-16 (2-byte null)
+            const textArr = new Uint8Array(utf16);
+            const body = new Uint8Array(1 + lang.length + bom.length + descUtf16.length + textArr.length);
+            let offset = 0;
+            body[offset++] = 0x01; // encoding: UTF-16 with BOM
+            body.set(lang, offset); offset += lang.length;
+            body.set(bom, offset); offset += bom.length;
+            body.set(descUtf16, offset); offset += descUtf16.length;
+            body.set(textArr, offset);
+            return makeFrame('COMM', body);
         } else {
+            const desc = new Uint8Array(1); // empty description
             textData = new Uint8Array([0x00, ...strToUint8(text)]);
+            const body = new Uint8Array(1 + lang.length + desc.length + textData.length);
+            let offset = 0;
+            body[offset++] = 0x00; // encoding: ISO-8859-1
+            body.set(lang, offset); offset += lang.length;
+            body.set(desc, offset); offset += desc.length;
+            body.set(textData, offset);
+            return makeFrame('COMM', body);
         }
-        const body = new Uint8Array(lang.length + desc.length + textData.length);
-        body.set(lang, 0);
-        body.set(desc, lang.length);
-        body.set(textData, lang.length + desc.length);
-        return makeFrame('COMM', body);
     }
 
     function makeApicFrame(imgData) {
