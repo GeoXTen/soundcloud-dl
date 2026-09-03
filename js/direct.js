@@ -399,6 +399,7 @@
             downloadBtn.addEventListener('click', () => {
                 const from = Math.min(fromVal, toVal);
                 const to = Math.max(fromVal, toVal);
+                console.log("[trim-ui] Download clicked:", {from, to, fromVal, toVal, duration, fromFmt: formatTime(from), toFmt: formatTime(to)});
                 if (to <= 0 || from === to) {
                     downloadBtn.style.background = '#ff3333';
                     downloadBtn.textContent = 'Invalid range';
@@ -476,7 +477,15 @@
                     let offset = 0;
                     for (const chunk of mp3Data) { result.set(chunk, offset); offset += chunk.length; }
 
-                    console.log("[trim] Done. Output size:", result.length);
+                    console.log("[trim] Done. Output size:", result.length, "expected duration:", (length/sampleRate).toFixed(2)+"s");
+
+                    // Verify by decoding result
+                    try {
+                        const verifyCtx = new (window.AudioContext || window.webkitAudioContext)();
+                        const verifyBuf = await verifyCtx.decodeAudioData(result.buffer.slice(0));
+                        console.log("[trim] Verified duration:", verifyBuf.duration.toFixed(2)+"s", "expected:", ((toSec-fromSec).toFixed(2)+"s"));
+                        verifyCtx.close();
+                    } catch(verr) { console.log("[trim] verify decode failed:", verr.message); }
 
                     audioCtx.close();
                     resolve(new Blob([result], { type: 'audio/mpeg' }));
