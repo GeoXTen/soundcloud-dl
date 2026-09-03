@@ -1109,13 +1109,12 @@
                 border-radius:6px!important;height:26px!important;min-width:30px!important;padding:0 8px!important;
                 display:inline-flex!important;align-items:center!important;justify-content:center!important;
                 flex-shrink:0!important;cursor:pointer!important;vertical-align:middle!important;
-                transition: background 0.15s ease, transform 0.15s cubic-bezier(0.34,1.56,0.64,1)!important;
+                transition: background 0.15s ease!important;
             }
-            .sc-dl-feed-btn:hover{background:#e64e00!important;transform:translateY(-1px)!important;}
-            .sc-dl-feed-btn:active{transform:scale(0.96)!important;}
+            .sc-dl-feed-btn:hover{background:#e64e00!important;}
+            .sc-dl-feed-btn:active{background:#cc4400!important;}
             .sc-dl-feed-btn:disabled{opacity:0.6!important;pointer-events:none!important;}
-            .sc-dl-feed-btn svg{pointer-events:none!important;transition:transform 0.15s ease!important;}
-            .sc-dl-feed-btn:hover svg{transform:scale(1.08)!important;}
+            .sc-dl-feed-btn svg{pointer-events:none!important;}
             /* Player mini - flat circle */
             #${BTN_ID}-player{
                 width:30px!important;height:30px!important;min-width:30px!important;min-height:30px!important;
@@ -1123,10 +1122,10 @@
                 flex:0 0 30px!important;padding:0!important;margin-left:8px!important;
                 background:#ff5500!important;color:#fff!important;border:none!important;
                 cursor:pointer!important;z-index:9999!important;
-                transition: background 0.15s ease, transform 0.15s cubic-bezier(0.34,1.56,0.64,1)!important;
+                transition: background 0.15s ease!important;
             }
-            #${BTN_ID}-player:hover{background:#e64e00!important;transform:scale(1.06)!important;}
-            #${BTN_ID}-player:active{transform:scale(0.93)!important;}
+            #${BTN_ID}-player:hover{background:#e64e00!important;}
+            #${BTN_ID}-player:active{background:#cc4400!important;}
             #${BTN_ID}-player svg{pointer-events:none!important;}
             /* Toast - flat slide */
             #sc-dl-toast-container{position:fixed!important;top:20px!important;right:20px!important;z-index:999999!important;display:flex!important;flex-direction:column!important;gap:8px!important;pointer-events:none!important;}
@@ -1141,30 +1140,22 @@
             .sc-dl-toast.sc-dl-toast-in{opacity:1!important;transform:translateX(0) scale(1)!important;}
             .sc-dl-toast.sc-dl-toast-out{opacity:0!important;transform:translateX(24px) scale(0.98)!important;}
             /* Popup overlay - fade */
-            #sc-dl-trim-popup{animation: sc-dl-fadeIn 0.2s ease!important;}
-            #sc-dl-trim-popup > div{animation: sc-dl-popIn 0.3s cubic-bezier(0.34,1.56,0.64,1)!important;}
+            #sc-dl-trim-popup{animation: sc-dl-fadeIn 0.15s ease!important;}
+            #sc-dl-trim-popup > div{animation: sc-dl-popIn 0.2s ease!important;}
             @keyframes sc-dl-fadeIn{from{opacity:0}to{opacity:1}}
-            @keyframes sc-dl-popIn{from{opacity:0;transform:scale(0.96) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+            @keyframes sc-dl-popIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
             @keyframes sc-dl-spin{to{transform:rotate(360deg)}}
             /* Popup flat */
             .sc-dl-popup{ background:#111!important; border:1px solid #222!important; border-radius:12px!important; }
-            .sc-dl-popup button{transition: background 0.15s ease, transform 0.15s cubic-bezier(0.34,1.56,0.64,1)!important;}
-            .sc-dl-popup button:hover{transform:translateY(-1px)!important;}
-            .sc-dl-popup button:active{transform:scale(0.97)!important;}
+            .sc-dl-popup button{transition: background 0.15s ease!important;}
             .sc-dl-popup input:focus{border-color:#ff5500!important;}
-            #sc-trim-slider-container{transition: opacity 0.15s!important;}
-            #sc-trim-handle-from,#sc-trim-handle-to{transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.15s!important;}
-            #sc-trim-handle-from:hover,#sc-trim-handle-to:hover{transform:translateX(-9px) scale(1.12)!important;box-shadow:0 3px 10px rgba(0,0,0,0.5)!important;}
-            #sc-trim-handle-from:active,#sc-trim-handle-to:active{transform:translateX(-9px) scale(0.95)!important;}
+            #sc-trim-handle-from:hover,#sc-trim-handle-to:hover{box-shadow:0 2px 8px rgba(0,0,0,0.4)!important;}
         `;
         document.head.appendChild(st);
     }
 
     function createButtons() {
         let injected = false;
-
-        // Remove ALL old download buttons
-        document.querySelectorAll('[id^="sc-direct-download-btn"], .sc-dl-feed-btn').forEach(el => el.remove());
 
         // === FEED PAGE: inject button on EVERY track card ===
         const feedBars = findFeedActionBars();
