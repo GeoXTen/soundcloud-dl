@@ -188,30 +188,29 @@
     // Toast download indicator
     let toastCount = 0;
     function showDownloadToast(name) {
+        injectFlatStyles();
         const id = "sc-dl-toast-" + (++toastCount);
         let c = document.getElementById("sc-dl-toast-container");
         if (!c) {
             c = document.createElement("div");
             c.id = "sc-dl-toast-container";
-            c.style.cssText = "position:fixed;top:20px;right:20px;z-index:999999;display:flex;flex-direction:column;gap:8px;pointer-events:none;";
             document.body.appendChild(c);
         }
         const t = document.createElement("div");
         t.id = id;
-        t.style.cssText = "pointer-events:auto;background:#1a1a2e;color:#fff;padding:12px 18px;border-radius:10px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;display:flex;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(0,0,0,0.4);border:1px solid rgba(255,85,0,0.3);opacity:0;transform:translateX(40px);transition:all 0.3s cubic-bezier(0.4,0,0.2,1);min-width:220px;max-width:320px;";
-        // Spinner (react-spinners-kit PushSpinner style)
-        t.innerHTML = '<div style="flex-shrink:0;width:22px;height:22px;position:relative;"><div style="width:100%;height:100%;border:3px solid rgba(255,85,0,0.2);border-top-color:#ff5500;border-radius:50%;animation:sc-dl-spin 0.8s linear infinite;"></div></div><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (name || "track") + '</span>';
+        t.className = "sc-dl-toast";
+        t.innerHTML = '<div style="flex-shrink:0;width:18px;height:18px;border:2px solid #333;border-top-color:#ff5500;border-radius:50%;animation:sc-dl-spin 0.7s linear infinite;"></div><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (name || "track") + '</span>';
         c.appendChild(t);
-        requestAnimationFrame(() => { t.style.opacity = "1"; t.style.transform = "translateX(0)"; });
+        requestAnimationFrame(() => { requestAnimationFrame(() => t.classList.add("sc-dl-toast-in")); });
         return id;
     }
     function hideDownloadToast(id) {
         if (!id) return;
         const t = document.getElementById(id);
         if (!t) return;
-        t.style.opacity = "0";
-        t.style.transform = "translateX(40px)";
-        setTimeout(() => t.remove(), 300);
+        t.classList.remove("sc-dl-toast-in");
+        t.classList.add("sc-dl-toast-out");
+        setTimeout(() => t.remove(), 280);
     }
 
     // Trim popup UI
@@ -237,12 +236,14 @@
             const existing = document.getElementById('sc-dl-trim-popup');
             if (existing) existing.remove();
 
+            injectFlatStyles();
             const overlay = document.createElement('div');
             overlay.id = 'sc-dl-trim-popup';
-            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:999998;display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;';
+            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(4px);z-index:999998;display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;';
 
             const popup = document.createElement('div');
-            popup.style.cssText = 'background:#1a1a2e;border-radius:16px;padding:24px;width:380px;max-width:90vw;color:#fff;box-shadow:0 8px 40px rgba(0,0,0,0.5);border:1px solid rgba(255,85,0,0.2);';
+            popup.className = 'sc-dl-popup';
+            popup.style.cssText = 'background:#111;border:1px solid #222;border-radius:12px;padding:20px;width:360px;max-width:90vw;color:#fff;';
 
             const trackName = filename.replace('.mp3', '').substring(0, 40);
             const durationStr = duration ? formatTime(duration) : '--:--:--';
@@ -258,20 +259,19 @@
                     </div>
                 </div>
 
-                <div style="background:#12122a;border-radius:10px;padding:16px;margin-bottom:16px;">
-                    <div style="font-size:13px;color:#aaa;margin-bottom:12px;">Trim (optional)</div>
-                    
-                    <div style="display:flex;gap:12px;margin-bottom:12px;">
+                <div style="background:#1a1a1a;border:1px solid #222;border-radius:8px;padding:14px;margin-bottom:14px;">
+                    <div style="font-size:12px;color:#888;margin-bottom:10px;letter-spacing:0.02em;">TRIM — OPTIONAL</div>
+                    <div style="display:flex;gap:10px;margin-bottom:10px;">
                         <div style="flex:1;">
-                            <label style="font-size:11px;color:#666;display:block;margin-bottom:4px;">From</label>
+                            <label style="font-size:10px;color:#666;display:block;margin-bottom:4px;letter-spacing:0.04em;">FROM</label>
                             <input id="sc-trim-from" type="text" value="00:00:00" placeholder="00:00:00"
-                                style="width:100%;background:#0a0a1a;border:1px solid #333;border-radius:6px;padding:8px 10px;color:#fff;font-size:13px;font-family:monospace;outline:none;box-sizing:border-box;"
+                                style="width:100%;background:#111;border:1px solid #222;border-radius:6px;padding:8px 10px;color:#fff;font-size:13px;font-family:monospace;outline:none;box-sizing:border-box;transition:border-color 0.15s;"
                             />
                         </div>
                         <div style="flex:1;">
-                            <label style="font-size:11px;color:#666;display:block;margin-bottom:4px;">To</label>
+                            <label style="font-size:10px;color:#666;display:block;margin-bottom:4px;letter-spacing:0.04em;">TO</label>
                             <input id="sc-trim-to" type="text" value="${durationStr}" placeholder="${durationStr}"
-                                style="width:100%;background:#0a0a1a;border:1px solid #333;border-radius:6px;padding:8px 10px;color:#fff;font-size:13px;font-family:monospace;outline:none;box-sizing:border-box;"
+                                style="width:100%;background:#111;border:1px solid #222;border-radius:6px;padding:8px 10px;color:#fff;font-size:13px;font-family:monospace;outline:none;box-sizing:border-box;transition:border-color 0.15s;"
                             />
                         </div>
                     </div>
@@ -820,7 +820,7 @@
         e.preventDefault(); e.stopPropagation();
         const isMini = btn.id.includes("-player");
         btn.disabled = true; const orig = btn.innerHTML;
-        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 4a8 8 0 018 8h-2a6 6 0 00-6-6V4z"/></svg>';
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="animation:sc-dl-spin 0.6s linear infinite;"><path d="M12 4a8 8 0 018 8h-2a6 6 0 00-6-6V4z"/></svg>';
         if (isMini) btn.style.opacity = "0.7";
         const toastName = trackUrl ? trackUrl.split('/').filter(Boolean).pop().replace(/-/g, ' ') : "track";
         const toast = showDownloadToast(toastName);
@@ -927,20 +927,21 @@
     }
 
     function makeFeedBtn(trackUrl) {
+        injectFlatStyles();
         const btn = document.createElement("button");
         btn.className = "sc-button sc-button-small sc-button-icon sc-dl-feed-btn";
         btn.title = "Download this track";
-        btn.style.cssText = "background:#ff5500;color:#fff;border-color:#ff5500;cursor:pointer;display:inline-flex!important;flex-shrink:0;vertical-align:middle;";
-        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>';
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>';
         btn.addEventListener("click", (e) => handleDownload(e, trackUrl));
         return btn;
     }
 
     function makePlayerBtn() {
+        injectFlatStyles();
         const btn = document.createElement("button");
         btn.id = BTN_ID + "-player";
         btn.title = "Download this track";
-        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="pointer-events:none;"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>';
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="pointer-events:none;"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>';
         btn.addEventListener("click", handleDownload);
         return btn;
     }
@@ -1096,26 +1097,65 @@
         return results;
     }
 
-    // Inject style for player mini button (once)
-    function injectPlayerStyle() {
-        const PLAYER_ID = BTN_ID + "-player";
-        if (document.getElementById(PLAYER_ID + "-style")) return;
+    // Flat design system + motion (React devs style: spring, fade, slide)
+    function injectFlatStyles() {
+        if (document.getElementById("sc-dl-flat-style")) return;
         const st = document.createElement("style");
-        st.id = PLAYER_ID + "-style";
+        st.id = "sc-dl-flat-style";
         st.textContent = `
-            #${PLAYER_ID}{
-                width:32px!important;height:32px!important;min-width:32px!important;min-height:32px!important;max-width:32px!important;
-                border-radius:50%!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
-                flex:0 0 32px!important;flex-shrink:0!important;padding:0!important;margin-left:8px!important;
-                background:#ff5500!important;color:#fff!important;border:none!important;box-sizing:border-box!important;
-                cursor:pointer!important;vertical-align:middle!important;position:relative;z-index:9999!important;
-                transition:transform 0.15s ease, box-shadow 0.15s ease!important;
-                box-shadow:0 2px 8px rgba(255,85,0,0.35)!important;
+            /* Feed button - flat */
+            .sc-dl-feed-btn{
+                background:#ff5500!important;color:#fff!important;border:none!important;
+                border-radius:6px!important;height:26px!important;min-width:30px!important;padding:0 8px!important;
+                display:inline-flex!important;align-items:center!important;justify-content:center!important;
+                flex-shrink:0!important;cursor:pointer!important;vertical-align:middle!important;
+                transition: background 0.15s ease, transform 0.15s cubic-bezier(0.34,1.56,0.64,1)!important;
             }
-            #${PLAYER_ID}:hover{transform:scale(1.1)!important;box-shadow:0 4px 12px rgba(255,85,0,0.5)!important;}
-            #${PLAYER_ID}:active{transform:scale(0.95)!important;}
-            #${PLAYER_ID} svg{pointer-events:none!important;}
+            .sc-dl-feed-btn:hover{background:#e64e00!important;transform:translateY(-1px)!important;}
+            .sc-dl-feed-btn:active{transform:scale(0.96)!important;}
+            .sc-dl-feed-btn:disabled{opacity:0.6!important;pointer-events:none!important;}
+            .sc-dl-feed-btn svg{pointer-events:none!important;transition:transform 0.15s ease!important;}
+            .sc-dl-feed-btn:hover svg{transform:scale(1.08)!important;}
+            /* Player mini - flat circle */
+            #${BTN_ID}-player{
+                width:30px!important;height:30px!important;min-width:30px!important;min-height:30px!important;
+                border-radius:50%!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
+                flex:0 0 30px!important;padding:0!important;margin-left:8px!important;
+                background:#ff5500!important;color:#fff!important;border:none!important;
+                cursor:pointer!important;z-index:9999!important;
+                transition: background 0.15s ease, transform 0.15s cubic-bezier(0.34,1.56,0.64,1)!important;
+            }
+            #${BTN_ID}-player:hover{background:#e64e00!important;transform:scale(1.06)!important;}
+            #${BTN_ID}-player:active{transform:scale(0.93)!important;}
+            #${BTN_ID}-player svg{pointer-events:none!important;}
+            /* Toast - flat slide */
+            #sc-dl-toast-container{position:fixed!important;top:20px!important;right:20px!important;z-index:999999!important;display:flex!important;flex-direction:column!important;gap:8px!important;pointer-events:none!important;}
+            .sc-dl-toast{
+                pointer-events:auto!important;background:#111!important;color:#fff!important;
+                padding:10px 14px!important;border-radius:8px!important;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;font-size:13px!important;
+                display:flex!important;align-items:center!important;gap:10px!important;
+                border:1px solid #222!important;min-width:200px!important;max-width:300px!important;
+                opacity:0;transform:translateX(24px) scale(0.98);
+                transition: opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.34,1.56,0.64,1)!important;
+            }
+            .sc-dl-toast.sc-dl-toast-in{opacity:1!important;transform:translateX(0) scale(1)!important;}
+            .sc-dl-toast.sc-dl-toast-out{opacity:0!important;transform:translateX(24px) scale(0.98)!important;}
+            /* Popup overlay - fade */
+            #sc-dl-trim-popup{animation: sc-dl-fadeIn 0.2s ease!important;}
+            #sc-dl-trim-popup > div{animation: sc-dl-popIn 0.3s cubic-bezier(0.34,1.56,0.64,1)!important;}
+            @keyframes sc-dl-fadeIn{from{opacity:0}to{opacity:1}}
+            @keyframes sc-dl-popIn{from{opacity:0;transform:scale(0.96) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
             @keyframes sc-dl-spin{to{transform:rotate(360deg)}}
+            /* Popup flat */
+            .sc-dl-popup{ background:#111!important; border:1px solid #222!important; border-radius:12px!important; }
+            .sc-dl-popup button{transition: background 0.15s ease, transform 0.15s cubic-bezier(0.34,1.56,0.64,1)!important;}
+            .sc-dl-popup button:hover{transform:translateY(-1px)!important;}
+            .sc-dl-popup button:active{transform:scale(0.97)!important;}
+            .sc-dl-popup input:focus{border-color:#ff5500!important;}
+            #sc-trim-slider-container{transition: opacity 0.15s!important;}
+            #sc-trim-handle-from,#sc-trim-handle-to{transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.15s!important;}
+            #sc-trim-handle-from:hover,#sc-trim-handle-to:hover{transform:translateX(-9px) scale(1.12)!important;box-shadow:0 3px 10px rgba(0,0,0,0.5)!important;}
+            #sc-trim-handle-from:active,#sc-trim-handle-to:active{transform:translateX(-9px) scale(0.95)!important;}
         `;
         document.head.appendChild(st);
     }
