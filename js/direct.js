@@ -413,7 +413,58 @@
         });
     }
 
-    // Trim MP3 using Web Audio API + lamejs
+    // Trim MP3 — fast byte-slice for CBR 128k (no re-encode, exact frame cut)
+    function trimMp3ByBytes(blob, fromSec, toSec, totalDuration) {
+        return new Promise((resolve, reject) => {
+            console.log("[trim-bytes] from:", fromSec, "to:", toSec, "total:", totalDuration, "blobSize:", blob.size);
+            const reader = new FileReader();
+            reader.onload = function() {
+                try {
+                    let data = new Uint8Array(reader.result);
+                    // Find ID3v2 tag size to skip
+                    let audioStart = 0;
+                    if (data[0]===0x49 && data[1]===0x44 && data[2]===0x33) {
+                        const sz = ((data[6]&0x7f)<<21)|((data[7]&0x7f)<<14)|((data[8]&0x7f)<<7)|(data[9]&0x7f);
+                        audioStart = 10 + sz;
+                    }
+                    // Strip ID3v1 at end
+                    let audioEnd = data.length;
+                    if (data.length > 128 && data[data.length-128]===0x54 && data[data.length-127]===0x41 && data[data.length-126]===0x47) {
+                        audioEnd = data.length - 128;
+                    }
+                    const audioLen = audioEnd - audioStart;
+                    console.log("[trim-bytes] audioStart:", audioStart, "audioEnd:", audioEnd, "audioLen:", audioLen);
+
+                    // CBR byte positions
+                    const startByte = audioStart + Math.floor((fromSec/totalDuration) * audioLen);
+                    const endByte = audioStart + Math.floor((toSec/totalDuration) * audioLen);
+                    console.log("[trim-bytes] est startByte:", startByte, "endByte:", endByte);
+
+                    // Align to next MP3 frame sync (0xFF 0xE0)
+                    function findSync(pos, dir) {
+                        const step = dir > 0 ? 1 : -1;
+                        for (let i = pos; i >= audioStart && i < audioEnd - 1; i += step) {
+                            if (data[i]===0xFF && (data[i+1]&0xE0)===0xE0) return i;
+                            if (Math.abs(i - pos) > 4096) break; // don't search too far
+                        }
+                        return pos;
+                    }
+                    const alignedStart = findSync(startByte, 1);
+                    const alignedEnd = findSync(endByte, -1);
+                    console.log("[trim-bytes] aligned start:", alignedStart, "end:", alignedEnd, "sliceLen:", alignedEnd - alignedStart);
+
+                    if (alignedEnd <= alignedStart) { reject(new Error("Invalid trim range bytes")); return; }
+                    const sliced = data.slice(alignedStart, alignedEnd);
+                    console.log("[trim-bytes] sliced size:", sliced.length, "expected ~", Math.round((toSec-fromSec)*128000/8), "bytes");
+                    resolve(new Blob([sliced], {type:'audio/mpeg'}));
+                } catch(e) { reject(e); }
+            };
+            reader.onerror = () => reject(new Error("Failed to read MP3"));
+            reader.readAsArrayBuffer(blob);
+        });
+    }
+
+    // Trim MP3 using Web Audio API + lamejs (fallback, slower, re-encodes)
     function trimMp3(blob, fromSec, toSec) {
         return new Promise((resolve, reject) => {
             console.log("[trim] Starting trim:", { from: fromSec, to: toSec, blobSize: blob.size });
@@ -451,7 +502,7 @@
                     const left16 = floatTo16(left);
                     const right16 = floatTo16(right);
 
-                    console.log("[trim] Encoding to MP3...");
+                    console.log("[trim] Encoding to MP3...", "left16 len:", left16.length);
 
                     // Encode to MP3 using lamejs
                     const mp3Encoder = new lamejs.Mp3Encoder(channels, sampleRate, 128);
@@ -482,7 +533,9 @@
                     // Verify by decoding result
                     try {
                         const verifyCtx = new (window.AudioContext || window.webkitAudioContext)();
-                        const verifyBuf = await verifyCtx.decodeAudioData(result.buffer.slice(0));
+                        // copy buffer for verification (slice to avoid detached)
+                        const copyBuf = result.buffer.slice(result.byteOffset, result.byteOffset + result.byteLength);
+                        const verifyBuf = await verifyCtx.decodeAudioData(copyBuf);
                         console.log("[trim] Verified duration:", verifyBuf.duration.toFixed(2)+"s", "expected:", ((toSec-fromSec).toFixed(2)+"s"));
                         verifyCtx.close();
                     } catch(verr) { console.log("[trim] verify decode failed:", verr.message); }
@@ -779,18 +832,25 @@
                 console.log("[direct] Raw MP3 size:", rawBlob.size);
 
                 let finalBlob;
-                if (trimResult.trim && typeof lamejs !== 'undefined') {
-                    // Trim mode: decode, trim, re-encode
+                if (trimResult.trim) {
                     if (toastEl) { const sp = toastEl.querySelector('span'); if (sp) sp.textContent = "Trimming... " + filename; }
                     console.log("[direct] Trimming from", trimResult.from, "to", trimResult.to);
-                    finalBlob = await trimMp3(rawBlob, trimResult.from, trimResult.to);
-                    console.log("[direct] Trimmed blob size:", finalBlob.size);
+                    const totalSec = lastApiInfo.duration ? lastApiInfo.duration/1000 : 0;
+                    try {
+                        // Fast CBR byte-slice (no re-encode = exact, no quality loss)
+                        finalBlob = await trimMp3ByBytes(rawBlob, trimResult.from, trimResult.to, totalSec);
+                        console.log("[direct] Byte-slice trimmed size:", finalBlob.size);
+                    } catch(sliceErr) {
+                        console.log("[direct] Byte-slice failed:", sliceErr.message, "falling back to re-encode");
+                        if (typeof lamejs !== 'undefined') {
+                            finalBlob = await trimMp3(rawBlob, trimResult.from, trimResult.to);
+                            console.log("[direct] Re-encoded trimmed size:", finalBlob.size);
+                        } else {
+                            throw sliceErr;
+                        }
+                    }
                     finalBlob = await tagMp3Blob(finalBlob, lastApiInfo);
                 } else {
-                    // Full mode
-                    if (trimResult.trim && typeof lamejs === 'undefined') {
-                        console.warn("[direct] lamejs not available, downloading full track");
-                    }
                     finalBlob = await tagMp3Blob(rawBlob, lastApiInfo);
                 }
 
