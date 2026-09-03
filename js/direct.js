@@ -277,28 +277,11 @@
                     </div>
 
                     ${duration ? `
-                    <div style="position:relative;height:36px;margin:12px 0 4px;">
-                        <div style="position:absolute;top:16px;left:0;right:0;height:4px;background:#333;border-radius:2px;"></div>
-                        <div id="sc-trim-range" style="position:absolute;top:16px;height:4px;background:#ff5500;border-radius:2px;left:0;right:0;"></div>
-                        <input id="sc-trim-slider-from" type="range" min="0" max="${duration}" value="0" step="1"
-                            style="position:absolute;top:6px;left:0;width:100%;-webkit-appearance:none;background:transparent;z-index:3;margin:0;cursor:pointer;"
-                        />
-                        <input id="sc-trim-slider-to" type="range" min="0" max="${duration}" value="${duration}" step="1"
-                            style="position:absolute;top:6px;left:0;width:100%;-webkit-appearance:none;background:transparent;z-index:4;margin:0;cursor:pointer;"
-                        />
-                        <style>
-                            #sc-trim-slider-from::-webkit-slider-thumb{
-                                -webkit-appearance:none;width:18px;height:18px;background:#ff5500;border-radius:50%;cursor:pointer;
-                                box-shadow:0 2px 6px rgba(0,0,0,0.4);position:relative;z-index:5;border:2px solid #fff;
-                            }
-                            #sc-trim-slider-to::-webkit-slider-thumb{
-                                -webkit-appearance:none;width:18px;height:18px;background:#ff8800;border-radius:50%;cursor:pointer;
-                                box-shadow:0 2px 6px rgba(0,0,0,0.4);position:relative;z-index:5;border:2px solid #fff;
-                            }
-                            #sc-trim-slider-from::-webkit-slider-runnable-track,#sc-trim-slider-to::-webkit-slider-runnable-track{
-                                background:transparent;height:36px;
-                            }
-                        </style>
+                    <div id="sc-trim-slider-container" style="position:relative;height:40px;margin:12px 0 4px;cursor:pointer;">
+                        <div style="position:absolute;top:18px;left:0;right:0;height:4px;background:#333;border-radius:2px;"></div>
+                        <div id="sc-trim-range" style="position:absolute;top:18px;height:4px;background:#ff5500;border-radius:2px;left:0;right:0;"></div>
+                        <div id="sc-trim-handle-from" style="position:absolute;top:12px;width:18px;height:18px;background:#ff5500;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.4);transform:translateX(-9px);z-index:2;cursor:grab;"></div>
+                        <div id="sc-trim-handle-to" style="position:absolute;top:12px;width:18px;height:18px;background:#ff8800;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.4);transform:translateX(-9px);z-index:2;cursor:grab;"></div>
                     </div>
                     <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-top:2px;">
                         <span>00:00:00</span>
@@ -320,52 +303,103 @@
             // Elements
             const fromInput = popup.querySelector('#sc-trim-from');
             const toInput = popup.querySelector('#sc-trim-to');
-            const sliderFrom = popup.querySelector('#sc-trim-slider-from');
-            const sliderTo = popup.querySelector('#sc-trim-slider-to');
+            const sliderContainer = popup.querySelector('#sc-trim-slider-container');
+            const handleFrom = popup.querySelector('#sc-trim-handle-from');
+            const handleTo = popup.querySelector('#sc-trim-handle-to');
             const rangeBar = popup.querySelector('#sc-trim-range');
             const cancelBtn = popup.querySelector('#sc-trim-cancel');
             const fullBtn = popup.querySelector('#sc-trim-full');
             const downloadBtn = popup.querySelector('#sc-trim-download');
 
-            // Update range bar
-            function updateRange() {
-                if (!duration || !sliderFrom || !sliderTo) return;
-                const from = parseInt(sliderFrom.value) || 0;
-                const to = parseInt(sliderTo.value) || 0;
-                const minVal = Math.min(from, to);
-                const maxVal = Math.max(from, to);
+            // State
+            let fromVal = 0;
+            let toVal = duration;
+            let dragging = null;
+
+            // Update UI
+            function updateUI() {
+                if (!duration || !sliderContainer) return;
+                const minVal = Math.min(fromVal, toVal);
+                const maxVal = Math.max(fromVal, toVal);
                 const left = (minVal / duration) * 100;
                 const width = ((maxVal - minVal) / duration) * 100;
                 rangeBar.style.left = left + '%';
                 rangeBar.style.width = width + '%';
+                handleFrom.style.left = (fromVal / duration * 100) + '%';
+                handleTo.style.left = (toVal / duration * 100) + '%';
                 fromInput.value = formatTime(minVal);
                 toInput.value = formatTime(maxVal);
             }
 
-            // Sync input to slider
-            function syncInputToSlider(input, slider) {
-                input.addEventListener('change', () => {
-                    const sec = parseTime(input.value);
-                    slider.value = Math.min(Math.max(sec, 0), duration);
-                    updateRange();
-                });
+            // Get time from click position
+            function getTimeFromEvent(e) {
+                const rect = sliderContainer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const pct = Math.max(0, Math.min(1, x / rect.width));
+                return Math.round(pct * duration);
             }
 
-            if (sliderFrom && sliderTo) {
-                sliderFrom.addEventListener('input', updateRange);
-                sliderTo.addEventListener('input', updateRange);
-                syncInputToSlider(fromInput, sliderFrom);
-                syncInputToSlider(toInput, sliderTo);
-                updateRange();
+            // Mouse/touch handlers
+            if (sliderContainer) {
+                handleFrom.addEventListener('mousedown', (e) => { e.preventDefault(); dragging = 'from'; handleFrom.style.cursor = 'grabbing'; });
+                handleTo.addEventListener('mousedown', (e) => { e.preventDefault(); dragging = 'to'; handleTo.style.cursor = 'grabbing'; });
+                handleFrom.addEventListener('touchstart', (e) => { dragging = 'from'; }, { passive: true });
+                handleTo.addEventListener('touchstart', (e) => { dragging = 'to'; }, { passive: true });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (!dragging) return;
+                    e.preventDefault();
+                    const t = getTimeFromEvent(e);
+                    if (dragging === 'from') fromVal = t;
+                    else toVal = t;
+                    updateUI();
+                });
+                document.addEventListener('touchmove', (e) => {
+                    if (!dragging) return;
+                    const t = getTimeFromEvent(e.touches[0]);
+                    if (dragging === 'from') fromVal = t;
+                    else toVal = t;
+                    updateUI();
+                }, { passive: true });
+
+                document.addEventListener('mouseup', () => {
+                    if (dragging === 'from') handleFrom.style.cursor = 'grab';
+                    if (dragging === 'to') handleTo.style.cursor = 'grab';
+                    dragging = null;
+                });
+                document.addEventListener('touchend', () => { dragging = null; });
+
+                // Click on track to move nearest handle
+                sliderContainer.addEventListener('click', (e) => {
+                    if (e.target === handleFrom || e.target === handleTo) return;
+                    const t = getTimeFromEvent(e);
+                    const distFrom = Math.abs(t - fromVal);
+                    const distTo = Math.abs(t - toVal);
+                    if (distFrom < distTo) fromVal = t;
+                    else toVal = t;
+                    updateUI();
+                });
+
+                updateUI();
             }
+
+            // Input sync
+            fromInput.addEventListener('change', () => {
+                fromVal = parseTime(fromInput.value);
+                updateUI();
+            });
+            toInput.addEventListener('change', () => {
+                toVal = parseTime(toInput.value);
+                updateUI();
+            });
 
             // Buttons
             cancelBtn.addEventListener('click', () => { overlay.remove(); resolve(null); });
             fullBtn.addEventListener('click', () => { overlay.remove(); resolve({ trim: false }); });
             downloadBtn.addEventListener('click', () => {
-                const from = parseTime(fromInput.value);
-                const to = parseTime(toInput.value);
-                if (from >= to || to <= 0) {
+                const from = Math.min(fromVal, toVal);
+                const to = Math.max(fromVal, toVal);
+                if (to <= 0 || from === to) {
                     downloadBtn.style.background = '#ff3333';
                     downloadBtn.textContent = 'Invalid range';
                     setTimeout(() => { downloadBtn.style.background = '#ff5500'; downloadBtn.textContent = 'Download'; }, 1000);
