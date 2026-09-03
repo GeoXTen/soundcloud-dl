@@ -288,17 +288,21 @@
                         <span>${durationStr}</span>
                     </div>
                     ` : ''}
-                    <div style="display:flex;gap:10px;margin-top:12px;align-items:center;">
+                    <div style="display:flex;gap:8px;margin-top:12px;align-items:center;flex-wrap:wrap;">
                         <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#ccc;cursor:pointer;user-select:none;">
-                            <input type="checkbox" id="sc-fade-in" style="accent-color:#ff5500;width:14px;height:14px;"> Fade in
+                            <input type="checkbox" id="sc-fade-in"> Fade in
                         </label>
-                        <input id="sc-fade-in-dur" type="number" value="2" min="0.5" max="10" step="0.5" style="width:48px;background:#0a0a1a;border:1px solid #333;border-radius:4px;padding:4px 6px;color:#fff;font-size:12px;text-align:center;">
-                        <span style="font-size:11px;color:#666;">s</span>
+                        <span style="display:flex;align-items:center;gap:3px;">
+                            <input id="sc-fade-in-dur" type="number" value="2" min="0.5" max="10" step="0.5" disabled style="width:44px;background:#111;border:1px solid #222;border-radius:6px;padding:4px 6px;color:#fff;font-size:12px;text-align:center;">
+                            <span style="font-size:11px;color:#666;">s</span>
+                        </span>
                         <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#ccc;cursor:pointer;user-select:none;margin-left:10px;">
-                            <input type="checkbox" id="sc-fade-out" style="accent-color:#ff5500;width:14px;height:14px;"> Fade out
+                            <input type="checkbox" id="sc-fade-out"> Fade out
                         </label>
-                        <input id="sc-fade-out-dur" type="number" value="2" min="0.5" max="10" step="0.5" style="width:48px;background:#0a0a1a;border:1px solid #333;border-radius:4px;padding:4px 6px;color:#fff;font-size:12px;text-align:center;">
-                        <span style="font-size:11px;color:#666;">s</span>
+                        <span style="display:flex;align-items:center;gap:3px;">
+                            <input id="sc-fade-out-dur" type="number" value="2" min="0.5" max="10" step="0.5" disabled style="width:44px;background:#111;border:1px solid #222;border-radius:6px;padding:4px 6px;color:#fff;font-size:12px;text-align:center;">
+                            <span style="font-size:11px;color:#666;">s</span>
+                        </span>
                     </div>
                 </div>
 
@@ -398,6 +402,10 @@
 
                 updateUI();
             }
+
+            // Fade toggles enable/disable duration inputs
+            fadeInChk.addEventListener('change', () => { fadeInDur.disabled = !fadeInChk.checked; });
+            fadeOutChk.addEventListener('change', () => { fadeOutDur.disabled = !fadeOutChk.checked; });
 
             // Input sync
             fromInput.addEventListener('change', () => {
@@ -1127,6 +1135,21 @@
             #${BTN_ID}-player:hover{background:#e64e00!important;}
             #${BTN_ID}-player:active{background:#cc4400!important;}
             #${BTN_ID}-player svg{pointer-events:none!important;}
+            /* Fade toggles - flat switch */
+            #sc-fade-in, #sc-fade-out{
+                appearance:none!important;-webkit-appearance:none!important;
+                width:30px!important;height:18px!important;background:#222!important;
+                border-radius:9px!important;position:relative!important;cursor:pointer!important;
+                transition:background 0.15s ease!important;vertical-align:middle!important;margin:0!important;flex-shrink:0!important;
+            }
+            #sc-fade-in:checked, #sc-fade-out:checked{background:#ff5500!important;}
+            #sc-fade-in::after, #sc-fade-out::after{
+                content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;
+                background:#888!important;border-radius:50%!important;transition:transform 0.15s ease, background 0.15s ease!important;
+            }
+            #sc-fade-in:checked::after, #sc-fade-out:checked::after{transform:translateX(12px)!important;background:#fff!important;}
+            #sc-fade-in-dur, #sc-fade-out-dur{transition: opacity 0.15s, border-color 0.15s!important;}
+            #sc-fade-in-dur:disabled, #sc-fade-out-dur:disabled{opacity:0.35!important;pointer-events:none!important;}
             /* Toast - flat slide */
             #sc-dl-toast-container{position:fixed!important;top:20px!important;right:20px!important;z-index:999999!important;display:flex!important;flex-direction:column!important;gap:8px!important;pointer-events:none!important;}
             .sc-dl-toast{
