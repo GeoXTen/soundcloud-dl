@@ -1184,7 +1184,7 @@
         }
 
         // === PLAYER BAR: mini orange circle ===
-        injectPlayerStyle();
+        injectFlatStyles();
         const PLAYER_ID = BTN_ID + "-player";
         let pContainer = null;
         pContainer = document.querySelector('.playbackSoundBadge__actions');
