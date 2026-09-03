@@ -1157,6 +1157,13 @@
     function createButtons() {
         let injected = false;
 
+        // Cleanup duplicate players left from previous buggy version
+        const dups = document.querySelectorAll('#' + BTN_ID + '-player');
+        if (dups.length > 1) {
+            for (let i = 1; i < dups.length; i++) dups[i].remove();
+            injected = true;
+        }
+
         // === FEED PAGE: inject button on EVERY track card ===
         const feedBars = findFeedActionBars();
         if (feedBars.length > 0) {
@@ -1193,10 +1200,15 @@
             }
         }
         if (pContainer) {
-            const playerBtn = makePlayerBtn();
-            pContainer.appendChild(playerBtn);
-            console.log("[direct] player mini button injected");
-            injected = true;
+            if (document.getElementById(PLAYER_ID) || pContainer.querySelector('#' + PLAYER_ID)) {
+                // already exists
+                injected = true;
+            } else {
+                const playerBtn = makePlayerBtn();
+                pContainer.appendChild(playerBtn);
+                console.log("[direct] player mini button injected");
+                injected = true;
+            }
         }
 
         if (!injected) { return false; }
