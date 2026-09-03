@@ -21,8 +21,19 @@ var _makeBAMock = function() {
             if (chrome.action && chrome.action.setTitle) return chrome.action.setTitle(details);
         },
         setIcon: function(details, callback) {
-            if (chrome.action && chrome.action.setIcon) return chrome.action.setIcon(details, callback);
+            try {
+                if (!details || (!details.path && !details.imageData)) {
+                    console.log("[SW] setIcon called without path/imageData, ignoring");
+                    if (callback) setTimeout(function() { callback(); }, 0);
+                    return Promise.resolve();
+                }
+                if (chrome.action && chrome.action.setIcon) return chrome.action.setIcon(details, callback).catch(function(e){
+                    console.log("[SW] setIcon suppressed:", e.message);
+                    if (callback) callback();
+                });
+            } catch(e) { console.log("[SW] setIcon exception suppressed:", e.message); }
             if (callback) setTimeout(function() { callback(); }, 0);
+            return Promise.resolve();
         },
         setBadgeText: function(details) {
             if (chrome.action && chrome.action.setBadgeText) return chrome.action.setBadgeText(details);
@@ -460,8 +471,17 @@ try {
     }
     // Suppress unhandled setIcon errors
     self.addEventListener("unhandledrejection", function(e) {
-        if (e.reason && e.reason.message && e.reason.message.indexOf("setIcon") >= 0) {
-            console.log("[SW] Suppressed setIcon unhandledrejection");
+        var msg = e.reason && e.reason.message ? e.reason.message : "";
+        if (msg.indexOf("setIcon") >= 0 || msg.indexOf("path or imageData") >= 0 || msg.indexOf("imageData") >= 0) {
+            console.log("[SW] Suppressed setIcon unhandledrejection:", msg);
+            e.preventDefault();
+        }
+    });
+    // Also suppress uncaught errors for setIcon
+    self.addEventListener("error", function(e) {
+        var msg = e.message || "";
+        if (msg.indexOf("path or imageData") >= 0 || msg.indexOf("setIcon") >= 0) {
+            console.log("[SW] Suppressed setIcon error:", msg);
             e.preventDefault();
         }
     });
