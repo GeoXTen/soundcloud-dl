@@ -450,7 +450,9 @@
                         return pos;
                     }
                     const alignedStart = findSync(startByte, 1);
-                    const alignedEnd = findSync(endByte, -1);
+                    // If trimming to end of track, don't search - use full end
+                    const isFullEnd = Math.abs(toSec - totalDuration) < 0.5;
+                    const alignedEnd = isFullEnd ? audioEnd : findSync(endByte, -1);
                     console.log("[trim-bytes] aligned start:", alignedStart, "end:", alignedEnd, "sliceLen:", alignedEnd - alignedStart);
 
                     if (alignedEnd <= alignedStart) { reject(new Error("Invalid trim range bytes")); return; }
@@ -731,7 +733,6 @@
                 let totalFrameSize = 0;
                 for (const f of frames) totalFrameSize += f.header.length + f.data.length;
                 // Tag header: "ID3" + version(2.3) + flags + size(4 bytes synchsafe)
-                const tagSize = synchsafe(totalFrameSize);
                 const tagHeader = new Uint8Array(10);
                 tagHeader[0] = 0x49; // I
                 tagHeader[1] = 0x44; // D
@@ -739,10 +740,10 @@
                 tagHeader[3] = 0x03; // version 2.3
                 tagHeader[4] = 0x00; // revision
                 tagHeader[5] = 0x00; // no flags
-                tagHeader[6] = (tagSize >> 21) & 0x7f;
-                tagHeader[7] = (tagSize >> 14) & 0x7f;
-                tagHeader[8] = (tagSize >> 7) & 0x7f;
-                tagHeader[9] = tagSize & 0x7f;
+                tagHeader[6] = (totalFrameSize >> 21) & 0x7f;
+                tagHeader[7] = (totalFrameSize >> 14) & 0x7f;
+                tagHeader[8] = (totalFrameSize >> 7) & 0x7f;
+                tagHeader[9] = totalFrameSize & 0x7f;
                 // Concatenate all
                 const tagParts = [tagHeader];
                 for (const f of frames) { tagParts.push(f.header); tagParts.push(f.data); }
@@ -757,12 +758,7 @@
     }
 
     function synchsafe(n) {
-        let result = 0;
-        result |= (n & 0x0fe00000) << 3;
-        result |= (n & 0x001fc000) << 2;
-        result |= (n & 0x00003f80) << 1;
-        result |= (n & 0x0000007f);
-        return result;
+        return ((n >> 21) & 0x7f) << 24 | ((n >> 14) & 0x7f) << 16 | ((n >> 7) & 0x7f) << 8 | (n & 0x7f);
     }
 
     function concatUint8(arrays) {
