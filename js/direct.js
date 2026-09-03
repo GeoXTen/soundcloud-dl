@@ -1137,15 +1137,17 @@
             #sc-fade-in, #sc-fade-out{
                 appearance:none!important;-webkit-appearance:none!important;
                 width:30px!important;height:18px!important;background:#222!important;
+                border:none!important;outline:none!important;padding:0!important;box-sizing:border-box!important;
                 border-radius:9px!important;position:relative!important;cursor:pointer!important;
                 transition:background 0.15s ease!important;vertical-align:middle!important;margin:0!important;flex-shrink:0!important;
             }
             #sc-fade-in:checked, #sc-fade-out:checked{background:#ff5500!important;}
             #sc-fade-in::after, #sc-fade-out::after{
-                content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;
-                background:#888!important;border-radius:50%!important;transition:transform 0.15s ease, background 0.15s ease!important;
+                content:'';position:absolute;top:50%!important;left:2px!important;width:14px!important;height:14px!important;
+                background:#888!important;border-radius:50%!important;transform:translateY(-50%)!important;
+                transition:transform 0.15s ease, background 0.15s ease!important;
             }
-            #sc-fade-in:checked::after, #sc-fade-out:checked::after{transform:translateX(12px)!important;background:#fff!important;}
+            #sc-fade-in:checked::after, #sc-fade-out:checked::after{transform:translateY(-50%) translateX(12px)!important;background:#fff!important;}
             #sc-fade-in-dur, #sc-fade-out-dur{transition: opacity 0.15s, border-color 0.15s!important;}
             #sc-fade-in-dur:disabled, #sc-fade-out-dur:disabled{opacity:0.35!important;pointer-events:none!important;}
             /* Toast - flat slide */
