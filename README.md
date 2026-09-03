@@ -2,7 +2,9 @@
 
 Chrome/Brave extension for downloading SoundCloud tracks as 128k MP3 — with trim, fade, and correct ID3 tags. Manifest V3.
 
-![Trim Popup]([images/screenshot-trim.png](https://i.postimg.cc/qqCLqCH9/image.png))
+<p align="center">
+  <img src="https://i.postimg.cc/qqCLqCH9/image.png" width="700" alt="Trim Popup — FROM/TO slider + Fade in/out"/>
+</p>
 
 ## Quick Install
 
