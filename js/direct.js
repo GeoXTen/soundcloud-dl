@@ -288,18 +288,18 @@
                         <span>${durationStr}</span>
                     </div>
                     ` : ''}
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;">
-                        <div style="display:flex;align-items:center;gap:6px;background:#111;border:1px solid #222;border-radius:6px;padding:6px 8px;">
-                            <input type="checkbox" id="sc-fade-in">
-                            <span style="font-size:12px;color:#ccc;user-select:none;flex:1;">Fade in</span>
-                            <input id="sc-fade-in-dur" type="number" value="2" min="0.5" max="10" step="0.5" disabled style="width:36px;background:#0a0a0a;border:1px solid #222;border-radius:4px;padding:3px 4px;color:#fff;font-size:12px;text-align:center;">
-                            <span style="font-size:11px;color:#666;">s</span>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
+                        <div style="display:flex;align-items:center;gap:5px;background:#111;border:1px solid #222;border-radius:6px;padding:6px 6px;">
+                            <input type="checkbox" id="sc-fade-in" style="flex-shrink:0;">
+                            <span style="font-size:12px;color:#ccc;user-select:none;white-space:nowrap;flex-shrink:0;">Fade in</span>
+                            <input id="sc-fade-in-dur" type="number" value="2" min="0.5" max="10" step="0.5" disabled style="width:32px;min-width:32px;flex-shrink:0;background:#0a0a0a;border:1px solid #222;border-radius:4px;padding:3px 2px;color:#fff;font-size:12px;text-align:center;">
+                            <span style="font-size:11px;color:#666;flex-shrink:0;">s</span>
                         </div>
-                        <div style="display:flex;align-items:center;gap:6px;background:#111;border:1px solid #222;border-radius:6px;padding:6px 8px;">
-                            <input type="checkbox" id="sc-fade-out">
-                            <span style="font-size:12px;color:#ccc;user-select:none;flex:1;">Fade out</span>
-                            <input id="sc-fade-out-dur" type="number" value="2" min="0.5" max="10" step="0.5" disabled style="width:36px;background:#0a0a0a;border:1px solid #222;border-radius:4px;padding:3px 4px;color:#fff;font-size:12px;text-align:center;">
-                            <span style="font-size:11px;color:#666;">s</span>
+                        <div style="display:flex;align-items:center;gap:5px;background:#111;border:1px solid #222;border-radius:6px;padding:6px 6px;">
+                            <input type="checkbox" id="sc-fade-out" style="flex-shrink:0;">
+                            <span style="font-size:12px;color:#ccc;user-select:none;white-space:nowrap;flex-shrink:0;">Fade out</span>
+                            <input id="sc-fade-out-dur" type="number" value="2" min="0.5" max="10" step="0.5" disabled style="width:32px;min-width:32px;flex-shrink:0;background:#0a0a0a;border:1px solid #222;border-radius:4px;padding:3px 2px;color:#fff;font-size:12px;text-align:center;">
+                            <span style="font-size:11px;color:#666;flex-shrink:0;">s</span>
                         </div>
                     </div>
                 </div>
