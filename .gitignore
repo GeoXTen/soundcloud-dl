@@ -4,3 +4,5 @@ soundcloud-dl.zip
 analyze.ps1
 package.json
 package-lock.json
+key.pem
+*.pem

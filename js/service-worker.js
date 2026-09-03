@@ -299,6 +299,12 @@ if (typeof XMLHttpRequest === "undefined") {
     self.XMLHttpRequest.prototype.abort = function() { this._aborted = true; };
     self.XMLHttpRequest.prototype.send = function(body) {
         var xhr = this;
+        // blob: URLs not supported in service worker fetch — fail gracefully
+        if (this._url && this._url.indexOf("blob:") === 0) {
+            console.log("[SW-XHR] blob URL not supported, aborting:", this._url.substring(0,60));
+            setTimeout(function() { if (xhr.onerror) xhr.onerror(); }, 0);
+            return;
+        }
         var controller = new AbortController();
         var opts = { method: this._method, headers: this._headers, signal: controller.signal };
         if (body) opts.body = body;
@@ -352,8 +358,10 @@ if (typeof location === "undefined") {
 }
 
 // === Step 8: Polyfill URL.createObjectURL ===
+// In service workers, URL.createObjectURL may not exist — use real one if available, otherwise skip
 if (typeof URL !== "undefined" && !URL.createObjectURL) {
-    URL.createObjectURL = function(blob) { return "blob:null/" + Math.random().toString(36).substr(2); };
+    console.log("[SW] URL.createObjectURL not available, downloads will use direct URL");
+    URL.createObjectURL = function(blob) { return null; };
     URL.revokeObjectURL = function() {};
 }
 
@@ -649,7 +657,7 @@ chrome.storage.local.get(null, function(items) {
         var senderInfo = sender.tab ? "tab:" + sender.tab.url : "extension";
         console.log("[SW-MSG #" + msgCount + "] FROM=" + senderInfo + " action=" + (message && message.action));
         
-        // Handle direct download from direct.js (bypasses CrossPilot)
+        // Handle direct download from direct.js (bypasses CrossPilot) — direct URL only
         if (message && message.messageRecipient === "__SC_DIRECT__" && message.action === "download") {
             console.log("[SW-DL] download request url=" + (message.url||"").substring(0,120) + " filename=" + message.filename);
             try {
@@ -657,40 +665,15 @@ chrome.storage.local.get(null, function(items) {
                 if (!fn.toLowerCase().endsWith(".mp3")) fn += ".mp3";
                 fn = fn.substring(0,180);
                 console.log("[SW-DL] sanitized filename=" + fn + " orig=" + message.filename);
-                // Fetch the MP3 as blob first to bypass server Content-Disposition UUID
-                fetch(message.url).then(r => {
-                    if (!r.ok) throw new Error("fetch failed " + r.status);
-                    return r.blob();
-                }).then(blob => {
-                    const blobUrl = URL.createObjectURL(blob);
-                    console.log("[SW-DL] blob created size=" + blob.size + " type=" + blob.type);
-                    chrome.downloads.download({url: blobUrl, filename: fn, conflictAction: "uniquify"}, function(downloadId) {
-                        if (chrome.runtime.lastError) {
-                            console.log("[SW-DL] blob download failed:", chrome.runtime.lastError.message);
-                            sendResponse({success:false, error: chrome.runtime.lastError.message});
-                        } else {
-                            console.log("[SW-DL] blob download started id=" + downloadId + " filename=" + fn);
-                            // Also log actual saved filename after a bit
-                            setTimeout(() => {
-                                chrome.downloads.search({id: downloadId}, (res) => {
-                                    if (res && res[0]) console.log("[SW-DL] actual saved filename:", res[0].filename, " finalUrl:", res[0].finalUrl);
-                                });
-                            }, 1000);
-                            sendResponse({success:true, downloadId: downloadId});
-                        }
-                        setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
-                    });
-                }).catch(err => {
-                    console.log("[SW-DL] fetch/blob failed:", err.message, "falling back to direct URL");
-                    chrome.downloads.download({url: message.url, filename: fn, conflictAction: "uniquify"}, function(downloadId) {
-                        if (chrome.runtime.lastError) {
-                            console.log("[SW-DL] direct download failed:", chrome.runtime.lastError.message);
-                            sendResponse({success:false, error: chrome.runtime.lastError.message});
-                        } else {
-                            console.log("[SW-DL] direct download started id=" + downloadId);
-                            sendResponse({success:true, downloadId: downloadId});
-                        }
-                    });
+                // Direct download — content script already handles blob+ID3, this is fallback only
+                chrome.downloads.download({url: message.url, filename: fn, conflictAction: "uniquify"}, function(downloadId) {
+                    if (chrome.runtime.lastError) {
+                        console.log("[SW-DL] download failed:", chrome.runtime.lastError.message);
+                        sendResponse({success:false, error: chrome.runtime.lastError.message});
+                    } else {
+                        console.log("[SW-DL] download started id=" + downloadId + " filename=" + fn);
+                        sendResponse({success:true, downloadId: downloadId});
+                    }
                 });
             } catch(e) {
                 console.log("[SW-DL] exception:", e.message);
