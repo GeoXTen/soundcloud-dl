@@ -288,6 +288,18 @@
                         <span>${durationStr}</span>
                     </div>
                     ` : ''}
+                    <div style="display:flex;gap:10px;margin-top:12px;align-items:center;">
+                        <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#ccc;cursor:pointer;user-select:none;">
+                            <input type="checkbox" id="sc-fade-in" style="accent-color:#ff5500;width:14px;height:14px;"> Fade in
+                        </label>
+                        <input id="sc-fade-in-dur" type="number" value="2" min="0.5" max="10" step="0.5" style="width:48px;background:#0a0a1a;border:1px solid #333;border-radius:4px;padding:4px 6px;color:#fff;font-size:12px;text-align:center;">
+                        <span style="font-size:11px;color:#666;">s</span>
+                        <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#ccc;cursor:pointer;user-select:none;margin-left:10px;">
+                            <input type="checkbox" id="sc-fade-out" style="accent-color:#ff5500;width:14px;height:14px;"> Fade out
+                        </label>
+                        <input id="sc-fade-out-dur" type="number" value="2" min="0.5" max="10" step="0.5" style="width:48px;background:#0a0a1a;border:1px solid #333;border-radius:4px;padding:4px 6px;color:#fff;font-size:12px;text-align:center;">
+                        <span style="font-size:11px;color:#666;">s</span>
+                    </div>
                 </div>
 
                 <div style="display:flex;gap:10px;">
@@ -307,6 +319,10 @@
             const handleFrom = popup.querySelector('#sc-trim-handle-from');
             const handleTo = popup.querySelector('#sc-trim-handle-to');
             const rangeBar = popup.querySelector('#sc-trim-range');
+            const fadeInChk = popup.querySelector('#sc-fade-in');
+            const fadeOutChk = popup.querySelector('#sc-fade-out');
+            const fadeInDur = popup.querySelector('#sc-fade-in-dur');
+            const fadeOutDur = popup.querySelector('#sc-fade-out-dur');
             const cancelBtn = popup.querySelector('#sc-trim-cancel');
             const fullBtn = popup.querySelector('#sc-trim-full');
             const downloadBtn = popup.querySelector('#sc-trim-download');
@@ -399,15 +415,23 @@
             downloadBtn.addEventListener('click', () => {
                 const from = Math.min(fromVal, toVal);
                 const to = Math.max(fromVal, toVal);
-                console.log("[trim-ui] Download clicked:", {from, to, fromVal, toVal, duration, fromFmt: formatTime(from), toFmt: formatTime(to)});
+                const fadeIn = fadeInChk.checked ? Math.max(0.1, parseFloat(fadeInDur.value)||2) : 0;
+                const fadeOut = fadeOutChk.checked ? Math.max(0.1, parseFloat(fadeOutDur.value)||2) : 0;
+                console.log("[trim-ui] Download clicked:", {from, to, fromVal, toVal, duration, fadeIn, fadeOut});
                 if (to <= 0 || from === to) {
                     downloadBtn.style.background = '#ff3333';
                     downloadBtn.textContent = 'Invalid range';
                     setTimeout(() => { downloadBtn.style.background = '#ff5500'; downloadBtn.textContent = 'Download'; }, 1000);
                     return;
                 }
+                if (fadeIn + fadeOut >= (to - from)) {
+                    downloadBtn.style.background = '#ff3333';
+                    downloadBtn.textContent = 'Fade too long';
+                    setTimeout(() => { downloadBtn.style.background = '#ff5500'; downloadBtn.textContent = 'Download'; }, 1200);
+                    return;
+                }
                 overlay.remove();
-                resolve({ trim: true, from, to });
+                resolve({ trim: true, from, to, fadeIn, fadeOut });
             });
             overlay.addEventListener('click', (e) => { if (e.target === overlay) { overlay.remove(); resolve(null); } });
         });
@@ -466,10 +490,10 @@
         });
     }
 
-    // Trim MP3 using Web Audio API + lamejs (fallback, slower, re-encodes)
-    function trimMp3(blob, fromSec, toSec) {
+    // Trim MP3 using Web Audio API + lamejs (for fade, slower, re-encodes)
+    function trimMp3(blob, fromSec, toSec, fadeIn, fadeOut) {
         return new Promise((resolve, reject) => {
-            console.log("[trim] Starting trim:", { from: fromSec, to: toSec, blobSize: blob.size });
+            console.log("[trim] Starting trim:", { from: fromSec, to: toSec, fadeIn, fadeOut, blobSize: blob.size });
             const reader = new FileReader();
             reader.onload = async function() {
                 try {
@@ -487,9 +511,29 @@
 
                     if (length <= 0) { reject(new Error("Invalid trim range")); return; }
 
-                    // Extract channels
-                    const left = audioBuffer.getChannelData(0).subarray(startSample, endSample);
-                    const right = channels > 1 ? audioBuffer.getChannelData(1).subarray(startSample, endSample) : left;
+                    // Extract channels (copy to allow fade mutation)
+                    const left = new Float32Array(audioBuffer.getChannelData(0).subarray(startSample, endSample));
+                    const right = channels > 1 ? new Float32Array(audioBuffer.getChannelData(1).subarray(startSample, endSample)) : left;
+
+                    // Apply fade in/out (linear)
+                    fadeIn = fadeIn || 0; fadeOut = fadeOut || 0;
+                    if (fadeIn > 0) {
+                        const n = Math.min(Math.floor(fadeIn * sampleRate), length);
+                        for (let i = 0; i < n; i++) {
+                            const g = i / n;
+                            left[i] *= g;
+                            if (channels > 1) right[i] *= g;
+                        }
+                    }
+                    if (fadeOut > 0) {
+                        const n = Math.min(Math.floor(fadeOut * sampleRate), length);
+                        for (let i = 0; i < n; i++) {
+                            const g = i / n;
+                            const idx = length - 1 - i;
+                            left[idx] *= g;
+                            if (channels > 1) right[idx] *= g;
+                        }
+                    }
 
                     // Convert Float32 to Int16 for lamejs
                     function floatTo16(float32) {
@@ -502,7 +546,7 @@
                     }
 
                     const left16 = floatTo16(left);
-                    const right16 = floatTo16(right);
+                    const right16 = channels > 1 ? floatTo16(right) : left16;
 
                     console.log("[trim] Encoding to MP3...", "left16 len:", left16.length);
 
@@ -833,13 +877,20 @@
                     console.log("[direct] Trimming from", trimResult.from, "to", trimResult.to);
                     const totalSec = lastApiInfo.duration ? lastApiInfo.duration/1000 : 0;
                     try {
-                        // Fast CBR byte-slice (no re-encode = exact, no quality loss)
-                        finalBlob = await trimMp3ByBytes(rawBlob, trimResult.from, trimResult.to, totalSec);
-                        console.log("[direct] Byte-slice trimmed size:", finalBlob.size);
+                        const needFade = (trimResult.fadeIn > 0 || trimResult.fadeOut > 0);
+                        if (needFade && typeof lamejs !== 'undefined') {
+                            console.log("[direct] Fade trim", trimResult.fadeIn, trimResult.fadeOut);
+                            finalBlob = await trimMp3(rawBlob, trimResult.from, trimResult.to, trimResult.fadeIn, trimResult.fadeOut);
+                            console.log("[direct] Fade trimmed size:", finalBlob.size);
+                        } else {
+                            // Fast CBR byte-slice (no re-encode = exact, no quality loss)
+                            finalBlob = await trimMp3ByBytes(rawBlob, trimResult.from, trimResult.to, totalSec);
+                            console.log("[direct] Byte-slice trimmed size:", finalBlob.size);
+                        }
                     } catch(sliceErr) {
-                        console.log("[direct] Byte-slice failed:", sliceErr.message, "falling back to re-encode");
+                        console.log("[direct] Trim failed:", sliceErr.message, "falling back to re-encode");
                         if (typeof lamejs !== 'undefined') {
-                            finalBlob = await trimMp3(rawBlob, trimResult.from, trimResult.to);
+                            finalBlob = await trimMp3(rawBlob, trimResult.from, trimResult.to, trimResult.fadeIn, trimResult.fadeOut);
                             console.log("[direct] Re-encoded trimmed size:", finalBlob.size);
                         } else {
                             throw sliceErr;
