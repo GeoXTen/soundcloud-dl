@@ -45,7 +45,7 @@ Then `chrome://extensions` → Developer mode → Load unpacked → select `soun
 
 ## Supported browsers
 
-- Chrome 88+, Brave, Edge 88+, any Chromium MV3
+- Chrome 88+, Brave, Edge 88+, Opera, Vivaldi, and any Chromium-based browser with MV3 support
 
 ## Notes
 
