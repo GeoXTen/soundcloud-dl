@@ -1100,24 +1100,21 @@
             results.push({ container: actionRow, trackUrl });
         });
 
-        // Type 4: New SoundCloud redesign — MuiBox-root mui-m0g6ua action row
-        document.querySelectorAll('.MuiBox-root.mui-m0g6ua, .MuiBox-root[class*="m0g6ua"]').forEach(box => {
+        // Type 4: New SoundCloud redesign — track header action row (MuiStack mui-1nkneyc / mui-16ytee5)
+        // Your mui-m0g6ua is the absolute gradient overlay (inset:0, opacity) — not the button bar, so we target the real row.
+        document.querySelectorAll('.MuiStack-root.mui-16ytee5, .MuiStack-root.mui-1nkneyc, [class*="MuiStack-root"][aria-label="Track header"] + * .MuiStack-root').forEach(box => {
             if (seenContainers.has(box)) return;
             if (box.closest('footer, [role="contentinfo"], [class*="playback"], [class*="miniplayer"]')) return;
-            if (box.querySelector('.sc-dl-feed-btn')) return;
-            const allBtns = box.querySelectorAll('button, a[role="button"]');
-            if (allBtns.length < 2) return;
-            // Must contain like/repost/share actions — avoid false positives on unrelated MuiBox
-            const texts = Array.from(allBtns).map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
-            const hasAction = texts.some(t => t.includes('like') || t.includes('repost') || t.includes('share') || t.includes('copy link') || t.includes('more'));
-            // Fallback: accept any MuiBox with >=3 buttons even if labels not english
-            if (!hasAction && allBtns.length < 3) return;
-            let trackUrl = getTrackUrl(location.href);
-            if (!trackUrl) {
-                const link = box.querySelector('a[href*="soundcloud.com"]') || document.querySelector('a[href^="/"][href*="/"]');
-                if (link) trackUrl = getTrackUrl(link.getAttribute('href'));
+            if (box.querySelector('.sc-dl-feed-btn, .sc-dl-mui-btn')) return;
+            // mui-m0g6ua is overlay — explicitly skip it
+            if (box.classList.contains('mui-m0g6ua') || box.matches('.MuiBox-root.mui-m0g6ua, [class*="m0g6ua"]')) return;
+            const allBtns = box.querySelectorAll('button[aria-label="Share"], button[aria-label="Copy link"], button[aria-label="Repost"], button[aria-label="More actions"], button[aria-label="Add to playlist"]');
+            if (allBtns.length < 2) {
+                // fallback: any stack with share/repost/more text
+                const alt = Array.from(box.querySelectorAll('button')).map(b => (b.getAttribute('aria-label')||'').toLowerCase());
+                if (!alt.some(t => t.includes('share') || t.includes('copy link') || t.includes('repost') || t.includes('more'))) return;
             }
-            // Also try og:url meta as fallback
+            let trackUrl = getTrackUrl(location.href);
             if (!trackUrl) {
                 const og = document.querySelector('meta[property="og:url"]');
                 if (og) trackUrl = getTrackUrl(og.getAttribute('content'));
@@ -1125,6 +1122,25 @@
             if (!trackUrl) return;
             seenContainers.add(box);
             results.push({ container: box, trackUrl });
+        });
+        // Fallback: scan any MuiStack that contains Share/Copy link/Repost cluster (hash may change)
+        document.querySelectorAll('.MuiStack-root').forEach(stack => {
+            if (seenContainers.has(stack)) return;
+            if (stack.closest('footer, [role="contentinfo"], [class*="playback"]')) return;
+            if (stack.querySelector('.sc-dl-feed-btn, .sc-dl-mui-btn')) return;
+            if (stack.classList.contains('mui-m0g6ua')) return;
+            const btns = stack.querySelectorAll('button[aria-label="Share"], button[aria-label="Copy link"], button[aria-label="Repost"]');
+            if (btns.length < 2) return;
+            // must be the row that is direct child of the track header section
+            if (!stack.closest('section[aria-label*="Track header"]')) return;
+            let trackUrl = getTrackUrl(location.href);
+            if (!trackUrl) {
+                const og = document.querySelector('meta[property="og:url"]');
+                if (og) trackUrl = getTrackUrl(og.getAttribute('content'));
+            }
+            if (!trackUrl) return;
+            seenContainers.add(stack);
+            results.push({ container: stack, trackUrl });
         });
 
         return results;
@@ -1148,6 +1164,8 @@
             .sc-dl-feed-btn:active{background:#cc4400!important;}
             .sc-dl-feed-btn:disabled{opacity:0.6!important;pointer-events:none!important;}
             .sc-dl-feed-btn svg{pointer-events:none!important;}
+            /* MUI header row — make DL button circular to match MuiIconButton */
+            .MuiStack-root .sc-dl-feed-btn{width:40px!important;height:40px!important;min-width:40px!important;border-radius:50%!important;padding:0!important;margin-left:4px!important;}
             /* Player mini - flat circle */
             #${BTN_ID}-player{
                 width:30px!important;height:30px!important;min-width:30px!important;min-height:30px!important;
@@ -1220,12 +1238,19 @@
             feedBars.forEach(({ container, trackUrl }) => {
                 if (container.querySelector('.sc-dl-feed-btn')) return;
                 const btn = makeFeedBtn(trackUrl);
-                // Try sc-button-group first, then sc-button-toolbar, then append to container
-                const btnGroup = container.querySelector('.sc-button-group, .sc-button-toolbar');
-                if (btnGroup) {
-                    btnGroup.appendChild(btn);
+                // MuiStack (new header) — insert before "More actions" to match native order
+                if (container.classList.contains('MuiStack-root') || container.matches('[class*="MuiStack"]')) {
+                    const moreBtn = container.querySelector('button[aria-label="More actions"]');
+                    if (moreBtn) container.insertBefore(btn, moreBtn);
+                    else container.appendChild(btn);
                 } else {
-                    container.appendChild(btn);
+                    // Try sc-button-group first, then sc-button-toolbar, then append to container
+                    const btnGroup = container.querySelector('.sc-button-group, .sc-button-toolbar');
+                    if (btnGroup) {
+                        btnGroup.appendChild(btn);
+                    } else {
+                        container.appendChild(btn);
+                    }
                 }
                 injected = true;
             });
