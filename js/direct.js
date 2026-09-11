@@ -1143,6 +1143,35 @@
             results.push({ container: stack, trackUrl });
         });
 
+        // Type 5: Comment bar — <input aria-label="Add a comment to this track" class="mui-a7x4ux">
+        document.querySelectorAll('input[aria-label*="Add a comment"], input.mui-a7x4ux, input[placeholder^="Comment at"]').forEach(inp => {
+            // wrapper is the flex container holding the input (often same MuiStack row or parent Box)
+            let wrapper = inp.closest('.MuiStack-root') || inp.parentElement?.parentElement;
+            if (!wrapper) wrapper = inp.parentElement;
+            if (!wrapper || seenContainers.has(wrapper)) return;
+            // avoid injecting inside hidden/overlay boxes
+            if (wrapper.classList.contains('mui-m0g6ua')) return;
+            if (wrapper.querySelector('.sc-dl-feed-btn, .sc-dl-comment-btn')) return;
+            // only on track page
+            if (!location.href.includes('soundcloud.com/')) return;
+            let trackUrl = getTrackUrl(location.href);
+            if (!trackUrl) {
+                const og = document.querySelector('meta[property="og:url"]');
+                if (og) trackUrl = getTrackUrl(og.getAttribute('content'));
+            }
+            if (!trackUrl) return;
+            // use the input's immediate flex parent as container (so button sits right of the field)
+            let container = inp.closest('.MuiInputBase-root')?.parentElement;
+            if (!container || container === document.body) container = inp.parentElement;
+            // fallback to wrapper if no better container
+            if (!container) container = wrapper;
+            if (seenContainers.has(container)) return;
+            if (container.querySelector('.sc-dl-feed-btn, .sc-dl-comment-btn')) return;
+            seenContainers.add(container);
+            seenContainers.add(wrapper);
+            results.push({ container, trackUrl, isComment: true });
+        });
+
         return results;
     }
 
@@ -1166,6 +1195,8 @@
             .sc-dl-feed-btn svg{pointer-events:none!important;}
             /* MUI header row — make DL button circular to match MuiIconButton */
             .MuiStack-root .sc-dl-feed-btn{width:40px!important;height:40px!important;min-width:40px!important;border-radius:50%!important;padding:0!important;margin-left:4px!important;}
+            /* Comment bar — compact orange button right of the field */
+            .sc-dl-comment-btn{margin-left:8px!important;flex-shrink:0!important;}
             /* Player mini - flat circle */
             #${BTN_ID}-player{
                 width:30px!important;height:30px!important;min-width:30px!important;min-height:30px!important;
@@ -1235,9 +1266,10 @@
         // === FEED PAGE: inject button on EVERY track card ===
         const feedBars = findFeedActionBars();
         if (feedBars.length > 0) {
-            feedBars.forEach(({ container, trackUrl }) => {
+            feedBars.forEach(({ container, trackUrl, isComment }) => {
                 if (container.querySelector('.sc-dl-feed-btn')) return;
                 const btn = makeFeedBtn(trackUrl);
+                if (isComment) btn.classList.add('sc-dl-comment-btn');
                 // MuiStack (new header) — insert before "More actions" to match native order
                 if (container.classList.contains('MuiStack-root') || container.matches('[class*="MuiStack"]')) {
                     const moreBtn = container.querySelector('button[aria-label="More actions"]');
