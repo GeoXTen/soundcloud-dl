@@ -1100,6 +1100,33 @@
             results.push({ container: actionRow, trackUrl });
         });
 
+        // Type 4: New SoundCloud redesign — MuiBox-root mui-m0g6ua action row
+        document.querySelectorAll('.MuiBox-root.mui-m0g6ua, .MuiBox-root[class*="m0g6ua"]').forEach(box => {
+            if (seenContainers.has(box)) return;
+            if (box.closest('footer, [role="contentinfo"], [class*="playback"], [class*="miniplayer"]')) return;
+            if (box.querySelector('.sc-dl-feed-btn')) return;
+            const allBtns = box.querySelectorAll('button, a[role="button"]');
+            if (allBtns.length < 2) return;
+            // Must contain like/repost/share actions — avoid false positives on unrelated MuiBox
+            const texts = Array.from(allBtns).map(b => (b.getAttribute('aria-label') || b.textContent || '').trim().toLowerCase());
+            const hasAction = texts.some(t => t.includes('like') || t.includes('repost') || t.includes('share') || t.includes('copy link') || t.includes('more'));
+            // Fallback: accept any MuiBox with >=3 buttons even if labels not english
+            if (!hasAction && allBtns.length < 3) return;
+            let trackUrl = getTrackUrl(location.href);
+            if (!trackUrl) {
+                const link = box.querySelector('a[href*="soundcloud.com"]') || document.querySelector('a[href^="/"][href*="/"]');
+                if (link) trackUrl = getTrackUrl(link.getAttribute('href'));
+            }
+            // Also try og:url meta as fallback
+            if (!trackUrl) {
+                const og = document.querySelector('meta[property="og:url"]');
+                if (og) trackUrl = getTrackUrl(og.getAttribute('content'));
+            }
+            if (!trackUrl) return;
+            seenContainers.add(box);
+            results.push({ container: box, trackUrl });
+        });
+
         return results;
     }
 
