@@ -1270,38 +1270,39 @@
         const st = document.createElement("style");
         st.id = "sc-dl-flat-style";
         st.textContent = `
-            /* Feed button - flat */
+            /* Feed button — ghost icon button: transparent, orange glyph, no filled disc.
+               This is the DEFAULT for every injected button. The ghost look used to be
+               scoped to .MuiStack-root, so on any other container the button fell back to
+               the old solid-orange square; now the solid fill is gone entirely. */
             .sc-dl-feed-btn{
-                background:#ff5500!important;color:#fff!important;border:none!important;
-                border-radius:6px!important;height:26px!important;min-width:30px!important;padding:0 8px!important;
+                background:transparent!important;color:#ff5500!important;border:none!important;
+                border-radius:50%!important;width:40px!important;height:40px!important;
+                min-width:40px!important;min-height:40px!important;padding:0!important;
+                box-sizing:border-box!important;margin-left:4px!important;
                 display:inline-flex!important;align-items:center!important;justify-content:center!important;
                 flex-shrink:0!important;cursor:pointer!important;vertical-align:middle!important;
-                transition: background 0.15s ease!important;
-            }
-            .sc-dl-feed-btn:hover{background:#e64e00!important;}
-            .sc-dl-feed-btn:active{background:#cc4400!important;}
-            .sc-dl-feed-btn:disabled{opacity:0.6!important;pointer-events:none!important;}
-            .sc-dl-feed-btn svg{pointer-events:none!important;}
-            /* MUI header row — ghost icon button matching MuiIconButton (no filled disc) */
-            .MuiStack-root .sc-dl-feed-btn{
-                width:40px!important;height:40px!important;min-width:40px!important;
-                border-radius:50%!important;padding:0!important;margin-left:4px!important;
-                background:transparent!important;color:#ff5500!important;
                 transition: background 0.15s ease, color 0.15s ease!important;
             }
-            .MuiStack-root .sc-dl-feed-btn:hover{background:rgba(255,85,0,0.16)!important;color:#ff7733!important;}
-            .MuiStack-root .sc-dl-feed-btn:active{background:rgba(255,85,0,0.24)!important;color:#ff7733!important;}
-            /* Comment bar — compact ghost button right of the field */
-            .sc-dl-feed-btn.sc-dl-comment-btn{
-                margin-left:8px!important;flex-shrink:0!important;
-                background:transparent!important;color:#ff5500!important;
-            }
-            .sc-dl-feed-btn.sc-dl-comment-btn:hover{background:rgba(255,85,0,0.16)!important;color:#ff7733!important;}
-            .sc-dl-feed-btn.sc-dl-comment-btn:active{background:rgba(255,85,0,0.24)!important;color:#ff7733!important;}
+            .sc-dl-feed-btn:hover{background:rgba(255,85,0,0.16)!important;color:#ff7733!important;}
+            .sc-dl-feed-btn:active{background:rgba(255,85,0,0.24)!important;color:#ff7733!important;}
+            .sc-dl-feed-btn:disabled{opacity:0.6!important;pointer-events:none!important;}
+            .sc-dl-feed-btn svg{pointer-events:none!important;width:18px!important;height:18px!important;}
             /* Keyboard focus ring — matches popup/handle convention */
-            .MuiStack-root .sc-dl-feed-btn:focus-visible,
-            .sc-dl-feed-btn.sc-dl-comment-btn:focus-visible,
+            .sc-dl-feed-btn:focus-visible,
             #${BTN_ID}-player:focus-visible{outline:2px solid #ff5500!important;outline-offset:2px!important;}
+            /* Classic action bar (light/dark legacy rows) — still ghost, only resized to the
+               40x32 native .sc-button box so the row height never changes. */
+            .soundActions .sc-dl-feed-btn,
+            .sc-button-group .sc-dl-feed-btn,
+            .sc-button-toolbar .sc-dl-feed-btn{
+                width:40px!important;height:32px!important;min-width:40px!important;min-height:32px!important;
+                border-radius:4px!important;
+            }
+            .soundActions .sc-dl-feed-btn svg,
+            .sc-button-group .sc-dl-feed-btn svg,
+            .sc-button-toolbar .sc-dl-feed-btn svg{width:16px!important;height:16px!important;}
+            /* Comment bar — compact ghost button right of the field */
+            .sc-dl-feed-btn.sc-dl-comment-btn{margin-left:8px!important;flex-shrink:0!important;}
             /* Player mini - ghost icon, no filled disc */
             #${BTN_ID}-player{
                 width:30px!important;height:30px!important;min-width:30px!important;min-height:30px!important;

@@ -32,7 +32,7 @@ Then `chrome://extensions` → Developer mode → Load unpacked → select `soun
 - **Fade in / Fade out** — flat toggles, duration `0.5–10s` (default 2s), Web Audio + lamejs re-encode; validated `fadeIn+fadeOut < duration`
 - **ID3v2.3 tags** — TIT2/TPE1/TALB/TDRC/TCON/TRCK/COMM/APIC with artwork `t500x500`, stripping existing ID3v1/v2
 - **SPA-aware** — detects playing track from player bar (both old light + new 2026 dark UI)
-- **Flat UI** — no spring bounce: `#ff5500` feed btn, 30px player circle, `#111` cards, `0.15s` color only
+- **Flat UI** — no spring bounce: transparent ghost icon button (orange `#ff5500` glyph, `rgba(255,85,0,0.16)` halo on hover), 30px player circle, `#111` cards, `0.15s` color only
 
 ## How it works
 
