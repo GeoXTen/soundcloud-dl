@@ -10,9 +10,9 @@ Chrome/Brave extension for downloading SoundCloud tracks as 128k MP3 — with tr
 
 ### Option 1: Release ZIP / CRX (recommended)
 
-1. Download [`soundcloud-dl-v1.1.5.zip`](https://github.com/GeoXTen/soundcloud-dl/releases/latest/download/soundcloud-dl-v1.1.5.zip) or [`soundcloud-dl-v1.1.5.crx`](https://github.com/GeoXTen/soundcloud-dl/releases/latest/download/soundcloud-dl-v1.1.5.crx) from [Releases](https://github.com/GeoXTen/soundcloud-dl/releases/latest)
+1. Download [`soundcloud-dl-v1.1.8.zip`](https://github.com/GeoXTen/soundcloud-dl/releases/latest/download/soundcloud-dl-v1.1.8.zip) from [Releases](https://github.com/GeoXTen/soundcloud-dl/releases/latest)
 2. For ZIP: extract anywhere → open `chrome://extensions` (or `brave://extensions`) → **Developer mode** ON → **Load unpacked** → select folder
-3. For CRX: drag `crx` onto `chrome://extensions` with Developer mode ON
+3. For CRX: if a `.crx` is attached to the release, drag it onto `chrome://extensions` with Developer mode ON
 4. Visit any SoundCloud page and click the orange download button
 
 ### Option 2: Clone repo
@@ -55,6 +55,7 @@ Then `chrome://extensions` → Developer mode → Load unpacked → select `soun
 
 ## Changelog
 
+- **v1.1.8** (2026-10-11): ghost icon button is now the default on every UI (was MUI-only); fixed duplicate download button injected under every track card on profile pages; fixed stale stylesheet repainting buttons solid orange after an extension reload + SPA navigation; trim popup layout/handle fixes, header download arrow, re-inject log spam removed
 - **v1.1.5** (2026-09-03): new flaticon icon, flat fade toggles (30×18), grid cards (no wrap), grey dot centering fix, CRX release
 - **v1.1.0 – v1.1.4**: CBR trim, ID3 fixes, heartbeat removal, duplicate-btn fix, toast/popup flat redesign
 
