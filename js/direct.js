@@ -1282,21 +1282,37 @@
             .sc-dl-feed-btn:active{background:#cc4400!important;}
             .sc-dl-feed-btn:disabled{opacity:0.6!important;pointer-events:none!important;}
             .sc-dl-feed-btn svg{pointer-events:none!important;}
-            /* MUI header row — make DL button circular to match MuiIconButton */
-            .MuiStack-root .sc-dl-feed-btn{width:40px!important;height:40px!important;min-width:40px!important;border-radius:50%!important;padding:0!important;margin-left:4px!important;}
-            /* Comment bar — compact orange button right of the field */
-            .sc-dl-comment-btn{margin-left:8px!important;flex-shrink:0!important;}
-            /* Player mini - flat circle */
+            /* MUI header row — ghost icon button matching MuiIconButton (no filled disc) */
+            .MuiStack-root .sc-dl-feed-btn{
+                width:40px!important;height:40px!important;min-width:40px!important;
+                border-radius:50%!important;padding:0!important;margin-left:4px!important;
+                background:transparent!important;color:#ff5500!important;
+                transition: background 0.15s ease, color 0.15s ease!important;
+            }
+            .MuiStack-root .sc-dl-feed-btn:hover{background:rgba(255,85,0,0.16)!important;color:#ff7733!important;}
+            .MuiStack-root .sc-dl-feed-btn:active{background:rgba(255,85,0,0.24)!important;color:#ff7733!important;}
+            /* Comment bar — compact ghost button right of the field */
+            .sc-dl-feed-btn.sc-dl-comment-btn{
+                margin-left:8px!important;flex-shrink:0!important;
+                background:transparent!important;color:#ff5500!important;
+            }
+            .sc-dl-feed-btn.sc-dl-comment-btn:hover{background:rgba(255,85,0,0.16)!important;color:#ff7733!important;}
+            .sc-dl-feed-btn.sc-dl-comment-btn:active{background:rgba(255,85,0,0.24)!important;color:#ff7733!important;}
+            /* Keyboard focus ring — matches popup/handle convention */
+            .MuiStack-root .sc-dl-feed-btn:focus-visible,
+            .sc-dl-feed-btn.sc-dl-comment-btn:focus-visible,
+            #${BTN_ID}-player:focus-visible{outline:2px solid #ff5500!important;outline-offset:2px!important;}
+            /* Player mini - ghost icon, no filled disc */
             #${BTN_ID}-player{
                 width:30px!important;height:30px!important;min-width:30px!important;min-height:30px!important;
                 border-radius:50%!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
                 flex:0 0 30px!important;padding:0!important;margin-left:8px!important;
-                background:#ff5500!important;color:#fff!important;border:none!important;
+                background:transparent!important;color:#ff5500!important;border:none!important;
                 cursor:pointer!important;z-index:9999!important;
-                transition: background 0.15s ease!important;
+                transition: background 0.15s ease, color 0.15s ease!important;
             }
-            #${BTN_ID}-player:hover{background:#e64e00!important;}
-            #${BTN_ID}-player:active{background:#cc4400!important;}
+            #${BTN_ID}-player:hover{background:rgba(255,85,0,0.16)!important;color:#ff7733!important;}
+            #${BTN_ID}-player:active{background:rgba(255,85,0,0.24)!important;color:#ff7733!important;}
             #${BTN_ID}-player svg{pointer-events:none!important;}
             /* Fade toggles - flat switch */
             #sc-fade-in, #sc-fade-out{
