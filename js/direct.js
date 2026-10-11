@@ -259,7 +259,7 @@
             popup.innerHTML = `
                 <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
                     <div style="flex-shrink:0;width:40px;height:40px;background:rgba(255,85,0,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#ff5500"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#ff5500"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
                     </div>
                     <div style="flex:1;min-width:0;">
                         <div title="${esc(trackName)}" style="font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(trackName)}</div>
