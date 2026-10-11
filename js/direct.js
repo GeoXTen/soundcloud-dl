@@ -6,6 +6,10 @@
     window.__scDirectLoaded = true;
     console.log("[direct] SoundCloud direct downloader loaded at", location.href);
     const BTN_ID = "sc-direct-download-btn";
+    // Collection/profile/feed pages (/artist/tracks, /albums, /likes, /feed, /stream, …) are not
+    // tracks, so their URL must never be resolved as one.
+    const COLLECTION_PATH = /(^|\/)(tracks|popular-tracks|albums|sets|playlists|reposts|likes|comments|following|followers|spotlight|you|stream|feed|discover|search|charts|tags|pages|mobile)(\/|$)/i;
+    function isCollectionPath() { return COLLECTION_PATH.test(location.pathname); }
     let clientId = null;
 
     // Extract SoundCloud client_id from page
@@ -1004,11 +1008,21 @@
         }
     }
 
+    // Last-resort guarantee: an inline `!important` background out-ranks every stylesheet, so
+    // neither a stale build's CSS nor SoundCloud's own sc-button rules can paint our button as
+    // a solid orange square. This is why the hover/active halo is an inset box-shadow — a
+    // background-based halo would be swallowed by this inline rule.
+    function hardenGhost(btn) {
+        btn.style.setProperty("background-color", "transparent", "important");
+        btn.style.setProperty("background-image", "none", "important");
+    }
+
     function makeFeedBtn(trackUrl) {
         injectFlatStyles();
         const btn = document.createElement("button");
         btn.className = "sc-button sc-button-small sc-button-icon sc-dl-feed-btn";
         btn.title = "Download this track";
+        hardenGhost(btn);
         btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>';
         btn.addEventListener("click", (e) => handleDownload(e, trackUrl));
         return btn;
@@ -1019,6 +1033,7 @@
         const btn = document.createElement("button");
         btn.id = BTN_ID + "-player";
         btn.title = "Download this track";
+        hardenGhost(btn);
         btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="pointer-events:none;"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>';
         btn.addEventListener("click", handleDownload);
         return btn;
@@ -1233,6 +1248,14 @@
         // Classic DOM: <input class="commentForm__input sc-input" placeholder="Write a comment">
         // MUI DOM: <input aria-label="Add a comment to this track" class="mui-a7x4ux">
         document.querySelectorAll('input[aria-label*="Add a comment"], input.mui-a7x4ux, input[placeholder^="Comment at"], input.commentForm__input, input[placeholder="Write a comment"]').forEach(inp => {
+            // A comment box that belongs to a track *card* (profile, feed, search, playlist, …)
+            // already gets its button from the action-bar/header paths above. Injecting here as
+            // well produced a second download button under every comment field on the profile
+            // page — and, because the only URL available in that context is the page URL, it
+            // pointed at /artist/tracks instead of a track. Only the page's own comment box is
+            // handled; collection pages are skipped outright for the same reason.
+            if (isCollectionPath()) return;
+            if (inp.closest('.soundList__item, .badgeList__item, .soundBadge, .playableTile, .audibleTile, .userStreamItem, .lazyLoadingList__list, .sc-list-nostyle > li')) return;
             // wrapper is the flex container holding the input (often same MuiStack row or parent Box)
             let wrapper = inp.closest('.MuiStack-root') || inp.closest('.commentForm__inputContainer') || inp.parentElement?.parentElement;
             if (!wrapper) wrapper = inp.parentElement;
@@ -1265,26 +1288,41 @@
     }
 
     // Flat design system + motion (React devs style: spring, fade, slide)
+    const FLAT_STYLE_ID = "sc-dl-flat-style";
+    // Keep in sync with the manifest version. A page that was already styled by an older
+    // build (extension reloaded, then SPA navigation re-injected the buttons) would
+    // otherwise keep the stale stylesheet and paint the fresh buttons with the old
+    // solid-orange base rule — that is exactly how the orange square can come back.
+    const FLAT_STYLE_VER = "1.1.8";
     function injectFlatStyles() {
-        if (document.getElementById("sc-dl-flat-style")) return;
+        const prev = document.getElementById(FLAT_STYLE_ID);
+        if (prev && prev.dataset.scDlVer === FLAT_STYLE_VER) return;
+        if (prev) prev.remove();
         const st = document.createElement("style");
-        st.id = "sc-dl-flat-style";
+        st.id = FLAT_STYLE_ID;
+        st.dataset.scDlVer = FLAT_STYLE_VER;
         st.textContent = `
             /* Feed button — ghost icon button: transparent, orange glyph, no filled disc.
                This is the DEFAULT for every injected button. The ghost look used to be
                scoped to .MuiStack-root, so on any other container the button fell back to
-               the old solid-orange square; now the solid fill is gone entirely. */
+               the old solid-orange square; now the solid fill is gone entirely.
+               The hover/active halo deliberately uses an inset box-shadow instead of a
+               background: every injected button also carries an inline
+               'background:transparent!important' rule, which out-ranks any stylesheet
+               (including a stale build's or SoundCloud's own sc-button rules) and would
+               otherwise swallow the hover fill. */
             .sc-dl-feed-btn{
-                background:transparent!important;color:#ff5500!important;border:none!important;
+                background:transparent!important;background-image:none!important;color:#ff5500!important;border:none!important;
                 border-radius:50%!important;width:40px!important;height:40px!important;
                 min-width:40px!important;min-height:40px!important;padding:0!important;
                 box-sizing:border-box!important;margin-left:4px!important;
                 display:inline-flex!important;align-items:center!important;justify-content:center!important;
                 flex-shrink:0!important;cursor:pointer!important;vertical-align:middle!important;
-                transition: background 0.15s ease, color 0.15s ease!important;
+                box-shadow:none!important;
+                transition: box-shadow 0.15s ease, color 0.15s ease!important;
             }
-            .sc-dl-feed-btn:hover{background:rgba(255,85,0,0.16)!important;color:#ff7733!important;}
-            .sc-dl-feed-btn:active{background:rgba(255,85,0,0.24)!important;color:#ff7733!important;}
+            .sc-dl-feed-btn:hover{box-shadow:inset 0 0 0 999px rgba(255,85,0,0.16)!important;color:#ff7733!important;}
+            .sc-dl-feed-btn:active{box-shadow:inset 0 0 0 999px rgba(255,85,0,0.24)!important;color:#ff7733!important;}
             .sc-dl-feed-btn:disabled{opacity:0.6!important;pointer-events:none!important;}
             .sc-dl-feed-btn svg{pointer-events:none!important;width:18px!important;height:18px!important;}
             /* Keyboard focus ring — matches popup/handle convention */
@@ -1308,12 +1346,13 @@
                 width:30px!important;height:30px!important;min-width:30px!important;min-height:30px!important;
                 border-radius:50%!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
                 flex:0 0 30px!important;padding:0!important;margin-left:8px!important;
-                background:transparent!important;color:#ff5500!important;border:none!important;
+                background:transparent!important;background-image:none!important;color:#ff5500!important;border:none!important;
+                box-shadow:none!important;
                 cursor:pointer!important;z-index:9999!important;
-                transition: background 0.15s ease, color 0.15s ease!important;
+                transition: box-shadow 0.15s ease, color 0.15s ease!important;
             }
-            #${BTN_ID}-player:hover{background:rgba(255,85,0,0.16)!important;color:#ff7733!important;}
-            #${BTN_ID}-player:active{background:rgba(255,85,0,0.24)!important;color:#ff7733!important;}
+            #${BTN_ID}-player:hover{box-shadow:inset 0 0 0 999px rgba(255,85,0,0.16)!important;color:#ff7733!important;}
+            #${BTN_ID}-player:active{box-shadow:inset 0 0 0 999px rgba(255,85,0,0.24)!important;color:#ff7733!important;}
             #${BTN_ID}-player svg{pointer-events:none!important;}
             /* Fade toggles - flat switch */
             #sc-fade-in, #sc-fade-out{
