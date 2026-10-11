@@ -242,22 +242,27 @@
             injectFlatStyles();
             const overlay = document.createElement('div');
             overlay.id = 'sc-dl-trim-popup';
+            overlay.setAttribute('role', 'presentation');
             overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(4px);z-index:999998;display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;';
 
             const popup = document.createElement('div');
             popup.className = 'sc-dl-popup';
-            popup.style.cssText = 'background:#111;border:1px solid #222;border-radius:12px;padding:20px;width:360px;max-width:90vw;color:#fff;';
+            popup.setAttribute('role', 'dialog');
+            popup.setAttribute('aria-modal', 'true');
+            popup.setAttribute('aria-label', 'Download options');
+            popup.style.cssText = 'background:#111;border:1px solid #222;border-radius:12px;padding:20px;width:360px;max-width:90vw;max-height:calc(100vh - 32px);overflow-y:auto;color:#fff;';
 
-            const trackName = filename.replace('.mp3', '').substring(0, 40);
+            const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+            const trackName = filename.replace(/\.mp3$/i, '');
             const durationStr = duration ? formatTime(duration) : '--:--:--';
 
             popup.innerHTML = `
                 <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-                    <div style="width:40px;height:40px;background:rgba(255,85,0,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                    <div style="flex-shrink:0;width:40px;height:40px;background:rgba(255,85,0,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="#ff5500"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
                     </div>
-                    <div>
-                        <div style="font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px;">${trackName}</div>
+                    <div style="flex:1;min-width:0;">
+                        <div title="${esc(trackName)}" style="font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(trackName)}</div>
                         <div style="font-size:12px;color:#888;">Duration: ${durationStr}</div>
                     </div>
                 </div>
@@ -280,28 +285,32 @@
                     </div>
 
                     ${duration ? `
-                    <div id="sc-trim-slider-container" style="position:relative;height:40px;margin:12px 0 4px;cursor:pointer;">
-                        <div style="position:absolute;top:18px;left:0;right:0;height:4px;background:#333;border-radius:2px;"></div>
-                        <div id="sc-trim-range" style="position:absolute;top:18px;height:4px;background:#ff5500;border-radius:2px;left:0;right:0;"></div>
-                        <div id="sc-trim-handle-from" style="position:absolute;top:12px;width:18px;height:18px;background:#ff5500;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.4);transform:translateX(-9px);z-index:2;cursor:grab;"></div>
-                        <div id="sc-trim-handle-to" style="position:absolute;top:12px;width:18px;height:18px;background:#ff8800;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.4);transform:translateX(-9px);z-index:2;cursor:grab;"></div>
+                    <div id="sc-trim-slider-container" role="group" aria-label="Trim range" style="position:relative;height:36px;margin:10px 0 2px;cursor:pointer;">
+                        <div id="sc-trim-track" style="position:absolute;top:16px;left:11px;right:11px;height:4px;background:#333;border-radius:2px;">
+                            <div id="sc-trim-range" style="position:absolute;top:0;height:4px;background:#ff5500;border-radius:2px;left:0;width:0;"></div>
+                        </div>
+                        <div id="sc-trim-handle-from" role="slider" tabindex="0" title="Trim start" aria-label="Trim start" aria-valuemin="0" aria-valuemax="${duration}" aria-valuenow="0"
+                            style="position:absolute;top:8px;left:11px;margin-left:-10px;width:20px;height:20px;box-sizing:border-box;background:#ff5500;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.45);z-index:2;cursor:grab;"></div>
+                        <div id="sc-trim-handle-to" role="slider" tabindex="0" title="Trim end" aria-label="Trim end" aria-valuemin="0" aria-valuemax="${duration}" aria-valuenow="${duration}"
+                            style="position:absolute;top:8px;left:11px;margin-left:-10px;width:20px;height:20px;box-sizing:border-box;background:#ff5500;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.45);z-index:2;cursor:grab;"></div>
                     </div>
-                    <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-top:2px;">
+                    <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-top:2px;padding:0 2px;">
                         <span>00:00:00</span>
                         <span>${durationStr}</span>
                     </div>
                     ` : ''}
+
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
-                        <div style="display:flex;align-items:center;gap:5px;background:#111;border:1px solid #222;border-radius:6px;padding:6px 6px;">
+                        <div title="Fade the clip in over the given number of seconds" style="display:flex;align-items:center;gap:5px;background:#111;border:1px solid #222;border-radius:6px;padding:6px;overflow:hidden;">
                             <input type="checkbox" id="sc-fade-in" style="flex-shrink:0;">
                             <span style="font-size:12px;color:#ccc;user-select:none;white-space:nowrap;flex-shrink:0;">Fade in</span>
-                            <input id="sc-fade-in-dur" type="number" value="2" min="0.5" max="10" step="0.5" disabled style="width:32px;min-width:32px;flex-shrink:0;background:#0a0a0a;border:1px solid #222;border-radius:4px;padding:3px 2px;color:#fff;font-size:12px;text-align:center;">
+                            <input id="sc-fade-in-dur" type="number" value="2" min="0.5" max="10" step="0.5" disabled aria-label="Fade in seconds" style="flex:1;min-width:0;background:#0a0a0a;border:1px solid #222;border-radius:4px;padding:3px 2px;color:#fff;font-size:12px;text-align:center;font-family:inherit;">
                             <span style="font-size:11px;color:#666;flex-shrink:0;">s</span>
                         </div>
-                        <div style="display:flex;align-items:center;gap:5px;background:#111;border:1px solid #222;border-radius:6px;padding:6px 6px;">
+                        <div title="Fade the clip out over the given number of seconds" style="display:flex;align-items:center;gap:5px;background:#111;border:1px solid #222;border-radius:6px;padding:6px;overflow:hidden;">
                             <input type="checkbox" id="sc-fade-out" style="flex-shrink:0;">
                             <span style="font-size:12px;color:#ccc;user-select:none;white-space:nowrap;flex-shrink:0;">Fade out</span>
-                            <input id="sc-fade-out-dur" type="number" value="2" min="0.5" max="10" step="0.5" disabled style="width:32px;min-width:32px;flex-shrink:0;background:#0a0a0a;border:1px solid #222;border-radius:4px;padding:3px 2px;color:#fff;font-size:12px;text-align:center;">
+                            <input id="sc-fade-out-dur" type="number" value="2" min="0.5" max="10" step="0.5" disabled aria-label="Fade out seconds" style="flex:1;min-width:0;background:#0a0a0a;border:1px solid #222;border-radius:4px;padding:3px 2px;color:#fff;font-size:12px;text-align:center;font-family:inherit;">
                             <span style="font-size:11px;color:#666;flex-shrink:0;">s</span>
                         </div>
                     </div>
@@ -321,6 +330,7 @@
             const fromInput = popup.querySelector('#sc-trim-from');
             const toInput = popup.querySelector('#sc-trim-to');
             const sliderContainer = popup.querySelector('#sc-trim-slider-container');
+            const trackEl = popup.querySelector('#sc-trim-track');
             const handleFrom = popup.querySelector('#sc-trim-handle-from');
             const handleTo = popup.querySelector('#sc-trim-handle-to');
             const rangeBar = popup.querySelector('#sc-trim-range');
@@ -337,58 +347,103 @@
             let toVal = duration;
             let dragging = null;
 
-            // Update UI
+            // Update UI — positions are computed in px against the inset track so the
+            // handles always stay inside the panel (they used to hang 9px outside it).
             function updateUI() {
-                if (!duration || !sliderContainer) return;
+                if (!duration || !trackEl) return;
                 const minVal = Math.min(fromVal, toVal);
                 const maxVal = Math.max(fromVal, toVal);
-                const left = (minVal / duration) * 100;
-                const width = ((maxVal - minVal) / duration) * 100;
-                rangeBar.style.left = left + '%';
-                rangeBar.style.width = width + '%';
-                handleFrom.style.left = (fromVal / duration * 100) + '%';
-                handleTo.style.left = (toVal / duration * 100) + '%';
+                const tw = trackEl.getBoundingClientRect().width;
+                const origin = trackEl.offsetLeft;
+                rangeBar.style.left = ((minVal / duration) * tw) + 'px';
+                rangeBar.style.width = (((maxVal - minVal) / duration) * tw) + 'px';
+                handleFrom.style.left = (origin + (fromVal / duration) * tw) + 'px';
+                handleTo.style.left = (origin + (toVal / duration) * tw) + 'px';
+                handleFrom.setAttribute('aria-valuenow', String(Math.round(fromVal)));
+                handleTo.setAttribute('aria-valuenow', String(Math.round(toVal)));
                 fromInput.value = formatTime(minVal);
                 toInput.value = formatTime(maxVal);
             }
 
-            // Get time from click position
+            // Get time from pointer position (clamped to the track, not the gutter)
             function getTimeFromEvent(e) {
-                const rect = sliderContainer.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const pct = Math.max(0, Math.min(1, x / rect.width));
+                if (!trackEl) return 0;
+                const rect = trackEl.getBoundingClientRect();
+                const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
                 return Math.round(pct * duration);
             }
 
-            // Mouse/touch handlers
-            if (sliderContainer) {
-                handleFrom.addEventListener('mousedown', (e) => { e.preventDefault(); dragging = 'from'; handleFrom.style.cursor = 'grabbing'; });
-                handleTo.addEventListener('mousedown', (e) => { e.preventDefault(); dragging = 'to'; handleTo.style.cursor = 'grabbing'; });
-                handleFrom.addEventListener('touchstart', (e) => { dragging = 'from'; }, { passive: true });
-                handleTo.addEventListener('touchstart', (e) => { dragging = 'to'; }, { passive: true });
-
-                document.addEventListener('mousemove', (e) => {
-                    if (!dragging) return;
+            // --- Listeners are named so they can be detached when the popup closes.
+            // Previously every open added four permanent document listeners.
+            function setDragTime(clientX) {
+                const t = getTimeFromEvent({ clientX });
+                if (dragging === 'from') fromVal = t;
+                else if (dragging === 'to') toVal = t;
+                updateUI();
+            }
+            function onPointerMove(e) {
+                if (!dragging) return;
+                e.preventDefault();
+                setDragTime(e.clientX);
+            }
+            function onTouchMove(e) {
+                if (!dragging || !e.touches[0]) return;
+                setDragTime(e.touches[0].clientX);
+            }
+            function onPointerUp() {
+                dragging = null;
+                handleFrom.style.cursor = 'grab';
+                handleTo.style.cursor = 'grab';
+            }
+            function onKeyDown(e) {
+                if (e.key === 'Escape') { e.preventDefault(); close(null); return; }
+                const step = e.shiftKey ? 10 : 1;
+                let target = null;
+                if (e.target === handleFrom) target = 'from';
+                else if (e.target === handleTo) target = 'to';
+                if (!target) return;
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
                     e.preventDefault();
-                    const t = getTimeFromEvent(e);
-                    if (dragging === 'from') fromVal = t;
-                    else toVal = t;
-                    updateUI();
-                });
-                document.addEventListener('touchmove', (e) => {
-                    if (!dragging) return;
-                    const t = getTimeFromEvent(e.touches[0]);
-                    if (dragging === 'from') fromVal = t;
-                    else toVal = t;
-                    updateUI();
-                }, { passive: true });
+                    if (target === 'from') fromVal = Math.max(0, fromVal - step);
+                    else toVal = Math.max(0, toVal - step);
+                } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (target === 'from') fromVal = Math.min(duration, fromVal + step);
+                    else toVal = Math.min(duration, toVal + step);
+                } else if (e.key === 'Home') {
+                    e.preventDefault();
+                    if (target === 'from') fromVal = 0; else toVal = 0;
+                } else if (e.key === 'End') {
+                    e.preventDefault();
+                    if (target === 'from') fromVal = duration; else toVal = duration;
+                } else {
+                    return;
+                }
+                updateUI();
+            }
 
-                document.addEventListener('mouseup', () => {
-                    if (dragging === 'from') handleFrom.style.cursor = 'grab';
-                    if (dragging === 'to') handleTo.style.cursor = 'grab';
-                    dragging = null;
-                });
-                document.addEventListener('touchend', () => { dragging = null; });
+            // Single exit point — always detaches listeners before removing the overlay
+            function close(result) {
+                document.removeEventListener('mousemove', onPointerMove);
+                document.removeEventListener('touchmove', onTouchMove);
+                document.removeEventListener('mouseup', onPointerUp);
+                document.removeEventListener('touchend', onPointerUp);
+                document.removeEventListener('keydown', onKeyDown);
+                window.removeEventListener('resize', updateUI);
+                overlay.remove();
+                resolve(result);
+            }
+
+            if (sliderContainer) {
+                handleFrom.addEventListener('mousedown', (e) => { e.preventDefault(); dragging = 'from'; handleFrom.style.cursor = 'grabbing'; handleFrom.focus(); });
+                handleTo.addEventListener('mousedown', (e) => { e.preventDefault(); dragging = 'to'; handleTo.style.cursor = 'grabbing'; handleTo.focus(); });
+                handleFrom.addEventListener('touchstart', () => { dragging = 'from'; }, { passive: true });
+                handleTo.addEventListener('touchstart', () => { dragging = 'to'; }, { passive: true });
+
+                document.addEventListener('mousemove', onPointerMove);
+                document.addEventListener('touchmove', onTouchMove, { passive: true });
+                document.addEventListener('mouseup', onPointerUp);
+                document.addEventListener('touchend', onPointerUp);
 
                 // Click on track to move nearest handle
                 sliderContainer.addEventListener('click', (e) => {
@@ -404,6 +459,10 @@
                 updateUI();
             }
 
+            document.addEventListener('keydown', onKeyDown);
+            window.addEventListener('resize', updateUI);
+            cancelBtn.focus();
+
             // Fade toggles enable/disable duration inputs
             fadeInChk.addEventListener('change', () => { fadeInDur.disabled = !fadeInChk.checked; });
             fadeOutChk.addEventListener('change', () => { fadeOutDur.disabled = !fadeOutChk.checked; });
@@ -418,31 +477,41 @@
                 updateUI();
             });
 
+            // Inline error feedback on the primary button (class-based, so the
+            // flat-stylesheet colour is restored instead of a hard-coded value)
+            let errorTimer = null;
+            function flashError(msg) {
+                if (errorTimer) clearTimeout(errorTimer);
+                downloadBtn.classList.add('sc-dl-invalid');
+                downloadBtn.textContent = msg;
+                errorTimer = setTimeout(() => {
+                    downloadBtn.classList.remove('sc-dl-invalid');
+                    downloadBtn.textContent = 'Download';
+                    errorTimer = null;
+                }, 1200);
+            }
+
             // Buttons
-            cancelBtn.addEventListener('click', () => { overlay.remove(); resolve(null); });
-            fullBtn.addEventListener('click', () => { overlay.remove(); resolve({ trim: false }); });
+            cancelBtn.addEventListener('click', () => close(null));
+            fullBtn.addEventListener('click', () => close({ trim: false }));
             downloadBtn.addEventListener('click', () => {
                 const from = Math.min(fromVal, toVal);
                 const to = Math.max(fromVal, toVal);
                 const fadeIn = fadeInChk.checked ? Math.max(0.1, parseFloat(fadeInDur.value)||2) : 0;
                 const fadeOut = fadeOutChk.checked ? Math.max(0.1, parseFloat(fadeOutDur.value)||2) : 0;
-                console.log("[trim-ui] Download clicked:", {from, to, fromVal, toVal, duration, fadeIn, fadeOut});
                 if (to <= 0 || from === to) {
-                    downloadBtn.style.background = '#ff3333';
-                    downloadBtn.textContent = 'Invalid range';
-                    setTimeout(() => { downloadBtn.style.background = '#ff5500'; downloadBtn.textContent = 'Download'; }, 1000);
+                    flashError('Invalid range');
                     return;
                 }
                 if (fadeIn + fadeOut >= (to - from)) {
-                    downloadBtn.style.background = '#ff3333';
-                    downloadBtn.textContent = 'Fade too long';
-                    setTimeout(() => { downloadBtn.style.background = '#ff5500'; downloadBtn.textContent = 'Download'; }, 1200);
+                    flashError('Fade too long');
                     return;
                 }
-                overlay.remove();
-                resolve({ trim: true, from, to, fadeIn, fadeOut });
+                close({ trim: true, from, to, fadeIn, fadeOut });
             });
-            overlay.addEventListener('click', (e) => { if (e.target === overlay) { overlay.remove(); resolve(null); } });
+
+            // Click the backdrop to dismiss
+            overlay.addEventListener('click', (e) => { if (e.target === overlay) close(null); });
         });
     }
 
@@ -1245,7 +1314,7 @@
             }
             #sc-fade-in:checked::after, #sc-fade-out:checked::after{transform:translateY(-50%) translateX(12px)!important;background:#fff!important;}
             #sc-fade-in-dur, #sc-fade-out-dur{transition: opacity 0.15s, border-color 0.15s!important;}
-            #sc-fade-in-dur:disabled, #sc-fade-out-dur:disabled{opacity:0.35!important;pointer-events:none!important;}
+            #sc-fade-in-dur:disabled, #sc-fade-out-dur:disabled{opacity:0.45!important;pointer-events:none!important;}
             /* Toast - flat slide */
             #sc-dl-toast-container{position:fixed!important;top:20px!important;right:20px!important;z-index:999999!important;display:flex!important;flex-direction:column!important;gap:8px!important;pointer-events:none!important;}
             .sc-dl-toast{
@@ -1266,9 +1335,26 @@
             @keyframes sc-dl-spin{to{transform:rotate(360deg)}}
             /* Popup flat */
             .sc-dl-popup{ background:#111!important; border:1px solid #222!important; border-radius:12px!important; }
-            .sc-dl-popup button{transition: background 0.15s ease!important;}
+            .sc-dl-popup button{transition: background 0.15s ease!important;white-space:nowrap!important;}
+            .sc-dl-popup button:focus-visible{outline:2px solid #ff5500!important;outline-offset:2px!important;}
             .sc-dl-popup input:focus{border-color:#ff5500!important;}
-            #sc-trim-handle-from:hover,#sc-trim-handle-to:hover{box-shadow:0 2px 8px rgba(0,0,0,0.4)!important;}
+            /* Narrow viewports — keep the three action buttons on one line */
+            @media (max-width:420px){
+                .sc-dl-popup{padding:16px!important;}
+                .sc-dl-popup button{font-size:12px!important;padding:10px 6px!important;}
+            }
+            /* Trim popup controls */
+            #sc-trim-slider-container{touch-action:none!important;}
+            #sc-trim-handle-from,#sc-trim-handle-to{transition:box-shadow 0.15s ease!important;}
+            #sc-trim-handle-from:hover,#sc-trim-handle-to:hover{box-shadow:0 2px 6px rgba(0,0,0,0.45),0 0 0 6px rgba(255,85,0,0.18)!important;}
+            #sc-trim-handle-from:focus-visible,#sc-trim-handle-to:focus-visible{outline:2px solid #ff5500!important;outline-offset:2px!important;}
+            #sc-trim-handle-from:active,#sc-trim-handle-to:active{cursor:grabbing!important;}
+            #sc-trim-download.sc-dl-invalid{background:#ff3333!important;}
+            /* Hide native number spinners — they clipped the fade duration digits */
+            #sc-fade-in-dur::-webkit-outer-spin-button,#sc-fade-in-dur::-webkit-inner-spin-button,
+            #sc-fade-out-dur::-webkit-outer-spin-button,#sc-fade-out-dur::-webkit-inner-spin-button{-webkit-appearance:none!important;margin:0!important;}
+            #sc-fade-in-dur,#sc-fade-out-dur{-moz-appearance:textfield!important;appearance:textfield!important;}
+
         `;
         document.head.appendChild(st);
     }
