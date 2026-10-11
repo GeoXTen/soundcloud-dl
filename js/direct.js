@@ -1,6 +1,9 @@
 // Direct SoundCloud downloader - bypasses CrossPilot, no eval needed
 // Requires lame.min.js for MP3 trimming
 (function() {
+    // Guard against double injection (content script + any manual/duplicate re-inject).
+    if (window.__scDirectLoaded) { console.log("[direct] already loaded - skipping duplicate inject"); return; }
+    window.__scDirectLoaded = true;
     console.log("[direct] SoundCloud direct downloader loaded at", location.href);
     const BTN_ID = "sc-direct-download-btn";
     let clientId = null;
@@ -1037,7 +1040,21 @@
                     if (url) { trackUrl = url; break; }
                 }
             }
-
+            // Fallback for the classic track-page header row: its H1.soundTitle__title is
+            // link-less and there is no a.sound__coverArt inside this context, so the two
+            // lookups above both fail and the main track never got a button.
+            // Only applies to the real header (>=3 actions, a track H1 present, not inside a
+            // list item / mini player) and never to playlist or album pages.
+            if (!trackUrl && allBtns.length >= 3 &&
+                !actionBar.closest('.soundList__item, .soundBadge, .soundBadgeList, .playableTile, .audibleTile') &&
+                document.querySelector('h1.soundTitle__title') &&
+                !/\/sets\/|\/albums\//.test(location.pathname)) {
+                trackUrl = getTrackUrl(location.href);
+                if (!trackUrl) {
+                    const og = document.querySelector('meta[property="og:url"]');
+                    if (og) trackUrl = getTrackUrl(og.getAttribute('content'));
+                }
+            }
             if (trackUrl) {
                 seenContainers.add(actionBar);
                 results.push({ container: actionBar, trackUrl });
@@ -1144,9 +1161,11 @@
         });
 
         // Type 5: Comment bar — <input aria-label="Add a comment to this track" class="mui-a7x4ux">
-        document.querySelectorAll('input[aria-label*="Add a comment"], input.mui-a7x4ux, input[placeholder^="Comment at"]').forEach(inp => {
+        // Classic DOM: <input class="commentForm__input sc-input" placeholder="Write a comment">
+        // MUI DOM: <input aria-label="Add a comment to this track" class="mui-a7x4ux">
+        document.querySelectorAll('input[aria-label*="Add a comment"], input.mui-a7x4ux, input[placeholder^="Comment at"], input.commentForm__input, input[placeholder="Write a comment"]').forEach(inp => {
             // wrapper is the flex container holding the input (often same MuiStack row or parent Box)
-            let wrapper = inp.closest('.MuiStack-root') || inp.parentElement?.parentElement;
+            let wrapper = inp.closest('.MuiStack-root') || inp.closest('.commentForm__inputContainer') || inp.parentElement?.parentElement;
             if (!wrapper) wrapper = inp.parentElement;
             if (!wrapper || seenContainers.has(wrapper)) return;
             // avoid injecting inside hidden/overlay boxes
@@ -1161,7 +1180,8 @@
             }
             if (!trackUrl) return;
             // use the input's immediate flex parent as container (so button sits right of the field)
-            let container = inp.closest('.MuiInputBase-root')?.parentElement;
+            let container = inp.closest('.MuiInputBase-root')?.parentElement ||
+                            inp.closest('.commentForm__inputFieldWrapper');
             if (!container || container === document.body) container = inp.parentElement;
             // fallback to wrapper if no better container
             if (!container) container = wrapper;
@@ -1253,6 +1273,8 @@
         document.head.appendChild(st);
     }
 
+    let playerBtnAnnounced = false;
+
     function createButtons() {
         let injected = false;
 
@@ -1313,7 +1335,13 @@
             } else {
                 const playerBtn = makePlayerBtn();
                 pContainer.appendChild(playerBtn);
-                console.log("[direct] player mini button injected");
+                // SoundCloud's React player re-renders its bar continuously, which drops our
+                // node, so re-attaching here is expected behaviour. Only announce the first
+                // attach — logging on every re-attach produced thousands of console lines.
+                if (!playerBtnAnnounced) {
+                    playerBtnAnnounced = true;
+                    console.log("[direct] player mini button injected");
+                }
                 injected = true;
             }
         }
@@ -1342,11 +1370,35 @@
         }
     }, 1000);
 
-    // Re-inject when SoundCloud lazy-loads new feed items on scroll
-    let debounceTimer = null;
-    const scrollObs = new MutationObserver(() => {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => { createButtons(); }, 300);
-    });
+    // Re-inject when SoundCloud lazy-loads new feed items on scroll.
+    // NOTE: SoundCloud's React player re-renders its bar several times per second, so this
+    // observer fires constantly. Keep each pass cheap: at most one run per 500ms, skip
+    // background tabs entirely, and never re-enter while a previous pass is still running.
+    // Leading + trailing throttle (deliberately NOT a resetting debounce): the constant React
+    // churn would keep re-arming a debounce and could starve re-attachment for as long as the
+    // player keeps re-rendering, which is exactly how the button went missing.
+    let pendingRun = null;
+    let createRunning = false;
+    let lastCreateRun = 0;
+    const MIN_RUN_INTERVAL = 500;
+    const runCreateButtons = () => {
+        if (createRunning) return;
+        if (document.hidden) return;
+        const since = Date.now() - lastCreateRun;
+        if (since < MIN_RUN_INTERVAL) {
+            // Always leave a trailing pass queued so a mutation storm cannot starve us.
+            if (pendingRun === null) {
+                pendingRun = setTimeout(() => { pendingRun = null; runCreateButtons(); }, MIN_RUN_INTERVAL - since);
+            }
+            return;
+        }
+        lastCreateRun = Date.now();
+        createRunning = true;
+        try { createButtons(); } finally { createRunning = false; }
+    };
+    const scrollObs = new MutationObserver(runCreateButtons);
     scrollObs.observe(document.body, {childList: true, subtree: true});
+
+    // Catch up once when the tab becomes visible again (passes are skipped while hidden)
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) runCreateButtons(); });
 })();
